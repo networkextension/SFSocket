@@ -135,6 +135,8 @@ class SFProxy {
         }
         return serverAddress
     }
+//disable code use SwiftyJSON
+/*
     func resp() ->[String:Any]{
         return ["name":proxyName as AnyObject,"host":serverAddress as AnyObject,"port":serverPort,"protocol":type.description,"method":method,"passwd":password,"tls":NSNumber.init(value: tlsEnable),"priority":NSNumber.init(value: priority),"enable":NSNumber.init(value: enable),"countryFlag":countryFlag,"isoCode":isoCode,"ipaddress":serverIP]
     }
@@ -198,6 +200,7 @@ class SFProxy {
         }
         return sp
     }
+*/
     func typeDesc() ->String{
         if tlsEnable && type == .HTTP {
             return "Type: " + "HTTPS"
