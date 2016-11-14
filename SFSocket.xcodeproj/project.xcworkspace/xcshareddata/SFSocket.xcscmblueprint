@@ -4,40 +4,20 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "834DA2CBF1A005FD462115D8041C6D81D5FB12EF" : 9223372036854775807,
-    "1C75F1C5CFCB95B3702F6F632FA05ED5244B519E" : 9223372036854775807,
-    "DDF5811BCEA5BB58A023C8D7FF14133ECF5D2B57" : 9223372036854775807,
-    "F5203A135CBC59107F981B12C20EBB5794D3BC69" : 9223372036854775807,
     "AACA9EEA20FE12DA3331147805C5AB3BDC660A1A" : 9223372036854775807,
-    "14FB860B4AA33901A3D04FED09F344EFB63A8590" : 9223372036854775807,
-    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : 9223372036854775807,
+    "834DA2CBF1A005FD462115D8041C6D81D5FB12EF" : 9223372036854775807,
     "DB7231E74227E06B741062C9E94288CC651E14E2" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7C89735E-98AF-411A-95B4-8613357C378F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "834DA2CBF1A005FD462115D8041C6D81D5FB12EF" : "SFSocket\/",
-    "1C75F1C5CFCB95B3702F6F632FA05ED5244B519E" : "thirdpart\/",
-    "DDF5811BCEA5BB58A023C8D7FF14133ECF5D2B57" : "CommonCrypto\/",
-    "F5203A135CBC59107F981B12C20EBB5794D3BC69" : "Crypto\/",
     "AACA9EEA20FE12DA3331147805C5AB3BDC660A1A" : "..",
-    "14FB860B4AA33901A3D04FED09F344EFB63A8590" : "AxLogger\/",
-    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "SwiftyJSON\/",
+    "834DA2CBF1A005FD462115D8041C6D81D5FB12EF" : "SFSocket\/",
     "DB7231E74227E06B741062C9E94288CC651E14E2" : "..\/.."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "SFSocket",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "src\/SFSocket\/SFSocket.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SFSocket.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/networkextension\/AxLogger.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "14FB860B4AA33901A3D04FED09F344EFB63A8590"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/robbiehanson\/CocoaAsyncSocket.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1C75F1C5CFCB95B3702F6F632FA05ED5244B519E"
-    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/networkextension\/SFSocket.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
@@ -49,24 +29,9 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AACA9EEA20FE12DA3331147805C5AB3BDC660A1A"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SwiftyJSON\/SwiftyJSON.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3"
-    },
-    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:yarshure\/simpletunnel.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DB7231E74227E06B741062C9E94288CC651E14E2"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/soffes\/CommonCrypto.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DDF5811BCEA5BB58A023C8D7FF14133ECF5D2B57"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/soffes\/Crypto.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F5203A135CBC59107F981B12C20EBB5794D3BC69"
     }
   ]
 }
