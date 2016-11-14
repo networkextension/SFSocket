@@ -27,6 +27,7 @@
 		69803E121DD95DC70047112C /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E111DD95DC70047112C /* Crypto.framework */; };
 		69803E141DD95DD30047112C /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E131DD95DD30047112C /* Sodium.framework */; };
 		69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E151DD95DD80047112C /* SwiftyJSON.framework */; };
+		69803E5B1DD9771B0047112C /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E5A1DD9771B0047112C /* Sodium.framework */; };
 		698A081B1DD5C603009BFFC9 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */; };
 		698A081D1DD5C648009BFFC9 /* TCPSSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */; };
 		698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */; };
@@ -65,6 +66,7 @@
 		69803E111DD95DC70047112C /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
 		69803E131DD95DD30047112C /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 		69803E151DD95DD80047112C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		69803E5A1DD9771B0047112C /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 		698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWUDPSocket.swift; sourceTree = "<group>"; };
 		698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSSConnector.swift; sourceTree = "<group>"; };
 		698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyConnector.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				69803E0E1DD95DBA0047112C /* CocoaAsyncSocket.framework in Frameworks */,
 				69803E121DD95DC70047112C /* Crypto.framework in Frameworks */,
 				69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */,
+				69803E5B1DD9771B0047112C /* Sodium.framework in Frameworks */,
 				69803E101DD95DC20047112C /* CommonCrypto.framework in Frameworks */,
 				69803E0C1DD95DB30047112C /* AxLogger.framework in Frameworks */,
 				69803E141DD95DD30047112C /* Sodium.framework in Frameworks */,
@@ -102,6 +105,7 @@
 		69803E081DD95D4F0047112C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				69803E5A1DD9771B0047112C /* Sodium.framework */,
 				69803E151DD95DD80047112C /* SwiftyJSON.framework */,
 				69803E131DD95DD30047112C /* Sodium.framework */,
 				69803E111DD95DC70047112C /* Crypto.framework */,

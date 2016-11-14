@@ -9,6 +9,7 @@
 import Foundation
 import CommonCrypto
 import AxLogger
+import Sodium
 //import Security
 
 let  kCCAlgorithmInvalid =  UINT32_MAX
@@ -211,10 +212,10 @@ class enc_ctx {
     }
     static func setupSodium() {
         if !enc_ctx.sodiumInited {
-            //if sodium_init() == -1 {
+            if sodium_init() == -1 {
                 //print("sodium_init failure")
                 AxLogger.log("sodium_init failure todo fix",level: .Error)
-            //}
+            }
         }
     }
     static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod) -> CCCryptorRef? {
@@ -396,34 +397,49 @@ class SSEncrypt {
         
         return m
     }
-    func crypto_stream_xor_ic(cd:Data,md:Data,mlen: UInt64, nd:Data, ic:UInt64, kd:Data)  ->Int32{
+    func crypto_stream_xor_ic(_ cd:inout Data, md: Data,mlen: UInt64, nd:Data, ic:UInt64, kd:Data)  ->Int32{
         
        
-        let ret:Int32 = 0
+        var ret:Int32 = -1
        
         
-        //let xx = Int32(send_ctx!.m.rawValue)
-//        int crypto_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m,
-//                                          unsigned long long mlen,
-//                                          const unsigned char *n, uint64_t ic,
-//                                          const unsigned char *k);
-
-//        let c:UnsafeMutablePointer<CUnsignedChar> = UnsafeMutablePointer<CUnsignedChar>.init((cd as NSData).mutableBytes)
-//        let m:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init((md  as NSData).bytes)
-//        let n:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init((nd  as NSData).bytes)
-//        let k:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init((kd  as NSData).bytes)
-//        switch send_ctx!.m{
-//        case .SALSA20:
-//             ret = crypto_stream_salsa20_xor_ic(c, m, mlen, n, ic, k);
-//            //return crypto_stream_xor_icc(c, m, mlen, n, ic, k,xx)
-//        case .CHACHA20:
-//            ret =  crypto_stream_chacha20_xor_ic(c, m, mlen, n, ic, k);
-//            //return crypto_stream_xor_icc(c, m, mlen, n, ic, k,xx)
-//        case .CHACHA20IETF:
-//            ret =  crypto_stream_chacha20_ietf_xor_ic(c, m, mlen, n, UInt32(ic), k);
-//        default:
-//            break
-//        }
+       
+        var outptr:UnsafeMutablePointer<UInt8>?
+        
+        
+        _ = cd.withUnsafeMutableBytes( { (ptr:UnsafeMutablePointer<UInt8>) in
+            outptr = ptr
+        })
+        
+        var inptr:UnsafePointer<UInt8>?
+        
+        _ = md.withUnsafeBytes({ (ptr:UnsafePointer<UInt8>)  in
+            inptr = ptr
+        })
+        
+        var kptr:UnsafePointer<UInt8>?
+        _ = kd.withUnsafeBytes({ (ptr:UnsafePointer<UInt8>)  in
+            kptr = ptr
+        })
+        
+        var nptr:UnsafePointer<UInt8>?
+        _ = nd.withUnsafeBytes({ (ptr:UnsafePointer<UInt8>)  in
+            nptr = ptr
+        })
+        switch send_ctx!.m{
+        case .SALSA20:
+            
+            ret = crypto_stream_salsa20_xor_ic(outptr!, inptr, mlen, nptr!, ic, kptr!)
+            
+        case .CHACHA20:
+            break
+            ret =  crypto_stream_chacha20_xor_ic(outptr!, inptr, mlen, nptr!, ic, kptr!)
+        case .CHACHA20IETF:
+            break
+            ret =  crypto_stream_chacha20_ietf_xor_ic(outptr!, inptr!, mlen, nptr!, UInt32(ic), kptr!)
+        default:
+            break
+        }
         //print("sodium ret \(ret)")
         return ret
     }
@@ -485,7 +501,7 @@ class SSEncrypt {
 //                print("ramdonKey \(ramdonKey!)")
 //                print("data \(left)")
                 let padding = ctx.counter % SODIUM_BLOCK_SIZE;
-                let cipher = Data.init(count:  left.count + Int(padding))
+                var cipher = Data.init(count:  left.count + Int(padding))
                 
                 //cipher.length += encrypt_bytes.length
                 //            brealloc(cipher, iv_len + (padding + cipher->len) * 2, capacity);
@@ -507,7 +523,7 @@ class SSEncrypt {
                 //            let ptr2:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init(encrypt_bytes.bytes)
                 //let vvv = NSMutableData.init(data: ctx.IV)
                 //vvv.length = 16
-                _ = crypto_stream_xor_ic(cd: cipher,
+                _ = crypto_stream_xor_ic(&cipher,
                                      md: plain,
                                      mlen: UInt64(plain.count),
                                      nd: ctx.IV,
@@ -624,7 +640,7 @@ class SSEncrypt {
         if ctx.m.rawValue >= CryptoMethod.SALSA20.rawValue {
             //debugLog("111 encrypt")
               let padding = ctx.counter % SODIUM_BLOCK_SIZE;
-            let cipher = Data.init(count:  2*(encrypt_bytes.count + Int(padding)))
+            var cipher = Data.init(count:  2*(encrypt_bytes.count + Int(padding)))
             
               //cipher.length += encrypt_bytes.length
 //            brealloc(cipher, iv_len + (padding + cipher->len) * 2, capacity);
@@ -649,7 +665,7 @@ class SSEncrypt {
 //            let ptr:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.init((cipher?.mutableBytes)!)
 //            let ptr2:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init(encrypt_bytes.bytes)
             //debugLog("333 encrypt")
-           _ =  crypto_stream_xor_ic(cd: cipher ,
+           _ =  crypto_stream_xor_ic(&cipher ,
                                  md: plain,
                                  mlen: UInt64(plain.count),
                                  nd: riv,//ctx.IV,

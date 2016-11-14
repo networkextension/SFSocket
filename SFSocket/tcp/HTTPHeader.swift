@@ -57,32 +57,32 @@ public let http:Data = "HTTP".data(using: .utf8)!
 public let http503 = "HTTP/1.1 503 Service Unavailable\r\rServer: A.BIG.T/2.0\r\nContent-Type: text/html\r\nAccept-Ranges: bytes\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
 
 
-protocol HTTPProtocol {
+public protocol HTTPProtocol {
     var length:Int  { get set }
     var version:String  { get set }
     //var ContentLength:UInt  { get set }
 //    var params:[String:String] { get set }
 }
 public class  HTTPHeader {
-    var length:Int = 0
-    var bodyLeftLength:Int = 0
-    var version:String = ""
-    var contentLength:Int = 0
-    var params:[String:String] = [:]
-    init? (data:Data) {
+    public var length:Int = 0
+    public var bodyLeftLength:Int = 0
+    public var version:String = ""
+    public var contentLength:Int = 0
+    public var params:[String:String] = [:]
+    public init? (data:Data) {
         length = data.count + 4
         
     }
-    var app:String {
+    public var app:String {
         if let app = params["User-Agent"]{
             return app
         }
         return ""
     }
-    func bodyReadFinish() ->Bool{
+    public func bodyReadFinish() ->Bool{
         return false
     }
-    func parserData(_ lines:[String]){
+    public func parserData(_ lines:[String]){
         for line in lines {
             if let r = line.range(of: ": ") {
                 
@@ -104,7 +104,7 @@ public class  HTTPHeader {
         }
         
     }
-    func headerData(_ proxy:SFProxy?)->Data {
+    public func headerData(_ proxy:SFProxy?)->Data {
         let f = headerString( proxy)
         
         if let d = f.data(using: .utf8) {
@@ -113,7 +113,7 @@ public class  HTTPHeader {
         return Data()
         
     }
-    func headerString(_ proxy:SFProxy?)->String {
+    public func headerString(_ proxy:SFProxy?)->String {
         return ""
     }
     deinit {
@@ -153,11 +153,11 @@ public func hexDataToInt(d:Data) ->UInt32{
     return result
 }
 public class  HTTPResponseHeader :HTTPHeader{
-    var sCode:Int = 0 //http response status code
-    var mode:HTTPResponseMode = .TransferEncoding
-    var close:Bool = false
-    var chunk_packet:chunked?
-    override init? (data:Data) {
+    public var sCode:Int = 0 //http response status code
+    public var mode:HTTPResponseMode = .TransferEncoding
+    public var close:Bool = false
+    public var chunk_packet:chunked?
+    public override init? (data:Data) {
         super.init(data: data)
         guard let row = String.init(data: data , encoding: .utf8) else {
             return nil
@@ -255,11 +255,11 @@ public class  HTTPResponseHeader :HTTPHeader{
         }
         
     }
-    func statusLine() ->String{
+    public func statusLine() ->String{
         return "\(version) \(sCode) \(statusCodeDescriptions[sCode])"
     }
     var finished:Bool  = false
-    override func bodyReadFinish() ->Bool{
+    public override func bodyReadFinish() ->Bool{
         if mode == .ContentLength {
             if bodyLeftLength <= 0 {
                 return  true
@@ -270,7 +270,7 @@ public class  HTTPResponseHeader :HTTPHeader{
     
         return false
     }
-    func contentLength() ->Int {
+    public func contentLength() ->Int {
         if self.mode == .ContentLength {
             if let len = params["Content-Length"]{
                 if let ContentRange = params["Content-Range"]{
@@ -317,7 +317,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         return 0
     }
 
-    func shouldColse2(hostname:String) ->Bool {
+    public func shouldColse2(hostname:String) ->Bool {
         //
         //优化协议
         //fixme
@@ -335,7 +335,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         
         return false
     }
-    override func headerString(_ proxy:SFProxy?)->String {
+    public override func headerString(_ proxy:SFProxy?)->String {
         var f = ""
         let s = "\r\n"
         let p = params
@@ -354,7 +354,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         return f
 
     }
-    func shouldClose() ->Bool{
+    public func shouldClose() ->Bool{
         if mode == .ContentLength {
             if bodyLeftLength <= 0 {
                 return close
@@ -375,15 +375,15 @@ public class  HTTPResponseHeader :HTTPHeader{
 
 let pattern = "::ffff:(.*)"
 public class  HTTPRequestHeader :HTTPHeader{
-    var Host:String = ""
-    var Port:Int = 0
-    var Method:HTTPMethod = .GET
-    var Url:String = ""
-    var location:String = ""
-    var ipAddressV4:String = ""
-    var ipAddressV6:String = ""
-    var mode:HTTPResponseMode = .ContentLength
-    var hostChanged:Bool = false
+    public var Host:String = ""
+    public var Port:Int = 0
+    public var Method:HTTPMethod = .GET
+    public var Url:String = ""
+    public var location:String = ""
+    public var ipAddressV4:String = ""
+    public var ipAddressV6:String = ""
+    public var mode:HTTPResponseMode = .ContentLength
+    public var hostChanged:Bool = false
     static func listGroups(string : String) -> [String] {
         //523 byte one time , too many memory
         let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
@@ -433,7 +433,7 @@ public class  HTTPRequestHeader :HTTPHeader{
         }
         
     }
-    override func bodyReadFinish() ->Bool{
+    override public func bodyReadFinish() ->Bool{
         
         
         if bodyLeftLength <= 0  {
@@ -615,7 +615,7 @@ public class  HTTPRequestHeader :HTTPHeader{
     }
 
     
-    func parmas() -> [String:String]{
+    public func parmas() -> [String:String]{
         var p = params
         if Method == .CONNECT
         {
@@ -633,7 +633,7 @@ public class  HTTPRequestHeader :HTTPHeader{
         //AxLogger.log("\(params)")
     }
     
-    override func headerString(_ proxy:SFProxy?)->String {
+    public override func headerString(_ proxy:SFProxy?)->String {
         var f = ""
         let s = "\r\n"
         var p = params

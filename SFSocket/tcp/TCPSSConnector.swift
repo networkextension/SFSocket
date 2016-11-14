@@ -8,6 +8,7 @@
 
 import Foundation
 import AxLogger
+
 let  ONETIMEAUTH_FLAG:UInt8 = 0x10
 public class  TCPSSConnector:ProxyConnector{
     //config_encryption(password, method);
