@@ -10,7 +10,7 @@
 //https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 import Foundation
 import AxLogger
-public enum HTTPMethod: String {
+public enum HTTPmethod: String {
     case DELETE = "DELETE"
     case GET = "GET"
     case HEAD = "HEAD"
@@ -35,7 +35,7 @@ public enum HTTPMethod: String {
 }
 public enum HTTPHeaderKey: String {
     case Host = "Host"
-    case Method = "Method"
+    case method = "method"
     case Url = "Url"
     case Accept = "Accept"
     case ProxyConnection = "Proxy-Connection"
@@ -377,7 +377,7 @@ let pattern = "::ffff:(.*)"
 open class  HTTPRequestHeader :HTTPHeader{
     open var Host:String = ""
     open var Port:Int = 0
-    open var Method:HTTPMethod = .GET
+    open var method:HTTPmethod = .GET
     open var Url:String = ""
     open var location:String = ""
     open var ipAddressV4:String = ""
@@ -488,14 +488,14 @@ open class  HTTPRequestHeader :HTTPHeader{
         }
         let c = f.components(separatedBy:" ")
         if c.count == 3 {
-            self.Method = HTTPMethod.init(rawValue: c.first!)!
+            self.method = HTTPmethod.init(rawValue: c.first!)!
             self.Url = c[1]
             //NSLog("url %@",self.Url)
             if self.Url.isEmpty {
                 AxLogger.log("HTTPRequest \(row) not url  \(c) ",level: .Trace)
                 
             }
-            if self.Method == .CONNECT {
+            if self.method == .CONNECT {
                 let u = self.Url.components(separatedBy:":")
                 if u.count == 2 {
                     self.Host = u.first!
@@ -508,7 +508,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                 //这里可能有错误的情况
                 
                 if let u = NSURL.init(string: self.Url) {
-                    if self.Method == .POST {
+                    if self.method == .POST {
                         AxLogger.log("request \(Url)",level: .Trace)
                     }
                     if  let port = u.port {
@@ -552,7 +552,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                             self.Url = "http://" + self.Host + self.Url
                         }
                     }
-                    if self.Method == .POST {
+                    if self.method == .POST {
                         AxLogger.log("new request \(Url)",level:.Trace)
                     }
                 }else {
@@ -617,7 +617,7 @@ open class  HTTPRequestHeader :HTTPHeader{
     
     open func parmas() -> [String:String]{
         var p = params
-        if Method == .CONNECT
+        if method == .CONNECT
         {
             
         }else {
@@ -642,18 +642,18 @@ open class  HTTPRequestHeader :HTTPHeader{
             let t = proxy.type
             switch t {
             case .HTTP, .HTTPS:
-                if Method == .CONNECT
+                if method == .CONNECT
                 {//https ?
-                    f = Method.rawValue + " " + Url + " " + version + s
+                    f = method.rawValue + " " + Url + " " + version + s
                 }else {
                     let path = genPath()
                     if !path.isEmpty{
-                        f = Method.rawValue + " " + path + " " + version + s
+                        f = method.rawValue + " " + path + " " + version + s
                     }else {
                         // fatalError()
-                        f = Method.rawValue + " / " + version + s
+                        f = method.rawValue + " / " + version + s
                     }
-                    //f = Method.rawValue + " " + Url + " " + version + s
+                    //f = method.rawValue + " " + Url + " " + version + s
                 }
                 //NSLog("http ######### url\(f),\(Url)")
                 for (key,value) in p {
@@ -669,17 +669,17 @@ open class  HTTPRequestHeader :HTTPHeader{
                 }
             //case .HTTPS: break
             case .SS:
-                if Method == .CONNECT
+                if method == .CONNECT
                 {//https ?
-                    f = Method.rawValue + " " + Url + " " + version + s
+                    f = method.rawValue + " " + Url + " " + version + s
                 }else {
                     
                     let path = genPath()
                     if !path.isEmpty{
-                        f = Method.rawValue + " " + path + " " + version + s
+                        f = method.rawValue + " " + path + " " + version + s
                     }else {
                         //fatalError()
-                        f = Method.rawValue + " " + "/" + " " + version + s
+                        f = method.rawValue + " " + "/" + " " + version + s
                     }
                     //NSLog("http ######### url \(f) ")
 //                    var path = "/"
@@ -696,7 +696,7 @@ open class  HTTPRequestHeader :HTTPHeader{
 //                            path = u.path! + "?" + u.query!
 //                        }
 //                    }
-//                    f = Method.rawValue + " " + path + " " + version + s
+//                    f = method.rawValue + " " + path + " " + version + s
                     //fatalError()
                 }
                 for (key,value) in p {
@@ -712,17 +712,17 @@ open class  HTTPRequestHeader :HTTPHeader{
             //Direct
             p.removeValue(forKey: "Proxy-Connection")
             
-            if Method == .CONNECT
+            if method == .CONNECT
             {//https ?
-                f = Method.rawValue + " " + Url + " " + version + s
+                f = method.rawValue + " " + Url + " " + version + s
             }else {
                 let path = genPath()
                 if !path.isEmpty{
-                    f = Method.rawValue + " " + path + " " + version + s
+                    f = method.rawValue + " " + path + " " + version + s
                     AxLogger.log("new request send line \(self.Host)",level:.Trace)
                 }else {
                    // fatalError()
-                    f = Method.rawValue + " / " + version + s
+                    f = method.rawValue + " / " + version + s
                 }
                 //NSLog("http ######### url \(f),\(Url)")
                 
@@ -798,7 +798,7 @@ open class  HTTPRequestHeader :HTTPHeader{
 
     }
     func buildCONNECTHead(_ proxy:SFProxy?) -> Data? {
-        if Method == .CONNECT {
+        if method == .CONNECT {
             return headerData(proxy)
         }else {
             //normal http requst through http proxy
@@ -836,36 +836,7 @@ open class  HTTPRequestHeader :HTTPHeader{
 
 let statusCodeDescriptions = [
     // Informational.
-//    100: "continue"                      , 101: "switching protocols"             , 102: "processing"                           ,
-//    103: "checkpoint"                    , 122: "uri too long"                    , 200: "ok"                                   ,
-//    201: "created"                       , 202: "accepted"                        , 203: "non authoritative info"               ,
-//    204: "no content"                    , 205: "reset content"                   , 206: "partial content"                      ,
-//    207: "multi status"                  , 208: "already reported"                , 226: "im used"                              ,
-//    
-//    // Redirection.
-//    300: "multiple choices"              , 301: "moved permanently"               , 302: "found"                                ,
-//    303: "see other"                     , 304: "not modified"                    , 305: "use proxy"                            ,
-//    306: "switch proxy"                  , 307: "temporary redirect"              , 308: "permanent redirect"                   ,
-//    
-//    // Client Error.
-//    400: "bad request"                   , 401: "unauthorized"                    , 402: "payment required"                     ,
-//    403: "forbidden"                     , 404: "not found"                       , 405: "method not allowed"                   ,
-//    406: "not acceptable"                , 407: "proxy authentication required"   , 408: "request timeout"                      ,
-//    409: "conflict"                      , 410: "gone"                            , 411: "length required"                      ,
-//    412: "precondition failed"           , 413: "request entity too large"        , 414: "request uri too large"                ,
-//    415: "unsupported media type"        , 416: "requested range not satisfiable" , 417: "expectation failed"                   ,
-//    418: "im a teapot"                   , 422: "unprocessable entity"            , 423: "locked"                               ,
-//    424: "failed dependency"             , 425: "unordered collection"            , 426: "upgrade required"                     ,
-//    428: "precondition required"         , 429: "too many requests"               , 431: "header fields too large"              ,
-//    444: "no response"                   , 449: "retry with"                      , 450: "blocked by windows parental controls" ,
-//    451: "unavailable for legal reasons" , 499: "client closed request"           ,
-//    
-//    // Server Error.
-//    500: "internal server error"         , 501: "not implemented"                 , 502: "bad gateway"                          ,
-//    503: "service unavailable"           , 504: "gateway timeout"                 , 505: "http version not supported"           ,
-//    506: "variant also negotiates"       , 507: "insufficient storage"            , 509: "bandwidth limit exceeded"             ,
-//    510: "not extended"                  ,
-    
+
     100: "Continue",
     101: "Switching Protocols",
     102: "Processing",
@@ -896,7 +867,7 @@ let statusCodeDescriptions = [
     402: "Payment Required",
     403: "Forbidden",
     404: "Not Found",
-    405: "Method Not Allowed",
+    405: "method Not Allowed",
     406: "Not Acceptable",
     407: "Proxy Authentication Required",
     408: "Request Timeout",
@@ -958,7 +929,7 @@ let statusCodeDescriptions = [
 //402 Payment Required
 //403 Forbidden
 //404 Not Found
-//405 Method Not Allowed
+//405 method Not Allowed
 //406 Not Acceptable
 //407 Proxy Authentication Required
 //408 Request Timeout
@@ -995,3 +966,34 @@ let statusCodeDescriptions = [
 //510 Not Extended
 //511 Network Authentication Required
 //599 Network Connect Timeout Error
+
+//    100: "continue"                      , 101: "switching protocols"             , 102: "processing"                           ,
+//    103: "checkpoint"                    , 122: "uri too long"                    , 200: "ok"                                   ,
+//    201: "created"                       , 202: "accepted"                        , 203: "non authoritative info"               ,
+//    204: "no content"                    , 205: "reset content"                   , 206: "partial content"                      ,
+//    207: "multi status"                  , 208: "already reported"                , 226: "im used"                              ,
+//
+//    // Redirection.
+//    300: "multiple choices"              , 301: "moved permanently"               , 302: "found"                                ,
+//    303: "see other"                     , 304: "not modified"                    , 305: "use proxy"                            ,
+//    306: "switch proxy"                  , 307: "temporary redirect"              , 308: "permanent redirect"                   ,
+//
+//    // Client Error.
+//    400: "bad request"                   , 401: "unauthorized"                    , 402: "payment required"                     ,
+//    403: "forbidden"                     , 404: "not found"                       , 405: "method not allowed"                   ,
+//    406: "not acceptable"                , 407: "proxy authentication required"   , 408: "request timeout"                      ,
+//    409: "conflict"                      , 410: "gone"                            , 411: "length required"                      ,
+//    412: "precondition failed"           , 413: "request entity too large"        , 414: "request uri too large"                ,
+//    415: "unsupported media type"        , 416: "requested range not satisfiable" , 417: "expectation failed"                   ,
+//    418: "im a teapot"                   , 422: "unprocessable entity"            , 423: "locked"                               ,
+//    424: "failed dependency"             , 425: "unordered collection"            , 426: "upgrade required"                     ,
+//    428: "precondition required"         , 429: "too many requests"               , 431: "header fields too large"              ,
+//    444: "no response"                   , 449: "retry with"                      , 450: "blocked by windows parental controls" ,
+//    451: "unavailable for legal reasons" , 499: "client closed request"           ,
+//
+//    // Server Error.
+//    500: "internal server error"         , 501: "not implemented"                 , 502: "bad gateway"                          ,
+//    503: "service unavailable"           , 504: "gateway timeout"                 , 505: "http version not supported"           ,
+//    506: "variant also negotiates"       , 507: "insufficient storage"            , 509: "bandwidth limit exceeded"             ,
+//    510: "not extended"                  ,
+

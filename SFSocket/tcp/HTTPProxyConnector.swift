@@ -40,7 +40,7 @@ class HTTPProxyConnector:ProxyConnector {
     func sendReq() {
         if let req = reqHeader  {
             if let data = req.buildCONNECTHead(self.proxy) {
-                AxLogger.log("\(cIDString) sending CONNECTHead \(data) \(req.Method)",level: .Debug)
+                AxLogger.log("\(cIDString) sending CONNECTHead \(data) \(req.method)",level: .Debug)
                 self.writeData(data, withTag: HTTPProxyConnector.ReadTag)
             }else {
                AxLogger.log("\(cIDString) buildCONNECTHead error",level: .Error)
