@@ -33,7 +33,7 @@ public enum HTTPMethod: String {
 //    }
 
 }
-enum HTTPHeaderKey: String {
+public enum HTTPHeaderKey: String {
     case Host = "Host"
     case Method = "Method"
     case Url = "Url"
@@ -48,13 +48,13 @@ enum HTTPHeaderKey: String {
     case CacheControl = "Cache-Control"
     case TransferEncoding = "Transfer-Encoding"
  }
-let sepData:Data = "\r\n".data(using: .utf8)!
-let hData:Data = "\r\n\r\n".data(using: .utf8)!
-let cData:Data = "CONNECT".data(using: .utf8)!
-let SSL_CONNECTION_RESPONSE = "HTTP/1.1 200 Connection established\r\n\r\n"
-let http:Data = "HTTP".data(using: .utf8)!
+public let sepData:Data = "\r\n".data(using: .utf8)!
+public let hData:Data = "\r\n\r\n".data(using: .utf8)!
+public let cData:Data = "CONNECT".data(using: .utf8)!
+public let SSL_CONNECTION_RESPONSE = "HTTP/1.1 200 Connection established\r\n\r\n"
+public let http:Data = "HTTP".data(using: .utf8)!
 
-let http503 = "HTTP/1.1 503 Service Unavailable\r\rServer: A.BIG.T/2.0\r\nContent-Type: text/html\r\nAccept-Ranges: bytes\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
+public let http503 = "HTTP/1.1 503 Service Unavailable\r\rServer: A.BIG.T/2.0\r\nContent-Type: text/html\r\nAccept-Ranges: bytes\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
 
 
 protocol HTTPProtocol {
@@ -63,7 +63,7 @@ protocol HTTPProtocol {
     //var ContentLength:UInt  { get set }
 //    var params:[String:String] { get set }
 }
-class  HTTPHeader {
+public class  HTTPHeader {
     var length:Int = 0
     var bodyLeftLength:Int = 0
     var version:String = ""
@@ -120,12 +120,12 @@ class  HTTPHeader {
         AxLogger.log("HTTPHeader dealloc",level: .Debug)
     }
 }
-enum HTTPResponseMode :String{
+public enum HTTPResponseMode :String{
     case ContentLength = "Content-Length"
     case TransferEncoding = "Transfer-Encoding"
     case ContentEncoding = "Content-Encoding"
 }
-struct chunked{
+public struct chunked{
     var len:Int = 0
     var leftLen:Int = 0
     var data:Data?
@@ -134,7 +134,7 @@ struct chunked{
         leftLen = left
     }
 }
-func hexDataToInt(d:Data) ->UInt32{
+public func hexDataToInt(d:Data) ->UInt32{
     
     
     var result:UInt32 = 0
@@ -152,7 +152,7 @@ func hexDataToInt(d:Data) ->UInt32{
     //_ = Scanner(string:x).scanHexInt32(&result)
     return result
 }
-class  HTTPResponseHeader :HTTPHeader{
+public class  HTTPResponseHeader :HTTPHeader{
     var sCode:Int = 0 //http response status code
     var mode:HTTPResponseMode = .TransferEncoding
     var close:Bool = false
@@ -374,7 +374,7 @@ class  HTTPResponseHeader :HTTPHeader{
 }
 
 let pattern = "::ffff:(.*)"
-class  HTTPRequestHeader :HTTPHeader{
+public class  HTTPRequestHeader :HTTPHeader{
     var Host:String = ""
     var Port:Int = 0
     var Method:HTTPMethod = .GET

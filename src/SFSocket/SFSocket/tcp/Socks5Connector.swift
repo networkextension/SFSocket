@@ -90,7 +90,7 @@ public class Socks5Connector:ProxyConnector{
         
         let reserved:UInt8 = 0x00
         buffer.append(reserved)
-        let  request_atyp:SOCKS5HostType = validateIpAddr(candidate: targetHost)
+        let  request_atyp:SOCKS5HostType = targetHost.validateIpAddr()
         if  request_atyp == .IPV4{
             //ip
             

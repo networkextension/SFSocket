@@ -26,31 +26,31 @@ public enum SFProxyType :Int, CustomStringConvertible{
         }
     }
 }
-class SFProxy {
-    var proxyName:String
-    var serverAddress:String
-    var serverPort:String
-    var password:String
-    var method:String
-    var tlsEnable:Bool = false //对于ss ,就是OTA 是否支持
-    var type:SFProxyType
-    var pingValue:Float = 0
-    var tcpValue:Double = 0
-    var dnsValue:Double = 0
-    var priority:Int = 0
-    var enable:Bool = true
-    var serverIP:String = ""
-    var countryFlag:String = ""
-    var isoCode:String = ""
-    var udpRelay:Bool = false
-    func countryFlagFunc() ->String{
+public class SFProxy {
+    public var proxyName:String
+    public var serverAddress:String
+    public var serverPort:String
+    public var password:String
+    public var method:String
+    public var tlsEnable:Bool = false //对于ss ,就是OTA 是否支持
+    public var type:SFProxyType
+    public var pingValue:Float = 0
+    public var tcpValue:Double = 0
+    public var dnsValue:Double = 0
+    public var priority:Int = 0
+    public var enable:Bool = true
+    public var serverIP:String = ""
+    public var countryFlag:String = ""
+    public var isoCode:String = ""
+    public var udpRelay:Bool = false
+    public func countryFlagFunc() ->String{
         if countryFlag.isEmpty {
             return showString()
         }else {
             return countryFlag + " " + proxyName
         }
     }
-    static func createProxyWithLine(line:String,pname:String) ->SFProxy? {
+    public static func createProxyWithLine(line:String,pname:String) ->SFProxy? {
         
         let name = pname.trimmingCharacters(in:
             NSCharacterSet.whitespacesAndNewlines)
@@ -105,7 +105,7 @@ class SFProxy {
         
         
     }
-    init(name:String,type:SFProxyType ,address:String,port:String , passwd:String,method:String,tls:Bool){
+    public init(name:String,type:SFProxyType ,address:String,port:String , passwd:String,method:String,tls:Bool){
         self.proxyName = name
         self.serverAddress = address
         self.serverPort = port
@@ -125,7 +125,7 @@ class SFProxy {
         
         
     }
-    func showString() ->String {
+    public func showString() ->String {
         if !proxyName.isEmpty{
             return proxyName
         }else {
@@ -201,13 +201,13 @@ class SFProxy {
         return sp
     }
 */
-    func typeDesc() ->String{
+    public func typeDesc() ->String{
         if tlsEnable && type == .HTTP {
             return "Type: " + "HTTPS"
         }
         return "Type: " + type.description
     }
-    func base64String() ->String {
+    public func base64String() ->String {
         let tls = tlsEnable ? "1" : "0"
 
         let string = method + ":" + password + "@" + serverAddress  + ":" + serverPort

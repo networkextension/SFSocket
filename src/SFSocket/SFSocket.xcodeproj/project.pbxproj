@@ -21,6 +21,12 @@
 		692DD5B41DD5CEA30079493D /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B31DD5CEA30079493D /* ConnectRequest.swift */; };
 		692DD5B61DD5CEFD0079493D /* BinaryDataScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */; };
 		692DD5B81DD5CF120079493D /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B71DD5CF120079493D /* Checksum.swift */; };
+		69803E0C1DD95DB30047112C /* AxLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0B1DD95DB30047112C /* AxLogger.framework */; };
+		69803E0E1DD95DBA0047112C /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0D1DD95DBA0047112C /* CocoaAsyncSocket.framework */; };
+		69803E101DD95DC20047112C /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
+		69803E121DD95DC70047112C /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E111DD95DC70047112C /* Crypto.framework */; };
+		69803E141DD95DD30047112C /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E131DD95DD30047112C /* Sodium.framework */; };
+		69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E151DD95DD80047112C /* SwiftyJSON.framework */; };
 		698A081B1DD5C603009BFFC9 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */; };
 		698A081D1DD5C648009BFFC9 /* TCPSSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */; };
 		698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */; };
@@ -36,137 +42,7 @@
 		69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		692DD5151DD5C72B0079493D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 21FD8C5A1AE6B03F008DCDBA;
-			remoteInfo = "Crypto-iOS";
-		};
-		692DD5271DD5C9280079493D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 211216831AE68D26004E1CE6;
-			remoteInfo = "CommonCrypto-macOS";
-		};
-		692DD5291DD5C9280079493D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 216CAE341AE6B273009A69EF;
-			remoteInfo = "CommonCrypto-iOS";
-		};
-		692DD52B1DD5C9280079493D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 804503281BA209F6002A5470;
-			remoteInfo = "CommonCrypto-watchOS";
-		};
-		692DD52D1DD5C9280079493D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 80098A511C12E5890029C530;
-			remoteInfo = "CommonCrypto-tvOS";
-		};
-		698A07F61DD5A174009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A07F21DD5A174009BFFC9 /* AxLogger.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 69A0D2851DD598F200227353;
-			remoteInfo = AxLogger;
-		};
-		698A08181DD5A326009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A07F21DD5A174009BFFC9 /* AxLogger.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 69A0D2841DD598F200227353;
-			remoteInfo = AxLogger;
-		};
-		698A082F1DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2112163D1AE68AD2004E1CE6;
-			remoteInfo = "Crypto-macOS";
-		};
-		698A08311DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 211216481AE68AD3004E1CE6;
-			remoteInfo = "CryptoTests-macOS";
-		};
-		698A08331DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 21FD8C5B1AE6B03F008DCDBA;
-			remoteInfo = "Crypto-iOS";
-		};
-		698A08351DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 21FD8C651AE6B03F008DCDBA;
-			remoteInfo = "CryptoTests-iOS";
-		};
-		698A08371DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 804503371BA20F37002A5470;
-			remoteInfo = "Crypto-watchOS";
-		};
-		698A08391DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 80098A6F1C12E87D0029C530;
-			remoteInfo = "Crypto-tvOS";
-		};
-		698A083B1DD5C6F6009BFFC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 80098A781C12E87D0029C530;
-			remoteInfo = "CryptoTests-tvOS";
-		};
-		69A0D2661DD595FD00227353 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6CD9900F1B77868C0011A685;
-			remoteInfo = "iOS CocoaAsyncSocket";
-		};
-		69C298AC1DD595C300E4C3BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6CD990101B77868C0011A685;
-			remoteInfo = "iOS CocoaAsyncSocket";
-		};
-		69C298AE1DD595C300E4C3BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9FC41F131B9D965000578BEB;
-			remoteInfo = "Mac CocoaAsyncSocket";
-		};
-		69C298B01DD595C300E4C3BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7D8B70C41BCFA15700D8E273;
-			remoteInfo = "tvOS CocoaAsyncSocket";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CommonCrypto.xcodeproj; path = ../../../CommonCrypto/CommonCrypto.xcodeproj; sourceTree = "<group>"; };
 		692DD5391DD5C98C0079493D /* DirectConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectConnector.swift; sourceTree = "<group>"; };
 		692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxyConnector.swift; sourceTree = "<group>"; };
 		692DD53D1DD5C99E0079493D /* Socks5Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socks5Connector.swift; sourceTree = "<group>"; };
@@ -181,13 +57,19 @@
 		692DD5B31DD5CEA30079493D /* ConnectRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
 		692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataScanner.swift; sourceTree = "<group>"; };
 		692DD5B71DD5CF120079493D /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
-		698A07F21DD5A174009BFFC9 /* AxLogger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AxLogger.xcodeproj; path = ../../../AxLogger/AxLogger/AxLogger.xcodeproj; sourceTree = "<group>"; };
+		69803E091DD95D8C0047112C /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		69803E0A1DD95D920047112C /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		69803E0B1DD95DB30047112C /* AxLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AxLogger.framework; path = Carthage/Build/iOS/AxLogger.framework; sourceTree = "<group>"; };
+		69803E0D1DD95DBA0047112C /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Carthage/Build/iOS/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
+		69803E0F1DD95DC20047112C /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/iOS/CommonCrypto.framework; sourceTree = "<group>"; };
+		69803E111DD95DC70047112C /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
+		69803E131DD95DD30047112C /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
+		69803E151DD95DD80047112C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWUDPSocket.swift; sourceTree = "<group>"; };
 		698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSSConnector.swift; sourceTree = "<group>"; };
 		698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyConnector.swift; sourceTree = "<group>"; };
 		698A08211DD5C6D4009BFFC9 /* SFEncrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFEncrypt.swift; sourceTree = "<group>"; };
 		698A08231DD5C6DD009BFFC9 /* EncryptExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptExtension.swift; sourceTree = "<group>"; };
-		698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Crypto.xcodeproj; path = ../../../Crypto/Crypto.xcodeproj; sourceTree = "<group>"; };
 		69A0D2721DD5964F00227353 /* IPAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPAddress.swift; sourceTree = "<group>"; };
 		69A0D2751DD5971A00227353 /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		69A0D2771DD5975800227353 /* Opt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opt.swift; sourceTree = "<group>"; };
@@ -198,7 +80,6 @@
 		69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawTCPSocketProtocol.swift; sourceTree = "<group>"; };
 		69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
 		69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
-		69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CocoaAsyncSocket.xcodeproj; path = ../../../thirdpart/CocoaAsyncSocket.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,29 +87,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69803E0E1DD95DBA0047112C /* CocoaAsyncSocket.framework in Frameworks */,
+				69803E121DD95DC70047112C /* Crypto.framework in Frameworks */,
+				69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */,
+				69803E101DD95DC20047112C /* CommonCrypto.framework in Frameworks */,
+				69803E0C1DD95DB30047112C /* AxLogger.framework in Frameworks */,
+				69803E141DD95DD30047112C /* Sodium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		692DD5211DD5C9280079493D /* Products */ = {
+		69803E081DD95D4F0047112C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				692DD5281DD5C9280079493D /* CommonCrypto.framework */,
-				692DD52A1DD5C9280079493D /* CommonCrypto.framework */,
-				692DD52C1DD5C9280079493D /* CommonCrypto.framework */,
-				692DD52E1DD5C9280079493D /* CommonCrypto.framework */,
+				69803E151DD95DD80047112C /* SwiftyJSON.framework */,
+				69803E131DD95DD30047112C /* Sodium.framework */,
+				69803E111DD95DC70047112C /* Crypto.framework */,
+				69803E0F1DD95DC20047112C /* CommonCrypto.framework */,
+				69803E0D1DD95DBA0047112C /* CocoaAsyncSocket.framework */,
+				69803E0B1DD95DB30047112C /* AxLogger.framework */,
 			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		698A07F31DD5A174009BFFC9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				698A07F71DD5A174009BFFC9 /* AxLogger.framework */,
-			);
-			name = Products;
+			name = Framework;
 			sourceTree = "<group>";
 		};
 		698A08201DD5C6C6009BFFC9 /* security */ = {
@@ -236,20 +117,6 @@
 			children = (
 			);
 			path = security;
-			sourceTree = "<group>";
-		};
-		698A08261DD5C6F6009BFFC9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				698A08301DD5C6F6009BFFC9 /* Crypto.framework */,
-				698A08321DD5C6F6009BFFC9 /* CryptoTests-macOS.xctest */,
-				698A08341DD5C6F6009BFFC9 /* Crypto.framework */,
-				698A08361DD5C6F6009BFFC9 /* CryptoTests-iOS.xctest */,
-				698A08381DD5C6F6009BFFC9 /* Crypto.framework */,
-				698A083A1DD5C6F6009BFFC9 /* Crypto.framework */,
-				698A083C1DD5C6F6009BFFC9 /* CryptoTests-tvOS.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		69A0D2741DD5970D00227353 /* scaner */ = {
@@ -264,10 +131,9 @@
 		69C298841DD593FF00E4C3BD = {
 			isa = PBXGroup;
 			children = (
-				692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */,
-				698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */,
-				698A07F21DD5A174009BFFC9 /* AxLogger.xcodeproj */,
-				69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */,
+				69803E091DD95D8C0047112C /* Cartfile */,
+				69803E0A1DD95D920047112C /* Cartfile.resolved */,
+				69803E081DD95D4F0047112C /* Framework */,
 				69C298901DD593FF00E4C3BD /* SFSocket */,
 				69C2988F1DD593FF00E4C3BD /* Products */,
 			);
@@ -341,16 +207,6 @@
 			path = stack;
 			sourceTree = "<group>";
 		};
-		69C298A71DD595C300E4C3BD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				69C298AD1DD595C300E4C3BD /* CocoaAsyncSocket.framework */,
-				69C298AF1DD595C300E4C3BD /* CocoaAsyncSocket.framework */,
-				69C298B11DD595C300E4C3BD /* CocoaAsyncSocket.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -377,9 +233,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				692DD5161DD5C72B0079493D /* PBXTargetDependency */,
-				698A08191DD5A326009BFFC9 /* PBXTargetDependency */,
-				69A0D2671DD595FD00227353 /* PBXTargetDependency */,
 			);
 			name = SFSocket;
 			productName = SFSocket;
@@ -413,138 +266,12 @@
 			mainGroup = 69C298841DD593FF00E4C3BD;
 			productRefGroup = 69C2988F1DD593FF00E4C3BD /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 698A07F31DD5A174009BFFC9 /* Products */;
-					ProjectRef = 698A07F21DD5A174009BFFC9 /* AxLogger.xcodeproj */;
-				},
-				{
-					ProductGroup = 69C298A71DD595C300E4C3BD /* Products */;
-					ProjectRef = 69C298A61DD595C300E4C3BD /* CocoaAsyncSocket.xcodeproj */;
-				},
-				{
-					ProductGroup = 692DD5211DD5C9280079493D /* Products */;
-					ProjectRef = 692DD5201DD5C9280079493D /* CommonCrypto.xcodeproj */;
-				},
-				{
-					ProductGroup = 698A08261DD5C6F6009BFFC9 /* Products */;
-					ProjectRef = 698A08251DD5C6F6009BFFC9 /* Crypto.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				69C2988D1DD593FF00E4C3BD /* SFSocket */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		692DD5281DD5C9280079493D /* CommonCrypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CommonCrypto.framework;
-			remoteRef = 692DD5271DD5C9280079493D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		692DD52A1DD5C9280079493D /* CommonCrypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CommonCrypto.framework;
-			remoteRef = 692DD5291DD5C9280079493D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		692DD52C1DD5C9280079493D /* CommonCrypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CommonCrypto.framework;
-			remoteRef = 692DD52B1DD5C9280079493D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		692DD52E1DD5C9280079493D /* CommonCrypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CommonCrypto.framework;
-			remoteRef = 692DD52D1DD5C9280079493D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A07F71DD5A174009BFFC9 /* AxLogger.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AxLogger.framework;
-			remoteRef = 698A07F61DD5A174009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A08301DD5C6F6009BFFC9 /* Crypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Crypto.framework;
-			remoteRef = 698A082F1DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A08321DD5C6F6009BFFC9 /* CryptoTests-macOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "CryptoTests-macOS.xctest";
-			remoteRef = 698A08311DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A08341DD5C6F6009BFFC9 /* Crypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Crypto.framework;
-			remoteRef = 698A08331DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A08361DD5C6F6009BFFC9 /* CryptoTests-iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "CryptoTests-iOS.xctest";
-			remoteRef = 698A08351DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A08381DD5C6F6009BFFC9 /* Crypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Crypto.framework;
-			remoteRef = 698A08371DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A083A1DD5C6F6009BFFC9 /* Crypto.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Crypto.framework;
-			remoteRef = 698A08391DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		698A083C1DD5C6F6009BFFC9 /* CryptoTests-tvOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "CryptoTests-tvOS.xctest";
-			remoteRef = 698A083B1DD5C6F6009BFFC9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		69C298AD1DD595C300E4C3BD /* CocoaAsyncSocket.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaAsyncSocket.framework;
-			remoteRef = 69C298AC1DD595C300E4C3BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		69C298AF1DD595C300E4C3BD /* CocoaAsyncSocket.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaAsyncSocket.framework;
-			remoteRef = 69C298AE1DD595C300E4C3BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		69C298B11DD595C300E4C3BD /* CocoaAsyncSocket.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaAsyncSocket.framework;
-			remoteRef = 69C298B01DD595C300E4C3BD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		69C2988C1DD593FF00E4C3BD /* Resources */ = {
@@ -591,24 +318,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		692DD5161DD5C72B0079493D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Crypto-iOS";
-			targetProxy = 692DD5151DD5C72B0079493D /* PBXContainerItemProxy */;
-		};
-		698A08191DD5A326009BFFC9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AxLogger;
-			targetProxy = 698A08181DD5A326009BFFC9 /* PBXContainerItemProxy */;
-		};
-		69A0D2671DD595FD00227353 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "iOS CocoaAsyncSocket";
-			targetProxy = 69A0D2661DD595FD00227353 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		69C298941DD593FF00E4C3BD /* Debug */ = {
@@ -720,6 +429,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SFSocket/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -742,6 +455,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SFSocket/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

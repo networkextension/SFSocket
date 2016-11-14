@@ -33,7 +33,7 @@ public class  TCPSSConnector:ProxyConnector{
         
 //        let  buf:bufferRef = bufferRef.alloc(1)
 //        balloc(buf,BUF_SIZE)
-        let  request_atyp:SOCKS5HostType = validateIpAddr(candidate: targetHost)
+        let  request_atyp:SOCKS5HostType = targetHost.validateIpAddr()
         var atype:UInt8 = SOCKS_IPV4
         if  request_atyp  == .IPV4{
            

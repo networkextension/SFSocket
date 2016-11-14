@@ -1,0 +1,6 @@
+github "networkextension/AxLogger" "0.1.1"
+github "robbiehanson/CocoaAsyncSocket" "7.5.0"
+github "soffes/CommonCrypto" "v1.1.0"
+github "zhuhaow/Sodium-framework" "v1.0.10.1"
+github "SwiftyJSON/SwiftyJSON" "3.1.2"
+github "soffes/Crypto" "v0.5.1"
