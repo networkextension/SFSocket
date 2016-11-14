@@ -1,0 +1,2 @@
+!#/bin/sh
+carthage bootstrap --no-use-binaries --platform ios
