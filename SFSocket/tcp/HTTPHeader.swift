@@ -19,7 +19,7 @@ public enum HTTPMethod: String {
     case POST = "POST"
     case PUT = "PUT"
     case CONNECT = "CONNECT"
-//    public var description: String {
+//    open var description: String {
 //        switch self {
 //        case DELETE: return "DELETE"
 //        case GET: return "GET"
@@ -63,26 +63,26 @@ public protocol HTTPProtocol {
     //var ContentLength:UInt  { get set }
 //    var params:[String:String] { get set }
 }
-public class  HTTPHeader {
-    public var length:Int = 0
-    public var bodyLeftLength:Int = 0
-    public var version:String = ""
-    public var contentLength:Int = 0
-    public var params:[String:String] = [:]
+open class  HTTPHeader {
+    open var length:Int = 0
+    open var bodyLeftLength:Int = 0
+    open var version:String = ""
+    open var contentLength:Int = 0
+    open var params:[String:String] = [:]
     public init? (data:Data) {
         length = data.count + 4
         
     }
-    public var app:String {
+    open var app:String {
         if let app = params["User-Agent"]{
             return app
         }
         return ""
     }
-    public func bodyReadFinish() ->Bool{
+    open func bodyReadFinish() ->Bool{
         return false
     }
-    public func parserData(_ lines:[String]){
+    open func parserData(_ lines:[String]){
         for line in lines {
             if let r = line.range(of: ": ") {
                 
@@ -104,7 +104,7 @@ public class  HTTPHeader {
         }
         
     }
-    public func headerData(_ proxy:SFProxy?)->Data {
+    open func headerData(_ proxy:SFProxy?)->Data {
         let f = headerString( proxy)
         
         if let d = f.data(using: .utf8) {
@@ -113,7 +113,7 @@ public class  HTTPHeader {
         return Data()
         
     }
-    public func headerString(_ proxy:SFProxy?)->String {
+    open func headerString(_ proxy:SFProxy?)->String {
         return ""
     }
     deinit {
@@ -152,11 +152,11 @@ public func hexDataToInt(d:Data) ->UInt32{
     //_ = Scanner(string:x).scanHexInt32(&result)
     return result
 }
-public class  HTTPResponseHeader :HTTPHeader{
-    public var sCode:Int = 0 //http response status code
-    public var mode:HTTPResponseMode = .TransferEncoding
-    public var close:Bool = false
-    public var chunk_packet:chunked?
+open  class  HTTPResponseHeader :HTTPHeader{
+    open var sCode:Int = 0 //http response status code
+    open var mode:HTTPResponseMode = .TransferEncoding
+    open var close:Bool = false
+    open var chunk_packet:chunked?
     public override init? (data:Data) {
         super.init(data: data)
         guard let row = String.init(data: data , encoding: .utf8) else {
@@ -255,11 +255,11 @@ public class  HTTPResponseHeader :HTTPHeader{
         }
         
     }
-    public func statusLine() ->String{
+    open func statusLine() ->String{
         return "\(version) \(sCode) \(statusCodeDescriptions[sCode])"
     }
     var finished:Bool  = false
-    public override func bodyReadFinish() ->Bool{
+    open override func bodyReadFinish() ->Bool{
         if mode == .ContentLength {
             if bodyLeftLength <= 0 {
                 return  true
@@ -270,7 +270,7 @@ public class  HTTPResponseHeader :HTTPHeader{
     
         return false
     }
-    public func contentLength() ->Int {
+    open func contentLength() ->Int {
         if self.mode == .ContentLength {
             if let len = params["Content-Length"]{
                 if let ContentRange = params["Content-Range"]{
@@ -317,7 +317,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         return 0
     }
 
-    public func shouldColse2(hostname:String) ->Bool {
+    open func shouldColse2(hostname:String) ->Bool {
         //
         //优化协议
         //fixme
@@ -335,7 +335,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         
         return false
     }
-    public override func headerString(_ proxy:SFProxy?)->String {
+    open override func headerString(_ proxy:SFProxy?)->String {
         var f = ""
         let s = "\r\n"
         let p = params
@@ -354,7 +354,7 @@ public class  HTTPResponseHeader :HTTPHeader{
         return f
 
     }
-    public func shouldClose() ->Bool{
+    open func shouldClose() ->Bool{
         if mode == .ContentLength {
             if bodyLeftLength <= 0 {
                 return close
@@ -374,16 +374,16 @@ public class  HTTPResponseHeader :HTTPHeader{
 }
 
 let pattern = "::ffff:(.*)"
-public class  HTTPRequestHeader :HTTPHeader{
-    public var Host:String = ""
-    public var Port:Int = 0
-    public var Method:HTTPMethod = .GET
-    public var Url:String = ""
-    public var location:String = ""
-    public var ipAddressV4:String = ""
-    public var ipAddressV6:String = ""
-    public var mode:HTTPResponseMode = .ContentLength
-    public var hostChanged:Bool = false
+open class  HTTPRequestHeader :HTTPHeader{
+    open var Host:String = ""
+    open var Port:Int = 0
+    open var Method:HTTPMethod = .GET
+    open var Url:String = ""
+    open var location:String = ""
+    open var ipAddressV4:String = ""
+    open var ipAddressV6:String = ""
+    open var mode:HTTPResponseMode = .ContentLength
+    open var hostChanged:Bool = false
     static func listGroups(string : String) -> [String] {
         //523 byte one time , too many memory
         let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
@@ -433,7 +433,7 @@ public class  HTTPRequestHeader :HTTPHeader{
         }
         
     }
-    override public func bodyReadFinish() ->Bool{
+    override open func bodyReadFinish() ->Bool{
         
         
         if bodyLeftLength <= 0  {
@@ -615,7 +615,7 @@ public class  HTTPRequestHeader :HTTPHeader{
     }
 
     
-    public func parmas() -> [String:String]{
+    open func parmas() -> [String:String]{
         var p = params
         if Method == .CONNECT
         {
@@ -633,7 +633,7 @@ public class  HTTPRequestHeader :HTTPHeader{
         //AxLogger.log("\(params)")
     }
     
-    public override func headerString(_ proxy:SFProxy?)->String {
+    open override func headerString(_ proxy:SFProxy?)->String {
         var f = ""
         let s = "\r\n"
         var p = params
