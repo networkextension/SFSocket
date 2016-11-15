@@ -432,10 +432,10 @@ class SSEncrypt {
             ret = crypto_stream_salsa20_xor_ic(outptr!, inptr, mlen, nptr!, ic, kptr!)
             
         case .CHACHA20:
-            break
+            
             ret =  crypto_stream_chacha20_xor_ic(outptr!, inptr, mlen, nptr!, ic, kptr!)
         case .CHACHA20IETF:
-            break
+            
             ret =  crypto_stream_chacha20_ietf_xor_ic(outptr!, inptr!, mlen, nptr!, UInt32(ic), kptr!)
         default:
             break

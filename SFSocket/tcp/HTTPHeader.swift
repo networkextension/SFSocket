@@ -19,19 +19,19 @@ public enum HTTPmethod: String {
     case POST = "POST"
     case PUT = "PUT"
     case CONNECT = "CONNECT"
-//    open var description: String {
-//        switch self {
-//        case DELETE: return "DELETE"
-//        case GET: return "GET"
-//        case HEAD:return "HEAD"
-//        case OPTIONS : return "OPTIONS"
-//        case PATCH : return  "PATCH"
-//        case POST: return "POST"
-//        case PUT: return "PUT"
-//        case CONNECT: return "CONNECT"
-//        
-//    }
-
+    //    open var description: String {
+    //        switch self {
+    //        case DELETE: return "DELETE"
+    //        case GET: return "GET"
+    //        case HEAD:return "HEAD"
+    //        case OPTIONS : return "OPTIONS"
+    //        case PATCH : return  "PATCH"
+    //        case POST: return "POST"
+    //        case PUT: return "PUT"
+    //        case CONNECT: return "CONNECT"
+    //
+    //    }
+    
 }
 public enum HTTPHeaderKey: String {
     case Host = "Host"
@@ -47,7 +47,7 @@ public enum HTTPHeaderKey: String {
     case AcceptEncoding = "Accept-Encoding"
     case CacheControl = "Cache-Control"
     case TransferEncoding = "Transfer-Encoding"
- }
+}
 public let sepData:Data = "\r\n".data(using: .utf8)!
 public let hData:Data = "\r\n\r\n".data(using: .utf8)!
 public let cData:Data = "CONNECT".data(using: .utf8)!
@@ -61,13 +61,21 @@ public protocol HTTPProtocol {
     var length:Int  { get set }
     var version:String  { get set }
     //var ContentLength:UInt  { get set }
-//    var params:[String:String] { get set }
+    //    var params:[String:String] { get set }
 }
-open class  HTTPHeader {
+open class  HTTPHeader:NSObject {
     open var length:Int = 0
     open var bodyLeftLength:Int = 0
     open var version:String = ""
-    open var contentLength:Int = 0
+    var bodyContentLength:Int = 0
+    open var contentLength:Int {
+        get {
+            return 0
+        }
+        set {
+            bodyContentLength = newValue
+        }
+    }
     open var params:[String:String] = [:]
     public init? (data:Data) {
         length = data.count + 4
@@ -86,10 +94,10 @@ open class  HTTPHeader {
         for line in lines {
             if let r = line.range(of: ": ") {
                 
-            
-//                let start = line.startIndex
-//                let end = line.endIndex
-               
+                
+                //                let start = line.startIndex
+                //                let end = line.endIndex
+                
                 
                 let key = line.substring(to: r.lowerBound) //substringToIndex(r.startIndex)
                 //print("key:" + key)
@@ -97,10 +105,10 @@ open class  HTTPHeader {
                 //print("value:" + v)
                 params[key] = v
             }
-//            let b = line.components(separatedBy: ": ")
-//            if b.count > 1{
-//                params[b.first!] = b[1]
-//            }
+            //            let b = line.components(separatedBy: ": ")
+            //            if b.count > 1{
+            //                params[b.first!] = b[1]
+            //            }
         }
         
     }
@@ -108,7 +116,7 @@ open class  HTTPHeader {
         let f = headerString( proxy)
         
         if let d = f.data(using: .utf8) {
-           return d
+            return d
         }
         return Data()
         
@@ -188,7 +196,7 @@ open  class  HTTPResponseHeader :HTTPHeader{
             //AxLogger.log("\(row) packet error",level: .Error)
             //print("http \(row) response no params")
         }
-
+        
         if lines.count > 1 {
             lines.remove(at: 1)
             self.parserData(lines)
@@ -208,28 +216,28 @@ open  class  HTTPResponseHeader :HTTPHeader{
                         if let end = x.last {
                             bodyLeftLength = Int(end)! - index! + 1
                         }else {
-                             bodyLeftLength = total! - index!
+                            bodyLeftLength = total! - index!
                         }
-                       
+                        
                     }else {
-                        bodyLeftLength = contentLength
+                        bodyLeftLength = self.contentLength
                     }
                     
                 }
                 self.mode = .ContentLength
             }else if  let ContentRange = params["Content-Range"]{
-                    //Content-Range parser  bytes 一般是这个
-                    // 500-1023/1024
-                    let dwW = ContentRange.components(separatedBy: " ")
-                    let x = dwW.last!.components(separatedBy:"/")
-                    let total = Int(x.last!)
-                    let yy = x.first!.components(separatedBy:"-")
-                    let index = Int(yy.first!)
-                    if let end = x.last {
-                        bodyLeftLength = Int(end)! - index! + 1 //fix less 1
-                    }else {
-                        bodyLeftLength = total! - index!
-                    }
+                //Content-Range parser  bytes 一般是这个
+                // 500-1023/1024
+                let dwW = ContentRange.components(separatedBy: " ")
+                let x = dwW.last!.components(separatedBy:"/")
+                let total = Int(x.last!)
+                let yy = x.first!.components(separatedBy:"-")
+                let index = Int(yy.first!)
+                if let end = x.last {
+                    bodyLeftLength = Int(end)! - index! + 1 //fix less 1
+                }else {
+                    bodyLeftLength = total! - index!
+                }
             }else {
                 
                 if let _ = params["Transfer-Encoding"]{
@@ -242,7 +250,7 @@ open  class  HTTPResponseHeader :HTTPHeader{
                     }else {
                         self.mode = .ContentEncoding //啥也没有饿
                     }
-                   // NSLog("Connection:\(params["Connection"])")
+                    // NSLog("Connection:\(params["Connection"])")
                 }
             }
         }
@@ -265,12 +273,13 @@ open  class  HTTPResponseHeader :HTTPHeader{
                 return  true
             }
         }else {
-           return finished
+            return finished
         }
-    
+        
         return false
     }
-    open func contentLength() ->Int {
+    open func contentLengthFunc () -> Int {
+        
         if self.mode == .ContentLength {
             if let len = params["Content-Length"]{
                 if let ContentRange = params["Content-Range"]{
@@ -293,7 +302,7 @@ open  class  HTTPResponseHeader :HTTPHeader{
                     }
                     //bodyLeftLength = contentLength
                 }
-
+                
                 
             } else if  let ContentRange = params["Content-Range"]{
                 //Content-Range parser  bytes 一般是这个
@@ -315,23 +324,25 @@ open  class  HTTPResponseHeader :HTTPHeader{
             
         }
         return 0
+        
+        
     }
-
+    
     open func shouldColse2(hostname:String) ->Bool {
         //
         //优化协议
         //fixme
-//        if let c = params["Connection"] where c == "close" {
-//            if sCode >= 300 && sCode < 400 {
-//                if let u = params["Location"]{
-//                    if let url = URL.init(string: u), url.host != hostname {
-//                        return true
-//                    }
-//                }
-//                
-//            }
-//        }
-
+        //        if let c = params["Connection"] where c == "close" {
+        //            if sCode >= 300 && sCode < 400 {
+        //                if let u = params["Location"]{
+        //                    if let url = URL.init(string: u), url.host != hostname {
+        //                        return true
+        //                    }
+        //                }
+        //
+        //            }
+        //        }
+        
         
         return false
     }
@@ -352,7 +363,7 @@ open  class  HTTPResponseHeader :HTTPHeader{
         
         f = f + "\r\n"
         return f
-
+        
     }
     open func shouldClose() ->Bool{
         if mode == .ContentLength {
@@ -366,10 +377,10 @@ open  class  HTTPResponseHeader :HTTPHeader{
             return false
         }
     }
- 
-
+    
+    
     deinit {
-         AxLogger.log("[HTTPRespHeader] deinit",level: .Debug)
+        AxLogger.log("[HTTPRespHeader] deinit",level: .Debug)
     }
 }
 
@@ -452,7 +463,7 @@ open class  HTTPRequestHeader :HTTPHeader{
     deinit {
         AxLogger.log("HTTPRequestHeader dealloc",level: .Debug)
     }
-
+    
     override init? (data:Data){
         super.init(data: data)
         guard let row = String.init(data: data, encoding: .utf8) else {
@@ -469,7 +480,7 @@ open class  HTTPRequestHeader :HTTPHeader{
         if lines.count > 0 {
             parserData(lines)
         }
-
+        
         if self.Host.isEmpty {
             if let h = params["Host"]{
                 var  x =  h.components(separatedBy:":")
@@ -532,20 +543,20 @@ open class  HTTPRequestHeader :HTTPHeader{
                         //let c = HTTPRequestHeader.listGroups(uhost)
                         //AxLogger.log("Host:\(uhost)",level: .Trace)
                         
-//                        if let ip = c.first {
-//                            let type = validateIpAddr(ip)
-//                            if  type  == .IPV4 {
-//                                self.ipAddressV4 = ip
-//                                AxLogger.log("IP:\(self.ipAddressV4)",level:.Trace)
-//                                //self.Url = "http://" + self.ipAddressV4 + self.Url
-//                            }else {
-//                                //self.Url = "http://" + uhost + self.Url
-//                            }
-//                            AxLogger.log("\(type.description)",level:.Trace)
-//                        }else {
-//                            AxLogger.log("\(uhost) ::ffff: failure",level: .Warning)
-//                            //self.Url = "http://" + uhost + self.Url
-//                        }
+                        //                        if let ip = c.first {
+                        //                            let type = validateIpAddr(ip)
+                        //                            if  type  == .IPV4 {
+                        //                                self.ipAddressV4 = ip
+                        //                                AxLogger.log("IP:\(self.ipAddressV4)",level:.Trace)
+                        //                                //self.Url = "http://" + self.ipAddressV4 + self.Url
+                        //                            }else {
+                        //                                //self.Url = "http://" + uhost + self.Url
+                        //                            }
+                        //                            AxLogger.log("\(type.description)",level:.Trace)
+                        //                        }else {
+                        //                            AxLogger.log("\(uhost) ::ffff: failure",level: .Warning)
+                        //                            //self.Url = "http://" + uhost + self.Url
+                        //                        }
                         //if uhost.range(of:"[")
                     }else {
                         if !self.Url.hasPrefix("http://"){
@@ -556,13 +567,13 @@ open class  HTTPRequestHeader :HTTPHeader{
                         AxLogger.log("new request \(Url)",level:.Trace)
                     }
                 }else {
-                    //tcp raw 80 
+                    //tcp raw 80
                     self.Url = "http://" + self.Host + self.Url
                     self.Port = 80
                     //fatalError()
                     //x.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
                     //"http://eclick.baidu.com/fp.htm?sr=414x736x32x3&je=0&ce=1&tz=-480&pl=&sc=10&im=1&wf=0&ah=716&aw=414&cav=9b48d47b4fb362e58ecf1973dfbbcf21&com=0&lan=zh-cn|0|0&pla=0&bp=&ci=&bi=&de=ios&_=1457518739474"
-                   //fatalError("HTTP Request \(row) not url  \(c) ")
+                    //fatalError("HTTP Request \(row) not url  \(c) ")
                 }
             }
             
@@ -576,16 +587,16 @@ open class  HTTPRequestHeader :HTTPHeader{
         
         //NSLog("#### host %@", Host)
         
-//        if !self.Host.isEmpty{
-//            let list = self.Host.components(separatedBy: ":")
-//            self.Host = list[0]
-//            if list.count > 1{
-//                if let p =  Int(list.last!){
-//                    self.Port = p
-//                    
-//                }
-//            }
-//        }
+        //        if !self.Host.isEmpty{
+        //            let list = self.Host.components(separatedBy: ":")
+        //            self.Host = list[0]
+        //            if list.count > 1{
+        //                if let p =  Int(list.last!){
+        //                    self.Port = p
+        //
+        //                }
+        //            }
+        //        }
         if params.count > 0 {
             if let len = params["Content-Length"]{
                 if let x = Int(len){
@@ -613,7 +624,7 @@ open class  HTTPRequestHeader :HTTPHeader{
         
         //NSLog("#### URL %@:%d", Host,Port)
     }
-
+    
     
     open func parmas() -> [String:String]{
         var p = params
@@ -660,7 +671,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                     f = f + key + ": " + value + "\r\n"
                 }
                 if !proxy.method.isEmpty && !proxy.password.isEmpty {
-                   //http basic auth
+                    //http basic auth
                     let temp = proxy.method + ":" + proxy.password
                     let utf8str = temp.data(using: .utf8)
                     if let base64Encoded = utf8str?.base64EncodedString(options: .endLineWithCarriageReturn) {
@@ -682,21 +693,21 @@ open class  HTTPRequestHeader :HTTPHeader{
                         f = method.rawValue + " " + "/" + " " + version + s
                     }
                     //NSLog("http ######### url \(f) ")
-//                    var path = "/"
-//                    if let u = NSURL(string: Url) {
-//                        if let q = u.query {
-//                            path = u.path! + "?" + q
-//                        }else {
-//                            path = u.path!
-//                        }
-//                        
-//                    }else {
-//                        //stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-//                        if  let s = Url.removingPercentEncoding, u = NSURL(string:s) {
-//                            path = u.path! + "?" + u.query!
-//                        }
-//                    }
-//                    f = method.rawValue + " " + path + " " + version + s
+                    //                    var path = "/"
+                    //                    if let u = NSURL(string: Url) {
+                    //                        if let q = u.query {
+                    //                            path = u.path! + "?" + q
+                    //                        }else {
+                    //                            path = u.path!
+                    //                        }
+                    //
+                    //                    }else {
+                    //                        //stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                    //                        if  let s = Url.removingPercentEncoding, u = NSURL(string:s) {
+                    //                            path = u.path! + "?" + u.query!
+                    //                        }
+                    //                    }
+                    //                    f = method.rawValue + " " + path + " " + version + s
                     //fatalError()
                 }
                 for (key,value) in p {
@@ -707,7 +718,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                 //            case .SOCKS5: break
                 //            case .LANTERN: break
             }
-
+            
         }else {
             //Direct
             p.removeValue(forKey: "Proxy-Connection")
@@ -721,7 +732,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                     f = method.rawValue + " " + path + " " + version + s
                     AxLogger.log("new request send line \(self.Host)",level:.Trace)
                 }else {
-                   // fatalError()
+                    // fatalError()
                     f = method.rawValue + " / " + version + s
                 }
                 //NSLog("http ######### url \(f),\(Url)")
@@ -735,12 +746,12 @@ open class  HTTPRequestHeader :HTTPHeader{
         f = f + "\r\n"
         return f
     }
-    func app()->String{
-        if let app = params["User-Agent"]{
-            return app
-        }
-        return ""
-    }
+    //    var app()->String{
+    //        if let app = params["User-Agent"]{
+    //            return app
+    //        }
+    //        return ""
+    //    }
     func updateWithLocation(_ location:String) ->Data {
         //redirect
         self.location = location
@@ -763,7 +774,7 @@ open class  HTTPRequestHeader :HTTPHeader{
                         
                     }
                 }
-
+                
             }
             
         }
@@ -782,20 +793,20 @@ open class  HTTPRequestHeader :HTTPHeader{
         result += "User-Agent: \(processinfo.processName)/version A.GIG.T/build)\r\n"
         //result += "User-Agent: \(processinfo.processName)/\(appVersion()) A.GIG.T/\(appBuild())\r\n"
         result += "Connection: keep-alive\r\n"
-//        if proxy.method.characters.count > 0 && proxy.password.characters.count > 0 {
-//            //http basic auth
-//            let temp = proxy.method + ":" + proxy.password
-//            let utf8str = temp.dataUsingEncoding(NSUTF8StringEncoding)
-//            if let base64Encoded = utf8str?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)) {
-//                result = result + "Proxy-Authorization: Basic " + base64Encoded + "\r\n"
-//            }
-//        }
-//        
+        //        if proxy.method.characters.count > 0 && proxy.password.characters.count > 0 {
+        //            //http basic auth
+        //            let temp = proxy.method + ":" + proxy.password
+        //            let utf8str = temp.dataUsingEncoding(NSUTF8StringEncoding)
+        //            if let base64Encoded = utf8str?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)) {
+        //                result = result + "Proxy-Authorization: Basic " + base64Encoded + "\r\n"
+        //            }
+        //        }
+        //
         result += "Proxy-Connection: keep-alive\r\n"
         result += "\r\n"
         //print(result)
         return result.data(using: .utf8)!
-
+        
     }
     func buildCONNECTHead(_ proxy:SFProxy?) -> Data? {
         if method == .CONNECT {
@@ -836,7 +847,7 @@ open class  HTTPRequestHeader :HTTPHeader{
 
 let statusCodeDescriptions = [
     // Informational.
-
+    
     100: "Continue",
     101: "Switching Protocols",
     102: "Processing",
@@ -885,8 +896,8 @@ let statusCodeDescriptions = [
     428: "Precondition Required"         , 429: "Too many Requests"               , 431: "Header Fields Too Large"              ,
     444: "No Response"                   , 449: "Retry With"                      , 450: "Blocked By Windows Parental controls" ,
     451: "Unavailable for legal reasons" , 499: "Client Closed Request"           ,
-
-
+    
+    
     500: "Internal Server Error",
     501: "Not Implemented",
     502: "Bad Gateway",

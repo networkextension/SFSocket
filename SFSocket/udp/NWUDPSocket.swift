@@ -54,10 +54,15 @@ open class NWUDPSocket {
                 AxLogger.log("Error when reading from remote server. \(error)",level: .Error)
                 return
             }
-            
-            for data in dataArray! {
+            #if swift( >=3.0)
+                for data in dataArray! {
+                    sSelf.delegate?.didReceiveData(data, from: sSelf)
+                }
+            #else
+                for data in dataArray {
                 sSelf.delegate?.didReceiveData(data, from: sSelf)
-            }
+                }
+            #endif
             }, maxDatagrams: 32)
     }
     
