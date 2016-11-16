@@ -45,7 +45,7 @@ open class IPv4Address: IPAddress {
         _in_addr = inaddr
     }
     
-    lazy var presentation: String = { [unowned self] in
+    public lazy var presentation: String = { [unowned self] in
         var buffer = [Int8](repeating: 0, count: Int(INET_ADDRSTRLEN))
         var p: UnsafePointer<Int8>! = nil
         withUnsafePointer(to: &self._in_addr) { (ptr: UnsafePointer<in_addr>) in

@@ -40,6 +40,7 @@
 		69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
 		69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
+		69DD43591DDC4FBA00080CF1 /* SFVPNStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */; };
 		69F698E71DDC151800966272 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
 		69F698E81DDC151800966272 /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		69FC1B001DDBFAB000EF8AAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC1AFF1DDBFAB000EF8AAC /* AppDelegate.swift */; };
@@ -123,6 +124,7 @@
 		69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawTCPSocketProtocol.swift; sourceTree = "<group>"; };
 		69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
 		69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
+		69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFVPNStatistics.swift; sourceTree = "<group>"; };
 		69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FC1AFF1DDBFAB000EF8AAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69FC1B011DDBFAB000EF8AAC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		69C298901DD593FF00E4C3BD /* SFSocket */ = {
 			isa = PBXGroup;
 			children = (
+				69DD43571DDC4F8200080CF1 /* state */,
 				692DD5811DD5CB250079493D /* SFData.swift */,
 				692DD57F1DD5CAB50079493D /* SwiftExtension.swift */,
 				698A08231DD5C6DD009BFFC9 /* EncryptExtension.swift */,
@@ -266,6 +269,14 @@
 				692DD5AF1DD5CE620079493D /* IPPacket.swift */,
 			);
 			path = stack;
+			sourceTree = "<group>";
+		};
+		69DD43571DDC4F8200080CF1 /* state */ = {
+			isa = PBXGroup;
+			children = (
+				69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */,
+			);
+			path = state;
 			sourceTree = "<group>";
 		};
 		69FC1AFE1DDBFAB000EF8AAC /* SFSocketTest */ = {
@@ -418,6 +429,7 @@
 				698A081B1DD5C603009BFFC9 /* NWUDPSocket.swift in Sources */,
 				692DD57E1DD5CA630079493D /* HTTPHeader.swift in Sources */,
 				69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */,
+				69DD43591DDC4FBA00080CF1 /* SFVPNStatistics.swift in Sources */,
 				69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */,
 				69A0D2761DD5971A00227353 /* StreamScanner.swift in Sources */,
 				692DD5AC1DD5CE310079493D /* UDPDirectStack.swift in Sources */,

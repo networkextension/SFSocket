@@ -23,11 +23,11 @@ public enum SFConnectionMode:String {
     }
     
 }
-class HTTPProxyConnector:ProxyConnector {
+public  class HTTPProxyConnector:ProxyConnector {
     
     var connectionMode:SFConnectionMode = .HTTP
-    var reqHeader:SFHTTPRequestHeader?
-    var respHeader:SFHTTPResponseHeader?
+    public var reqHeader:SFHTTPRequestHeader?
+    public var respHeader:SFHTTPResponseHeader?
     var httpConnected:Bool = false
     var headerData:Data = Data()
     static let ReadTag:Int = -2000
@@ -120,7 +120,7 @@ class HTTPProxyConnector:ProxyConnector {
     }
     
 
-    override func socketConnectd() {
+    override public func socketConnectd() {
        
         if httpConnected == false {
             self.sendReq()
@@ -129,7 +129,7 @@ class HTTPProxyConnector:ProxyConnector {
         }
     }
 
-    internal override func sendData(data: Data, withTag tag: Int) {
+    public override func sendData(data: Data, withTag tag: Int) {
         if writePending {
             return
         }
@@ -161,7 +161,7 @@ class HTTPProxyConnector:ProxyConnector {
             strong.checkStatus()
         }
     }
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
       
         guard keyPath == "state" else {
             return
@@ -210,7 +210,7 @@ class HTTPProxyConnector:ProxyConnector {
         AxLogger.log("\(cIDString) stat: \(connection!.state.description)", level: .Debug)
     }
 
-    static func connectorWithSelectorPolicy(targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->HTTPProxyConnector{
+    public static func connectorWithSelectorPolicy(targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->HTTPProxyConnector{
         let c:HTTPProxyConnector = HTTPProxyConnector(p: p)
         //c.manager = man
         //c.cIDFunc()

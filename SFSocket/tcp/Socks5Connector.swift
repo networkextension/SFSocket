@@ -34,7 +34,7 @@ public class Socks5Connector:ProxyConnector{
     var stage:SFSocks5Stage = .Auth
     var recvBuffer:Data?
     static var  ReadTag:Int = -3000
-    static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->Socks5Connector{
+    public static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->Socks5Connector{
         let c:Socks5Connector = Socks5Connector(p: p)
         //c.manager = man
         

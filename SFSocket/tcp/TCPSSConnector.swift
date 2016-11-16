@@ -159,7 +159,7 @@ public class  TCPSSConnector:ProxyConnector{
         }
 
     }
-    static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->TCPSSConnector{
+    public static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->TCPSSConnector{
         let c:TCPSSConnector = TCPSSConnector( p: p)
         //c.manager = man
         //c.policy = selectorPolicy

@@ -25,7 +25,7 @@ public class DirectConnector:NWTCPSocket{
             }
         }
     }
-    override public func connectTo(_ host: String, port: Int, enableTLS: Bool, tlsSettings: [NSObject : AnyObject]?) throws {
+    public override  func connectTo(_ host: String, port: Int, enableTLS: Bool, tlsSettings: [NSObject : AnyObject]?) throws {
         do {
            try  super.connectTo(host, port: port, enableTLS: false, tlsSettings: nil)
         }catch let e  {
@@ -34,7 +34,7 @@ public class DirectConnector:NWTCPSocket{
         
         
     }
-    static func connectorWithHost(targetHost:String,targetPort:Int) ->DirectConnector{
+    public static func connectorWithHost(targetHost:String,targetPort:Int) ->DirectConnector{
     //public func
         let c = DirectConnector()
         c.targetPort = targetPort

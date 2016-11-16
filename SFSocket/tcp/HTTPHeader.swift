@@ -134,10 +134,10 @@ public enum HTTPResponseMode :String{
     case ContentEncoding = "Content-Encoding"
 }
 public struct chunked{
-    var len:Int = 0
-    var leftLen:Int = 0
-    var data:Data?
-    init(l:Int,left:Int){
+    public var len:Int = 0
+    public var leftLen:Int = 0
+    public var data:Data?
+    public init(l:Int,left:Int){
         len = l
         leftLen = left
     }
@@ -266,7 +266,7 @@ open  class  SFHTTPResponseHeader :SFHTTPHeader{
     open func statusLine() ->String{
         return "\(version) \(sCode) \(statusCodeDescriptions[sCode])"
     }
-    var finished:Bool  = false
+    public var finished:Bool  = false
     open override func bodyReadFinish() ->Bool{
         if mode == .ContentLength {
             if bodyLeftLength <= 0 {
@@ -417,7 +417,7 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         
         return groupMatches
     }
-    func genPath() -> String {
+    public func genPath() -> String {
         //print(index)
         var u = self.Url
         if !location.isEmpty{
@@ -454,7 +454,7 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         }
         
     }
-    func forceSend() -> Bool{
+    public func forceSend() -> Bool{
         if let status = params["Proxy-Connection"], status == "close" {
             return true
         }
@@ -752,7 +752,7 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
     //        }
     //        return ""
     //    }
-    func updateWithLocation(_ location:String) ->Data {
+    public func updateWithLocation(_ location:String) ->Data {
         //redirect
         self.location = location
         if let u = NSURL.init(string: self.location) {
@@ -783,7 +783,7 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         return data
     }
     //tcp connection pass through http proxy
-    static func buildCONNECTHead(_ host:String, port:String,proxy:SFProxy) ->Data{
+    public static func buildCONNECTHead(_ host:String, port:String,proxy:SFProxy) ->Data{
         let processinfo = ProcessInfo.processInfo
         //let version = kernelVersion()Darwin/\(version)
         var result = "CONNECT " + host + ":" + port + " HTTP/1.1\r\n"

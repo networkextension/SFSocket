@@ -43,7 +43,7 @@ public enum SOCKS5HostType:UInt8,CustomStringConvertible{
     }
 }
 
-extension String {
+public extension String {
     public func to(index:Int) ->String{
         return self.substring(to: self.index(self.startIndex, offsetBy: index))
     }
