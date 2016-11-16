@@ -27,7 +27,6 @@
 		69803E121DD95DC70047112C /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E111DD95DC70047112C /* Crypto.framework */; };
 		69803E141DD95DD30047112C /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E131DD95DD30047112C /* Sodium.framework */; };
 		69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E151DD95DD80047112C /* SwiftyJSON.framework */; };
-		69803E5B1DD9771B0047112C /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E5A1DD9771B0047112C /* Sodium.framework */; };
 		698A081B1DD5C603009BFFC9 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */; };
 		698A081D1DD5C648009BFFC9 /* TCPSSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */; };
 		698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */; };
@@ -41,7 +40,50 @@
 		69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
 		69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
+		69F698E71DDC151800966272 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
+		69F698E81DDC151800966272 /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B001DDBFAB000EF8AAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC1AFF1DDBFAB000EF8AAC /* AppDelegate.swift */; };
+		69FC1B021DDBFAB000EF8AAC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC1B011DDBFAB000EF8AAC /* ViewController.swift */; };
+		69FC1B051DDBFAB000EF8AAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69FC1B031DDBFAB000EF8AAC /* Main.storyboard */; };
+		69FC1B071DDBFAB000EF8AAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69FC1B061DDBFAB000EF8AAC /* Assets.xcassets */; };
+		69FC1B0A1DDBFAB000EF8AAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69FC1B081DDBFAB000EF8AAC /* LaunchScreen.storyboard */; };
+		69FC1B111DDBFADE00EF8AAC /* SFSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69C2988E1DD593FF00E4C3BD /* SFSocket.framework */; };
+		69FC1B141DDBFC7200EF8AAC /* CocoaAsyncSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E0D1DD95DBA0047112C /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B161DDBFCF400EF8AAC /* SFSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69C2988E1DD593FF00E4C3BD /* SFSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B171DDBFD3D00EF8AAC /* AxLogger.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E0B1DD95DB30047112C /* AxLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B181DDBFD4300EF8AAC /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E111DD95DC70047112C /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B191DDBFD4500EF8AAC /* Sodium.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E131DD95DD30047112C /* Sodium.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69FC1B1A1DDBFD4900EF8AAC /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 69803E151DD95DD80047112C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		69FC1B1B1DDC00A100EF8AAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69C298851DD593FF00E4C3BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69C2988D1DD593FF00E4C3BD;
+			remoteInfo = SFSocket;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		69FC1B121DDBFAE400EF8AAC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				69FC1B1A1DDBFD4900EF8AAC /* SwiftyJSON.framework in CopyFiles */,
+				69FC1B191DDBFD4500EF8AAC /* Sodium.framework in CopyFiles */,
+				69FC1B141DDBFC7200EF8AAC /* CocoaAsyncSocket.framework in CopyFiles */,
+				69FC1B181DDBFD4300EF8AAC /* Crypto.framework in CopyFiles */,
+				69F698E81DDC151800966272 /* CommonCrypto.framework in CopyFiles */,
+				69FC1B161DDBFCF400EF8AAC /* SFSocket.framework in CopyFiles */,
+				69FC1B171DDBFD3D00EF8AAC /* AxLogger.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		692DD5391DD5C98C0079493D /* DirectConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectConnector.swift; sourceTree = "<group>"; };
@@ -66,7 +108,6 @@
 		69803E111DD95DC70047112C /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/iOS/Crypto.framework; sourceTree = "<group>"; };
 		69803E131DD95DD30047112C /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 		69803E151DD95DD80047112C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		69803E5A1DD9771B0047112C /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/iOS/Sodium.framework; sourceTree = "<group>"; };
 		698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWUDPSocket.swift; sourceTree = "<group>"; };
 		698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSSConnector.swift; sourceTree = "<group>"; };
 		698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyConnector.swift; sourceTree = "<group>"; };
@@ -82,6 +123,13 @@
 		69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawTCPSocketProtocol.swift; sourceTree = "<group>"; };
 		69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
 		69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
+		69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		69FC1AFF1DDBFAB000EF8AAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		69FC1B011DDBFAB000EF8AAC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		69FC1B041DDBFAB000EF8AAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		69FC1B061DDBFAB000EF8AAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		69FC1B091DDBFAB000EF8AAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		69FC1B0B1DDBFAB000EF8AAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +140,18 @@
 				69803E0E1DD95DBA0047112C /* CocoaAsyncSocket.framework in Frameworks */,
 				69803E121DD95DC70047112C /* Crypto.framework in Frameworks */,
 				69803E161DD95DD80047112C /* SwiftyJSON.framework in Frameworks */,
-				69803E5B1DD9771B0047112C /* Sodium.framework in Frameworks */,
 				69803E101DD95DC20047112C /* CommonCrypto.framework in Frameworks */,
 				69803E0C1DD95DB30047112C /* AxLogger.framework in Frameworks */,
 				69803E141DD95DD30047112C /* Sodium.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FC1AFA1DDBFAB000EF8AAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FC1B111DDBFADE00EF8AAC /* SFSocket.framework in Frameworks */,
+				69F698E71DDC151800966272 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +161,6 @@
 		69803E081DD95D4F0047112C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				69803E5A1DD9771B0047112C /* Sodium.framework */,
 				69803E151DD95DD80047112C /* SwiftyJSON.framework */,
 				69803E131DD95DD30047112C /* Sodium.framework */,
 				69803E111DD95DC70047112C /* Crypto.framework */,
@@ -139,6 +194,7 @@
 				69803E0A1DD95D920047112C /* Cartfile.resolved */,
 				69803E081DD95D4F0047112C /* Framework */,
 				69C298901DD593FF00E4C3BD /* SFSocket */,
+				69FC1AFE1DDBFAB000EF8AAC /* SFSocketTest */,
 				69C2988F1DD593FF00E4C3BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				69C2988E1DD593FF00E4C3BD /* SFSocket.framework */,
+				69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,6 +268,19 @@
 			path = stack;
 			sourceTree = "<group>";
 		};
+		69FC1AFE1DDBFAB000EF8AAC /* SFSocketTest */ = {
+			isa = PBXGroup;
+			children = (
+				69FC1AFF1DDBFAB000EF8AAC /* AppDelegate.swift */,
+				69FC1B011DDBFAB000EF8AAC /* ViewController.swift */,
+				69FC1B031DDBFAB000EF8AAC /* Main.storyboard */,
+				69FC1B061DDBFAB000EF8AAC /* Assets.xcassets */,
+				69FC1B081DDBFAB000EF8AAC /* LaunchScreen.storyboard */,
+				69FC1B0B1DDBFAB000EF8AAC /* Info.plist */,
+			);
+			path = SFSocketTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -243,12 +313,32 @@
 			productReference = 69C2988E1DD593FF00E4C3BD /* SFSocket.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		69FC1AFC1DDBFAB000EF8AAC /* SFSocketTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69FC1B0E1DDBFAB000EF8AAC /* Build configuration list for PBXNativeTarget "SFSocketTest" */;
+			buildPhases = (
+				69FC1AF91DDBFAB000EF8AAC /* Sources */,
+				69FC1AFA1DDBFAB000EF8AAC /* Frameworks */,
+				69FC1AFB1DDBFAB000EF8AAC /* Resources */,
+				69FC1B121DDBFAE400EF8AAC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				69FC1B1C1DDC00A100EF8AAC /* PBXTargetDependency */,
+			);
+			name = SFSocketTest;
+			productName = SFSocketTest;
+			productReference = 69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		69C298851DD593FF00E4C3BD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Kong XiangBo";
 				TargetAttributes = {
@@ -256,6 +346,11 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 745WQDK4L7;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+					69FC1AFC1DDBFAB000EF8AAC = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 745WQDK4L7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -266,6 +361,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 69C298841DD593FF00E4C3BD;
 			productRefGroup = 69C2988F1DD593FF00E4C3BD /* Products */;
@@ -273,6 +369,7 @@
 			projectRoot = "";
 			targets = (
 				69C2988D1DD593FF00E4C3BD /* SFSocket */,
+				69FC1AFC1DDBFAB000EF8AAC /* SFSocketTest */,
 			);
 		};
 /* End PBXProject section */
@@ -282,6 +379,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FC1AFB1DDBFAB000EF8AAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FC1B0A1DDBFAB000EF8AAC /* LaunchScreen.storyboard in Resources */,
+				69FC1B071DDBFAB000EF8AAC /* Assets.xcassets in Resources */,
+				69FC1B051DDBFAB000EF8AAC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,7 +428,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		69FC1AF91DDBFAB000EF8AAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FC1B021DDBFAB000EF8AAC /* ViewController.swift in Sources */,
+				69FC1B001DDBFAB000EF8AAC /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		69FC1B1C1DDC00A100EF8AAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69C2988D1DD593FF00E4C3BD /* SFSocket */;
+			targetProxy = 69FC1B1B1DDC00A100EF8AAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		69FC1B031DDBFAB000EF8AAC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69FC1B041DDBFAB000EF8AAC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		69FC1B081DDBFAB000EF8AAC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69FC1B091DDBFAB000EF8AAC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		69C298941DD593FF00E4C3BD /* Debug */ = {
@@ -365,7 +508,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -412,7 +555,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -474,6 +617,40 @@
 			};
 			name = Release;
 		};
+		69FC1B0C1DDBFAB000EF8AAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 745WQDK4L7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SFSocketTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yarshure.SFSocketTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		69FC1B0D1DDBFAB000EF8AAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 745WQDK4L7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SFSocketTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yarshure.SFSocketTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -491,6 +668,15 @@
 			buildConfigurations = (
 				69C298971DD593FF00E4C3BD /* Debug */,
 				69C298981DD593FF00E4C3BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69FC1B0E1DDBFAB000EF8AAC /* Build configuration list for PBXNativeTarget "SFSocketTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69FC1B0C1DDBFAB000EF8AAC /* Debug */,
+				69FC1B0D1DDBFAB000EF8AAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

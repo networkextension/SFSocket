@@ -26,8 +26,8 @@ public enum SFConnectionMode:String {
 class HTTPProxyConnector:ProxyConnector {
     
     var connectionMode:SFConnectionMode = .HTTP
-    var reqHeader:HTTPRequestHeader?
-    var respHeader:HTTPResponseHeader?
+    var reqHeader:SFHTTPRequestHeader?
+    var respHeader:SFHTTPResponseHeader?
     var httpConnected:Bool = false
     var headerData:Data = Data()
     static let ReadTag:Int = -2000
@@ -59,7 +59,7 @@ class HTTPProxyConnector:ProxyConnector {
             // body found
             headerData.append( data.subdata(in: r))
             
-            respHeader = HTTPResponseHeader(data: headerData)
+            respHeader = SFHTTPResponseHeader(data: headerData)
             if let r = respHeader, r.sCode != 200 {
                 AxLogger.log("\(self) CONNECT status\(r.sCode) ",level: .Error)
                 //有bug

@@ -63,7 +63,7 @@ public protocol HTTPProtocol {
     //var ContentLength:UInt  { get set }
     //    var params:[String:String] { get set }
 }
-open class  HTTPHeader:NSObject {
+open class  SFHTTPHeader {
     open var length:Int = 0
     open var bodyLeftLength:Int = 0
     open var version:String = ""
@@ -160,7 +160,7 @@ public func hexDataToInt(d:Data) ->UInt32{
     //_ = Scanner(string:x).scanHexInt32(&result)
     return result
 }
-open  class  HTTPResponseHeader :HTTPHeader{
+open  class  SFHTTPResponseHeader :SFHTTPHeader{
     open var sCode:Int = 0 //http response status code
     open var mode:HTTPResponseMode = .TransferEncoding
     open var close:Bool = false
@@ -385,7 +385,7 @@ open  class  HTTPResponseHeader :HTTPHeader{
 }
 
 let pattern = "::ffff:(.*)"
-open class  HTTPRequestHeader :HTTPHeader{
+open class  SFHTTPRequestHeader :SFHTTPHeader{
     open var Host:String = ""
     open var Port:Int = 0
     open var method:HTTPmethod = .GET
@@ -464,7 +464,7 @@ open class  HTTPRequestHeader :HTTPHeader{
         AxLogger.log("HTTPRequestHeader dealloc",level: .Debug)
     }
     
-    override init? (data:Data){
+    public override init? (data:Data){
         super.init(data: data)
         guard let row = String.init(data: data, encoding: .utf8) else {
             return nil
