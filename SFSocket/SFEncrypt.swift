@@ -331,7 +331,7 @@ class SSEncrypt {
     }
     func dataWithHexString(hex: String) -> Data {
         var hex = hex
-        var data = SFData()
+        let  data = SFData()
         while(hex.characters.count > 0) {
             let c: String = hex.to(index: 2)
             hex = hex.to(index: 2)
@@ -797,11 +797,11 @@ class SSEncrypt {
         let chunk_len:UInt16 = UInt16(blen).bigEndian
         let c =  UInt32(counter.bigEndian)
         
-        var keyData = SFData()
+        let keyData = SFData()
         keyData.append(send_ctx!.IV)
         keyData.append(c)
         let hash = buffer.hmacsha1(keyData: keyData.data)
-        var result = SFData()
+        let result = SFData()
         result.append(chunk_len)
         
         result.append(hash)

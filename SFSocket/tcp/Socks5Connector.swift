@@ -34,7 +34,7 @@ public class Socks5Connector:ProxyConnector{
     var stage:SFSocks5Stage = .Auth
     var recvBuffer:Data?
     static var  ReadTag:Int = -3000
-    public static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->Socks5Connector{
+    public static func connectorWithSelectorPolicy(_ selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->Socks5Connector{
         let c:Socks5Connector = Socks5Connector(p: p)
         //c.manager = man
         
@@ -83,7 +83,7 @@ public class Socks5Connector:ProxyConnector{
     }
     func sendBind(){
         //req 050100030F6170692E747769747465722E636F6D01BB
-        var buffer = SFData() //req 050100
+        let buffer = SFData() //req 050100
         buffer.append(SOCKS_VERSION)
         let connect:UInt8 = 0x01
         buffer.append(connect)
