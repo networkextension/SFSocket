@@ -1,6 +1,6 @@
 import Foundation
 
-
+import AxLogger
 public enum IPVersion: UInt8 {
     case iPv4 = 4, iPv6 = 6
 }
@@ -98,9 +98,8 @@ open class IPPacket {
         guard data.count > headerLength + 4 else {
             return nil
         }
-        //fixme
-        return Port.init()
-        //return Port(bytesInNetworkOrder: (data as NSData).bytes.advanced(by: headerLength))
+        
+        return Port(bytesInNetworkOrder: (data as NSData).bytes.advanced(by: headerLength))
     }
     
     /**
@@ -127,9 +126,8 @@ open class IPPacket {
         guard data.count > headerLength + 4 else {
             return nil
         }
-        //fixme
-        return Port.init()
-        //return Port(coder: (data as NSData).bytes.advanced(by: headerLength + 2))
+        
+        return Port(bytesInNetworkOrder: (data as NSData).bytes.advanced(by: headerLength + 2))
     }
     
     
@@ -200,7 +198,7 @@ open class IPPacket {
         
         let vhl = scanner.readByte()!
         guard let v = IPVersion(rawValue: vhl >> 4) else {
-            //DDLogError("Got unknown ip packet version \(vhl >> 4)")
+            AxLogger.log("Got unknown ip packet version \(vhl >> 4)",level: .Error)
             return nil
         }
         version = v
@@ -213,7 +211,7 @@ open class IPPacket {
         tos = scanner.readByte()!
         
         guard totalLength == scanner.read16()! else {
-            //DDLogError("Packet length mismatches from header.")
+            AxLogger.log("Packet length mismatches from header.",level: .Error)
             return nil
         }
         
@@ -222,7 +220,7 @@ open class IPPacket {
         TTL = scanner.readByte()!
         
         guard let proto = TransportProtocol(rawValue: scanner.readByte()!) else {
-            //DDLogWarn("Get unsupported packet protocol.")
+            AxLogger.log("Get unsupported packet protocol.",level: .Error)
             return nil
         }
         transportProtocol = proto
@@ -236,7 +234,7 @@ open class IPPacket {
             destinationAddress = IPv4Address(fromUInt32InHostOrder: scanner.read32()!)
         default:
             // IPv6 is not supported yet.
-            //DDLogWarn("IPv6 is not supported yet.")
+            AxLogger.log("IPv6 is not supported yet.",level: .Error)
             return nil
         }
         
@@ -247,7 +245,7 @@ open class IPPacket {
             }
             self.protocolParser = parser
         default:
-            //DDLogError("Can not parse packet header of type \(transportProtocol) yet")
+            AxLogger.log("Can not parse packet header of type \(transportProtocol) yet",level: .Error)
             return nil
         }
     }

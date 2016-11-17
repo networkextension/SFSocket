@@ -6,6 +6,7 @@ struct ConnectInfo: Hashable {
     let destinationAddress: IPv4Address
     let destinationPort: Port
     
+    
     var hashValue: Int {
         return sourceAddress.hashValue &+ sourcePort.hashValue &+ destinationAddress.hashValue &+ destinationPort.hashValue
     }

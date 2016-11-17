@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691883591DDDA52E0051DAAE /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691883581DDDA52E0051DAAE /* Port.swift */; };
 		692DD53A1DD5C98C0079493D /* DirectConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5391DD5C98C0079493D /* DirectConnector.swift */; };
 		692DD53C1DD5C9940079493D /* HTTPProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */; };
 		692DD53E1DD5C99E0079493D /* Socks5Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53D1DD5C99E0079493D /* Socks5Connector.swift */; };
@@ -87,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		691883581DDDA52E0051DAAE /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		692DD5391DD5C98C0079493D /* DirectConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectConnector.swift; sourceTree = "<group>"; };
 		692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxyConnector.swift; sourceTree = "<group>"; };
 		692DD53D1DD5C99E0079493D /* Socks5Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socks5Connector.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		69C2989A1DD5946E00E4C3BD /* udp */ = {
 			isa = PBXGroup;
 			children = (
+				691883581DDDA52E0051DAAE /* Port.swift */,
 				692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */,
 				692DD5B31DD5CEA30079493D /* ConnectRequest.swift */,
 				692DD5B11DD5CE920079493D /* PacketProtocolParser.swift */,
@@ -416,6 +419,7 @@
 				692DD5821DD5CB250079493D /* SFData.swift in Sources */,
 				69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */,
 				692DD5401DD5C9F10079493D /* SFProxy.swift in Sources */,
+				691883591DDDA52E0051DAAE /* Port.swift in Sources */,
 				692DD5AE1DD5CE490079493D /* IPStackProtocol.swift in Sources */,
 				698A08221DD5C6D4009BFFC9 /* SFEncrypt.swift in Sources */,
 				692DD5801DD5CAB50079493D /* SwiftExtension.swift in Sources */,
