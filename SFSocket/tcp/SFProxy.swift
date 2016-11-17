@@ -50,6 +50,101 @@ public class SFProxy {
             return countryFlag + " " + proxyName
         }
     }
+    public static func createProxyWithURL(_ configString:String) ->(proxy:SFProxy?,message:String) {
+        // http://base64str
+        //"aes-256-cfb:fb4b532cb4180c9037c5b64bb3c09f7e@108.61.126.194:14860"
+        //mayflower://xx:xx@108.61.126.194:14860
+        //"ss://Y2hhY2hhMjA6NTg0NTIweGMwQDQ1LjMyLjkuMTMwOjE1MDE?remark=%F0%9F%87%AF%F0%9F%87%B5"
+        //(lldb) n
+        //(lldb) po x
+        //"ss://Y2hhY2hhMjA6NTg0NTIweGMwQDQ1LjMyLjkuMTMwOjE1MDE?remark=🇯🇵"
+        //let x = configString.removingPercentEncoding!
+        //NSLog("%@", configString)
+        if let u = NSURL.init(string: configString){
+            
+            
+            guard  let scheme = u.scheme else {
+                //找不到scheme 会crash
+                //alertMessageAction("\(configString) Invilad", complete: nil)
+                return (nil,"\(configString) Invilad")
+            }
+            
+            let proxy:SFProxy = SFProxy.init(name: "server", type: .SS, address: "", port: "443", passwd: "", method: "aes-256-cfb", tls: false)
+            
+            let t = scheme.uppercased()
+            if t == "HTTP" {
+                proxy.type = .HTTP
+            }else if t == "HTTPS" {
+                proxy.type = .HTTPS
+                proxy.tlsEnable = true
+            }else if t == "SOCKS5" {
+                proxy.type = .SOCKS5
+            }else if t == "SS" {
+                proxy.type = .SS
+            }else {
+                return (nil, "URL \(scheme) Invilad")
+                
+            }
+            let result = u.host!
+            
+            if let query  = u.query {
+                let x = query.components(separatedBy: "&")
+                for xy in x {
+                    let x2 = xy.components(separatedBy: "=")
+                    if x2.count == 2 {
+                        if x2.first! == "remark" {
+                            proxy.proxyName = x2.last!.removingPercentEncoding!
+                        }
+                        if x2.first! == "tlsEnable"{
+                            let v = Int(x2.last!)
+                            if v == 1  {
+                                proxy.tlsEnable = true
+                            }else {
+                                proxy.tlsEnable = false
+                            }
+                        }
+                    }
+                }
+            }
+            var paddedLength = 0
+            let left = result.characters.count % 4
+            if left != 0 {
+                paddedLength = 4 - left
+            }
+            
+            let padStr = result + String.init(repeating: "=", count: paddedLength)
+            if let data = Data.init(base64Encoded: padStr, options: .ignoreUnknownCharacters) {
+                if let resultString = String.init(data: data , encoding: .utf8) {
+                    let items = resultString.components(separatedBy: ":")
+                    if items.count == 3 {
+                        proxy.method = items[0].lowercased()
+                        proxy.serverPort = items[2]
+                        
+                        if let r = items[1].range(of: "@"){
+                            let tempString = items[1]
+                            proxy.password = tempString.substring(to: r.lowerBound)
+                            proxy.serverAddress = tempString.substring(from: r.upperBound)
+                        } else {
+                            return (nil,"\(resultString) Invilad")
+                        }
+                    }else {
+                         return (nil,"\(resultString) Invilad")
+                    }
+                }else{
+                     return (nil,"\(configString) Invilad")
+                }
+                
+                
+            }else {
+                 return (nil,"\(configString) Invilad")
+            }
+            
+            
+        }else {
+             return (nil,"\(configString) Invilad")
+        }
+        return (nil,"Not Found Proxy infomation")
+    }
     public static func createProxyWithLine(line:String,pname:String) ->SFProxy? {
         
         let name = pname.trimmingCharacters(in:
