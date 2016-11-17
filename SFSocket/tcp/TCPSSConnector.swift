@@ -27,7 +27,7 @@ public class  TCPSSConnector:ProxyConnector{
 
 
     func buildHead() ->Data {
-        var header = SFData()
+        let header = SFData()
         //NSLog("TCPSS %@:%d",targetHost,targetPort)
         //targetHost is ip or domain
         var addr_len = 0
@@ -159,7 +159,7 @@ public class  TCPSSConnector:ProxyConnector{
         }
 
     }
-    public static func connectorWithSelectorPolicy(selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->TCPSSConnector{
+    public static func connectorWithSelectorPolicy(_ selectorPolicy:SFPolicy ,targetHostname hostname:String, targetPort port:UInt16,p:SFProxy) ->TCPSSConnector{
         let c:TCPSSConnector = TCPSSConnector( p: p)
         //c.manager = man
         //c.policy = selectorPolicy
