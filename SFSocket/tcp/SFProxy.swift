@@ -124,6 +124,7 @@ public class SFProxy {
                             let tempString = items[1]
                             proxy.password = tempString.substring(to: r.lowerBound)
                             proxy.serverAddress = tempString.substring(from: r.upperBound)
+                            return (proxy,"OK")
                         } else {
                             return (nil,"\(resultString) Invilad")
                         }
@@ -235,7 +236,7 @@ public class SFProxy {
     public func resp() ->[String:Any]{
         return ["name":proxyName as AnyObject,"host":serverAddress as AnyObject,"port":serverPort,"protocol":type.description,"method":method,"passwd":password,"tls":NSNumber.init(value: tlsEnable),"priority":NSNumber.init(value: priority),"enable":NSNumber.init(value: enable),"countryFlag":countryFlag,"isoCode":isoCode,"ipaddress":serverIP]
     }
-    open  static func map(name:String,value:JSON) ->SFProxy{
+    open  static func map(_ name:String,value:JSON) ->SFProxy{
         let i = value
         let px = i["protocol"].stringValue as NSString
         let proto = px.uppercased
