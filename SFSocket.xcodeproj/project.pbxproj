@@ -22,6 +22,12 @@
 		692DD5B41DD5CEA30079493D /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B31DD5CEA30079493D /* ConnectRequest.swift */; };
 		692DD5B61DD5CEFD0079493D /* BinaryDataScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */; };
 		692DD5B81DD5CF120079493D /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B71DD5CF120079493D /* Checksum.swift */; };
+		697B7C431DE067C500584179 /* AxLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C421DE067C500584179 /* AxLogger.framework */; };
+		697B7C451DE067CC00584179 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C441DE067CC00584179 /* CocoaAsyncSocket.framework */; };
+		697B7C471DE067D300584179 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C461DE067D300584179 /* CommonCrypto.framework */; };
+		697B7C491DE067D800584179 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C481DE067D800584179 /* Crypto.framework */; };
+		697B7C4B1DE067DD00584179 /* Sodium.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C4A1DE067DD00584179 /* Sodium.framework */; };
+		697B7C4D1DE067E300584179 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C4C1DE067E300584179 /* SwiftyJSON.framework */; };
 		69803E0C1DD95DB30047112C /* AxLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0B1DD95DB30047112C /* AxLogger.framework */; };
 		69803E0E1DD95DBA0047112C /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0D1DD95DBA0047112C /* CocoaAsyncSocket.framework */; };
 		69803E101DD95DC20047112C /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
@@ -132,6 +138,12 @@
 		692DD5B31DD5CEA30079493D /* ConnectRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequest.swift; sourceTree = "<group>"; };
 		692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataScanner.swift; sourceTree = "<group>"; };
 		692DD5B71DD5CF120079493D /* Checksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checksum.swift; sourceTree = "<group>"; };
+		697B7C421DE067C500584179 /* AxLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AxLogger.framework; path = Carthage/Build/Mac/AxLogger.framework; sourceTree = SOURCE_ROOT; };
+		697B7C441DE067CC00584179 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Carthage/Build/Mac/CocoaAsyncSocket.framework; sourceTree = SOURCE_ROOT; };
+		697B7C461DE067D300584179 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/Mac/CommonCrypto.framework; sourceTree = SOURCE_ROOT; };
+		697B7C481DE067D800584179 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Carthage/Build/Mac/Crypto.framework; sourceTree = SOURCE_ROOT; };
+		697B7C4A1DE067DD00584179 /* Sodium.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sodium.framework; path = Carthage/Build/Mac/Sodium.framework; sourceTree = SOURCE_ROOT; };
+		697B7C4C1DE067E300584179 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = SOURCE_ROOT; };
 		69803E091DD95D8C0047112C /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		69803E0A1DD95D920047112C /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		69803E0B1DD95DB30047112C /* AxLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AxLogger.framework; path = Carthage/Build/iOS/AxLogger.framework; sourceTree = "<group>"; };
@@ -173,6 +185,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				697B7C451DE067CC00584179 /* CocoaAsyncSocket.framework in Frameworks */,
+				697B7C491DE067D800584179 /* Crypto.framework in Frameworks */,
+				697B7C4D1DE067E300584179 /* SwiftyJSON.framework in Frameworks */,
+				697B7C471DE067D300584179 /* CommonCrypto.framework in Frameworks */,
+				697B7C431DE067C500584179 /* AxLogger.framework in Frameworks */,
+				697B7C4B1DE067DD00584179 /* Sodium.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +219,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		697B7C411DE067A200584179 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				697B7C4C1DE067E300584179 /* SwiftyJSON.framework */,
+				697B7C4A1DE067DD00584179 /* Sodium.framework */,
+				697B7C481DE067D800584179 /* Crypto.framework */,
+				697B7C461DE067D300584179 /* CommonCrypto.framework */,
+				697B7C441DE067CC00584179 /* CocoaAsyncSocket.framework */,
+				697B7C421DE067C500584179 /* AxLogger.framework */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
 		69803E081DD95D4F0047112C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +264,7 @@
 		69B954F31DDF81CF006AF669 /* SFSocketOSX */ = {
 			isa = PBXGroup;
 			children = (
+				697B7C411DE067A200584179 /* Framework */,
 				69B954F41DDF81CF006AF669 /* SFSocketOSX.h */,
 				69B954F51DDF81CF006AF669 /* Info.plist */,
 			);
@@ -617,6 +649,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = SFSocketOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -640,6 +676,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = SFSocketOSX/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -847,6 +887,7 @@
 				69B954F81DDF81CF006AF669 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		69C298881DD593FF00E4C3BD /* Build configuration list for PBXProject "SFSocket" */ = {
 			isa = XCConfigurationList;
