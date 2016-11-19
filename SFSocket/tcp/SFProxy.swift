@@ -144,7 +144,7 @@ public class SFProxy {
         }else {
              return (nil,"\(configString) Invilad")
         }
-        return (nil,"Not Found Proxy infomation")
+        
     }
     public static func createProxyWithLine(line:String,pname:String) ->SFProxy? {
         

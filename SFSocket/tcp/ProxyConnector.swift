@@ -17,7 +17,7 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
     var targetPort:UInt16 = 0
     var tlsEvaluate:Bool = false
     #if os(iOS)
-    let acceptableCipherSuites:NSSet = [
+    let acceptableCipherSuites:Set<NSNumber> = [
         
         NSNumber(value: TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256),
         NSNumber(value: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),
@@ -84,7 +84,7 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
             if let tlsSettings = tlsSettings as? [String: AnyObject] {
                 tlsParameters.setValuesForKeys(tlsSettings)
             }else {
-                tlsParameters.sslCipherSuites = acceptableCipherSuites as? Set<NSNumber>
+                tlsParameters.sslCipherSuites = acceptableCipherSuites 
 
             }
             let v = SSLProtocol.tlsProtocol12
