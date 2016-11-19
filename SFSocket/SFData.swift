@@ -47,7 +47,8 @@ public class SFData:CustomStringConvertible {
         data.append(storage)
     }
     public func append(_ newElement: CChar) {
-        
+        let v = UInt8(bitPattern: newElement)
+        data.append(v)
     }
     public func append(_ v:String){
         let storage = v.data(using: .utf8)

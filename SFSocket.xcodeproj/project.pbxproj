@@ -37,6 +37,35 @@
 		69A0D2761DD5971A00227353 /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2751DD5971A00227353 /* StreamScanner.swift */; };
 		69A0D2781DD5975800227353 /* Opt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2771DD5975800227353 /* Opt.swift */; };
 		69A0D27A1DD5979C00227353 /* RawSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2791DD5979C00227353 /* RawSocketFactory.swift */; };
+		69B954F61DDF81CF006AF669 /* SFSocketOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 69B954F41DDF81CF006AF669 /* SFSocketOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		69B954FA1DDF81DC006AF669 /* SFVPNStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */; };
+		69B954FB1DDF81E0006AF669 /* SFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5811DD5CB250079493D /* SFData.swift */; };
+		69B954FC1DDF81E3006AF669 /* SwiftExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57F1DD5CAB50079493D /* SwiftExtension.swift */; };
+		69B954FD1DDF81E9006AF669 /* EncryptExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A08231DD5C6DD009BFFC9 /* EncryptExtension.swift */; };
+		69B954FE1DDF81ED006AF669 /* SFEncrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A08211DD5C6D4009BFFC9 /* SFEncrypt.swift */; };
+		69B954FF1DDF81F3006AF669 /* Opt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2771DD5975800227353 /* Opt.swift */; };
+		69B955001DDF81F6006AF669 /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2751DD5971A00227353 /* StreamScanner.swift */; };
+		69B955011DDF81FB006AF669 /* Checksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B71DD5CF120079493D /* Checksum.swift */; };
+		69B955021DDF81FE006AF669 /* IPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2721DD5964F00227353 /* IPAddress.swift */; };
+		69B955031DDF8201006AF669 /* IPPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AF1DD5CE620079493D /* IPPacket.swift */; };
+		69B955041DDF8205006AF669 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691883581DDDA52E0051DAAE /* Port.swift */; };
+		69B955051DDF8208006AF669 /* BinaryDataScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B51DD5CEFD0079493D /* BinaryDataScanner.swift */; };
+		69B955061DDF820C006AF669 /* ConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B31DD5CEA30079493D /* ConnectRequest.swift */; };
+		69B955071DDF820F006AF669 /* PacketProtocolParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5B11DD5CE920079493D /* PacketProtocolParser.swift */; };
+		69B955081DDF8212006AF669 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AD1DD5CE490079493D /* IPStackProtocol.swift */; };
+		69B955091DDF8216006AF669 /* UDPDirectStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AB1DD5CE310079493D /* UDPDirectStack.swift */; };
+		69B9550A1DDF8219006AF669 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */; };
+		69B9550B1DDF821F006AF669 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57D1DD5CA630079493D /* HTTPHeader.swift */; };
+		69B9550C1DDF8221006AF669 /* SFProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53F1DD5C9F10079493D /* SFProxy.swift */; };
+		69B9550D1DDF8224006AF669 /* Socks5Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53D1DD5C99E0079493D /* Socks5Connector.swift */; };
+		69B9550E1DDF8227006AF669 /* HTTPProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */; };
+		69B9550F1DDF822B006AF669 /* DirectConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5391DD5C98C0079493D /* DirectConnector.swift */; };
+		69B955101DDF822E006AF669 /* ProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081E1DD5C664009BFFC9 /* ProxyConnector.swift */; };
+		69B955111DDF8232006AF669 /* TCPSSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081C1DD5C648009BFFC9 /* TCPSSConnector.swift */; };
+		69B955121DDF8235006AF669 /* RawSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A0D2791DD5979C00227353 /* RawSocketFactory.swift */; };
+		69B955131DDF8238006AF669 /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
+		69B955141DDF823A006AF669 /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
+		69B955151DDF823D006AF669 /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298931DD593FF00E4C3BD /* SFSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 69C298911DD593FF00E4C3BD /* SFSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
@@ -120,6 +149,9 @@
 		69A0D2751DD5971A00227353 /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		69A0D2771DD5975800227353 /* Opt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opt.swift; sourceTree = "<group>"; };
 		69A0D2791DD5979C00227353 /* RawSocketFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawSocketFactory.swift; sourceTree = "<group>"; };
+		69B954F21DDF81CF006AF669 /* SFSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SFSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69B954F41DDF81CF006AF669 /* SFSocketOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSocketOSX.h; sourceTree = "<group>"; };
+		69B954F51DDF81CF006AF669 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69C2988E1DD593FF00E4C3BD /* SFSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SFSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69C298911DD593FF00E4C3BD /* SFSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSocket.h; sourceTree = "<group>"; };
 		69C298921DD593FF00E4C3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +169,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		69B954EE1DDF81CF006AF669 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69C2988A1DD593FF00E4C3BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,6 +230,15 @@
 			path = scaner;
 			sourceTree = "<group>";
 		};
+		69B954F31DDF81CF006AF669 /* SFSocketOSX */ = {
+			isa = PBXGroup;
+			children = (
+				69B954F41DDF81CF006AF669 /* SFSocketOSX.h */,
+				69B954F51DDF81CF006AF669 /* Info.plist */,
+			);
+			path = SFSocketOSX;
+			sourceTree = "<group>";
+		};
 		69C298841DD593FF00E4C3BD = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +247,7 @@
 				69803E081DD95D4F0047112C /* Framework */,
 				69C298901DD593FF00E4C3BD /* SFSocket */,
 				69FC1AFE1DDBFAB000EF8AAC /* SFSocketTest */,
+				69B954F31DDF81CF006AF669 /* SFSocketOSX */,
 				69C2988F1DD593FF00E4C3BD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -208,6 +257,7 @@
 			children = (
 				69C2988E1DD593FF00E4C3BD /* SFSocket.framework */,
 				69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */,
+				69B954F21DDF81CF006AF669 /* SFSocket.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -298,6 +348,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		69B954EF1DDF81CF006AF669 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69B954F61DDF81CF006AF669 /* SFSocketOSX.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69C2988B1DD593FF00E4C3BD /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -309,6 +367,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		69B954F11DDF81CF006AF669 /* SFSocketOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69B954F91DDF81CF006AF669 /* Build configuration list for PBXNativeTarget "SFSocketOSX" */;
+			buildPhases = (
+				69B954ED1DDF81CF006AF669 /* Sources */,
+				69B954EE1DDF81CF006AF669 /* Frameworks */,
+				69B954EF1DDF81CF006AF669 /* Headers */,
+				69B954F01DDF81CF006AF669 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SFSocketOSX;
+			productName = SFSocketOSX;
+			productReference = 69B954F21DDF81CF006AF669 /* SFSocket.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		69C2988D1DD593FF00E4C3BD /* SFSocket */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69C298961DD593FF00E4C3BD /* Build configuration list for PBXNativeTarget "SFSocket" */;
@@ -356,6 +432,11 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Kong XiangBo";
 				TargetAttributes = {
+					69B954F11DDF81CF006AF669 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 745WQDK4L7;
+						ProvisioningStyle = Automatic;
+					};
 					69C2988D1DD593FF00E4C3BD = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 745WQDK4L7;
@@ -384,11 +465,19 @@
 			targets = (
 				69C2988D1DD593FF00E4C3BD /* SFSocket */,
 				69FC1AFC1DDBFAB000EF8AAC /* SFSocketTest */,
+				69B954F11DDF81CF006AF669 /* SFSocketOSX */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		69B954F01DDF81CF006AF669 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69C2988C1DD593FF00E4C3BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,6 +498,41 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		69B954ED1DDF81CF006AF669 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69B9550E1DDF8227006AF669 /* HTTPProxyConnector.swift in Sources */,
+				69B9550B1DDF821F006AF669 /* HTTPHeader.swift in Sources */,
+				69B955121DDF8235006AF669 /* RawSocketFactory.swift in Sources */,
+				69B9550F1DDF822B006AF669 /* DirectConnector.swift in Sources */,
+				69B9550A1DDF8219006AF669 /* NWUDPSocket.swift in Sources */,
+				69B955071DDF820F006AF669 /* PacketProtocolParser.swift in Sources */,
+				69B955101DDF822E006AF669 /* ProxyConnector.swift in Sources */,
+				69B954FB1DDF81E0006AF669 /* SFData.swift in Sources */,
+				69B954FA1DDF81DC006AF669 /* SFVPNStatistics.swift in Sources */,
+				69B955151DDF823D006AF669 /* RawTCPSocketProtocol.swift in Sources */,
+				69B955031DDF8201006AF669 /* IPPacket.swift in Sources */,
+				69B955061DDF820C006AF669 /* ConnectRequest.swift in Sources */,
+				69B9550D1DDF8224006AF669 /* Socks5Connector.swift in Sources */,
+				69B955141DDF823A006AF669 /* NWTCPSocket.swift in Sources */,
+				69B954FC1DDF81E3006AF669 /* SwiftExtension.swift in Sources */,
+				69B955131DDF8238006AF669 /* GCDTCPSocket.swift in Sources */,
+				69B954FE1DDF81ED006AF669 /* SFEncrypt.swift in Sources */,
+				69B955011DDF81FB006AF669 /* Checksum.swift in Sources */,
+				69B9550C1DDF8221006AF669 /* SFProxy.swift in Sources */,
+				69B955111DDF8232006AF669 /* TCPSSConnector.swift in Sources */,
+				69B955021DDF81FE006AF669 /* IPAddress.swift in Sources */,
+				69B955091DDF8216006AF669 /* UDPDirectStack.swift in Sources */,
+				69B955051DDF8208006AF669 /* BinaryDataScanner.swift in Sources */,
+				69B954FD1DDF81E9006AF669 /* EncryptExtension.swift in Sources */,
+				69B955041DDF8205006AF669 /* Port.swift in Sources */,
+				69B955001DDF81F6006AF669 /* StreamScanner.swift in Sources */,
+				69B954FF1DDF81F3006AF669 /* Opt.swift in Sources */,
+				69B955081DDF8212006AF669 /* IPStackProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69C298891DD593FF00E4C3BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -483,6 +607,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		69B954F71DDF81CF006AF669 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 745WQDK4L7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = SFSocketOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yarshure.SFSocket;
+				PRODUCT_NAME = SFSocket;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		69B954F81DDF81CF006AF669 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 745WQDK4L7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = SFSocketOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yarshure.SFSocket;
+				PRODUCT_NAME = SFSocket;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		69C298941DD593FF00E4C3BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -670,6 +840,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		69B954F91DDF81CF006AF669 /* Build configuration list for PBXNativeTarget "SFSocketOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69B954F71DDF81CF006AF669 /* Debug */,
+				69B954F81DDF81CF006AF669 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		69C298881DD593FF00E4C3BD /* Build configuration list for PBXProject "SFSocket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
