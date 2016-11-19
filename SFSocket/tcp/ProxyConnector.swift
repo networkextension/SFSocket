@@ -44,7 +44,7 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
         
     ]
     #else
-    let acceptableCipherSuites = [
+    let acceptableCipherSuites:Set<NSNumber> = [
     NSNumber(value: TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256),
     NSNumber(value: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),
     NSNumber(value: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256),
