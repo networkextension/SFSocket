@@ -234,6 +234,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
                     guard error == nil else {
                         if let s = self , let c = s.connection, c.state != .connected {
                             AxLogger.log("\(self!.cIDString) NWTCPSocket got an error when reading data: \(error!.localizedDescription) state:\(c.state.description) ",level: .Error)
+                            s.disconnect()
                         }
                         
                         return
