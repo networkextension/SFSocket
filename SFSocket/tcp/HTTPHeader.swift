@@ -92,23 +92,22 @@ open class  SFHTTPHeader {
     }
     open func parserData(_ lines:[String]){
         for line in lines {
-            if let r = line.range(of: ": ") {
-                
-                
-                //                let start = line.startIndex
-                //                let end = line.endIndex
-                
-                
-                let key = line.substring(to: r.lowerBound) //substringToIndex(r.startIndex)
-                //print("key:" + key)
-                let v = line.substring(from: r.upperBound)//substringFromIndex(r.endIndex)
-                //print("value:" + v)
-                params[key] = v
+            let header = line.characters.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
+            guard header.count == 2 else {
+                continue
             }
-            //            let b = line.components(separatedBy: ": ")
-            //            if b.count > 1{
-            //                params[b.first!] = b[1]
-            //            }
+            let key = (String(header[0]).trimmingCharacters(in: CharacterSet.whitespaces))
+            let value = (String(header[1]).trimmingCharacters(in: CharacterSet.whitespaces))
+
+            params[key] = value
+            //memory leak 
+            //change to [(String,String)]
+//            if let r = line.range(of: ": ") {
+//                
+//                let key = line.substring(to: r.lowerBound) //
+//                let v = line.substring(from: r.upperBound)//
+//                params[key] = v
+//            }
         }
         
     }

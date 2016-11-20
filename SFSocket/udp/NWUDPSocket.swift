@@ -37,11 +37,13 @@ open class NWUDPSocket {
      - parameter port: The port.
      */
     init?(host: String, port: Int) {
-        guard let udpsession = RawSocketFactory.TunnelProvider?.createUDPSession(to: NWHostEndpoint(hostname: host, port: "\(port)"), from: nil) else {
-            return nil
+        guard let provider = RawSocketFactory.TunnelProvider  else {
+             return nil
         }
+        let p = String(port)
+        session = provider.createUDPSession(to: NWHostEndpoint(hostname: host, port: p), from: nil)
+           
         
-        session = udpsession
         
         session.setReadHandler({ [ weak self ] dataArray, error in
             guard let sSelf = self else {
