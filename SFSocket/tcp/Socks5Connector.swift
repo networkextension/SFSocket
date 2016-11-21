@@ -63,7 +63,7 @@ public class Socks5Connector:ProxyConnector{
 
         }
         
-       //AxLogger.log("\(cIDString) send  .Auth req \(buffer)",level:.Trace)
+       AxLogger.log("\(cIDString) send  .Auth req \(buffer)",level:.Trace)
         self.writeData(buffer,withTag: Socks5Connector.ReadTag)
     }
     func sendUserAndPassword(){
@@ -111,11 +111,11 @@ public class Socks5Connector:ProxyConnector{
             if let data =  toIPv6Addr(ipString: targetHost) {
                 
              
-               //AxLogger.log("\(cIDString) convert \(targetHost) to Data:\(data)",level: .Info)
+               AxLogger.log("\(cIDString) convert \(targetHost) to Data:\(data)",level: .Info)
                 buffer.append(data)
                 //buffer.append(targetPort.byteSwapped)
             }else {
-               //AxLogger.log("\(cIDString) convert \(targetHost) to in6_addr error )",level: .Warning)
+               AxLogger.log("\(cIDString) convert \(targetHost) to in6_addr error )",level: .Warning)
                 return
             }
             
@@ -142,7 +142,7 @@ public class Socks5Connector:ProxyConnector{
                 recvBuffer = Data()
             }
             recvBuffer?.append(data!)
-           //AxLogger.log("\(cIDString)  .Auth  respon buf \(recvBuffer)",level: .Trace)
+           AxLogger.log("\(cIDString)  .Auth  respon buf \(recvBuffer as? NSData)",level: .Trace)
             guard var buffer = recvBuffer else {return }
             let version : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: version, count: 1)
@@ -189,7 +189,7 @@ public class Socks5Connector:ProxyConnector{
                 recvBuffer = Data()
             }
             recvBuffer?.append(data!)
-           //AxLogger.log("\(cIDString)  .AuthSend   respon buf \(recvBuffer)",level: .Debug)
+           AxLogger.log("\(cIDString)  .AuthSend   respon buf \(recvBuffer)",level: .Debug)
             guard var buffer = recvBuffer else {return }
             let version : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: version, count: 1)
@@ -202,7 +202,7 @@ public class Socks5Connector:ProxyConnector{
                 }else {
                     recvBuffer = Data()
                 }
-               //AxLogger.log("\(cIDString)  .Auth Success and send BIND CMD",level: .Warning)
+               AxLogger.log("\(cIDString)  .Auth Success and send BIND CMD",level: .Warning)
                 sendBind()
                 stage = .Bind
             }else {
@@ -262,16 +262,16 @@ public class Socks5Connector:ProxyConnector{
                     length.deallocate(capacity: 1)
                     port.deallocate(capacity: 1)
                 }else if type.pointee == SOCKS_IPV6 {
-                    //AxLogger.log("\(cIDString) Bind respond ipv6 currnetly don't support",level:.Error)
+                    AxLogger.log("\(cIDString) Bind respond ipv6 currnetly don't support",level:.Error)
                 }
                 
                 stage = .Connected
-               //AxLogger.log("\(cIDString) recv .Bind respon and Connected now \(recvBuffer)",level: .Debug)
+               AxLogger.log("\(cIDString) recv .Bind respon and Connected now \(recvBuffer as? NSData)",level: .Debug)
                 sock5connected()
                 reserved.deallocate(capacity: 1)
                 type.deallocate(capacity: 1)
             }else {
-               //AxLogger.log("\(cIDString) don't recv .Bind respon",level: .Debug)
+               AxLogger.log("\(cIDString) don't recv .Bind respon",level: .Debug)
             }
             version.deallocate(capacity: 1)
             result.deallocate(capacity: 1)
