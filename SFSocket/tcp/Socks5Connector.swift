@@ -29,8 +29,8 @@ public enum SFSocks5Stage:Int8,CustomStringConvertible{
 // 050000010000000001BB
 
 public class Socks5Connector:ProxyConnector{
-    var host:String?
-    var port:UInt16 = 0
+//    var host:String?
+//    var port:UInt16 = 0
     var stage:SFSocks5Stage = .Auth
     var recvBuffer:Data?
     static var  ReadTag:Int = -3000
@@ -63,7 +63,7 @@ public class Socks5Connector:ProxyConnector{
 
         }
         
-       AxLogger.log("\(cIDString) send  .Auth req \(buffer)",level:.Trace)
+       AxLogger.log("\(cIDString) send  .Auth req \(buffer as NSData)",level:.Debug)
         self.writeData(buffer,withTag: Socks5Connector.ReadTag)
     }
     func sendUserAndPassword(){
@@ -77,7 +77,7 @@ public class Socks5Connector:ProxyConnector{
         len = UInt8(proxy.password.characters.count)
         buffer.append(len)
         buffer.append(proxy.password.data(using: .utf8)!)
-        
+        AxLogger.log("\(cIDString) send  .Auth req \(buffer as NSData)",level:.Debug)
         self.writeData( buffer, withTag: Socks5Connector.ReadTag)
         
     }
@@ -121,7 +121,7 @@ public class Socks5Connector:ProxyConnector{
             
         }
     
-       //AxLogger.log("\(cIDString) send  .Bind req \(buffer)",level: .Trace)
+       AxLogger.log("\(cIDString) send  .Bind req \(buffer.data as NSData)",level: .Debug)
         self.writeData(buffer.data, withTag: Socks5Connector.ReadTag)
     }
     public override func socketConnectd(){
@@ -136,14 +136,19 @@ public class Socks5Connector:ProxyConnector{
 
     override func readCallback(data: Data?, tag: Int) {
         
+        
+        AxLogger.log("\(cIDString) recv new data  \(data! as NSData)",level: .Debug)
         if stage == .Auth {
             //ans 0500
             if recvBuffer == nil {
-                recvBuffer = Data()
+                recvBuffer = data!
+            }else {
+                recvBuffer?.append(data!)
             }
-            recvBuffer?.append(data!)
-           AxLogger.log("\(cIDString)  .Auth  respon buf \(recvBuffer as? NSData)",level: .Trace)
+            
+           
             guard var buffer = recvBuffer else {return }
+            AxLogger.log("\(cIDString)  .Auth  respon buf \(buffer as NSData)",level: .Debug)
             let version : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: version, count: 1)
             
@@ -169,6 +174,7 @@ public class Socks5Connector:ProxyConnector{
                     }else {
                         recvBuffer = Data()
                     }
+                    recvBuffer = nil
                     stage = .AuthSend
                     sendUserAndPassword()
                 }else if auth.pointee == 0xff {
@@ -185,17 +191,30 @@ public class Socks5Connector:ProxyConnector{
             version.deallocate(capacity: 1)
             auth.deallocate(capacity: 1)
         }else if stage == .AuthSend {
+            
             if recvBuffer == nil {
                 recvBuffer = Data()
             }
             recvBuffer?.append(data!)
-           AxLogger.log("\(cIDString)  .AuthSend   respon buf \(recvBuffer)",level: .Debug)
+            //05020004 00000000 0000
+            
+           
             guard var buffer = recvBuffer else {return }
+            AxLogger.log("\(cIDString)  .AuthSend   respon buf \(buffer as NSData )",level: .Debug)
+            /*
+            recvBuffer = nil
+            
+            sendBind()
+            
+            stage = .Bind
+            return //Data 为nil 是什么bug?,被系统reset 了吗？
+            */
             let version : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: version, count: 1)
             
             let result : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: result, count: 1)
+            
             if version.pointee == SOCKS_AUTH_VERSION && result.pointee == SOCKS_AUTH_SUCCESS {
                 if buffer.count > 2 {
                     buffer = buffer.subdata(in: Range(2 ..< buffer.count))
@@ -206,8 +225,8 @@ public class Socks5Connector:ProxyConnector{
                 sendBind()
                 stage = .Bind
             }else {
-               AxLogger.log("socks5 client  .Auth failure",level: .Warning)
-                self.forceDisconnect()
+                AxLogger.log("socks5 client  .Auth failure",level: .Warning)
+                self.disconnect()
             }
             version.deallocate(capacity: 1)
             result.deallocate(capacity: 1)
@@ -216,9 +235,10 @@ public class Socks5Connector:ProxyConnector{
                 recvBuffer = Data()
             }
             recvBuffer?.append(data!)
-           //AxLogger.log("\(cIDString)  .Bind  respon buf \(recvBuffer)",level: .Debug)
+           
             //05000001 c0a80251 c4bf
             guard let buffer = recvBuffer else {return }
+            AxLogger.log("\(cIDString)  .Bind  respon buf \(buffer as NSData)",level: .Debug)
             let version : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
             buffer.copyBytes(to: version, count: 1)
             
@@ -234,13 +254,13 @@ public class Socks5Connector:ProxyConnector{
                  buffer.copyBytes(to: type, from: Range(3...3))
                 if type.pointee == 1 {
                     let ip: UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 4)
-                    buffer.copyBytes(to: ip, from: Range(4 ... 8))
+                    buffer.copyBytes(to: ip, from: Range(4 ... 7))
                     
                     let port: UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 2)
-                    buffer.copyBytes(to: port, from: Range(8 ... 10))
+                    buffer.copyBytes(to: port, from: Range(8 ..< 10))
                    //AxLogger.log("\(cIDString) Bind respond \(ip.pointee):\(port.pointee)",level: .Debug)
                     if buffer.count > 10  {
-                        recvBuffer = buffer.subdata(in: Range(10 ...  buffer.count))
+                        recvBuffer = buffer.subdata(in: Range(10 ..<  buffer.count))
                     }else {
                         recvBuffer = nil
                     }
@@ -255,7 +275,7 @@ public class Socks5Connector:ProxyConnector{
                    //AxLogger.log("\(cIDString) Bind respond domain name length:\(length.pointee) \(domainname):\(port.pointee)",level: .Debug)
                     let len = 5+Int(length.pointee) + 2
                     if buffer.count >  len {
-                        recvBuffer = buffer.subdata(in: Range(len ... buffer.count ))
+                        recvBuffer = buffer.subdata(in: Range(len ..< buffer.count ))
                     }else {
                         recvBuffer = nil
                     }
@@ -266,7 +286,7 @@ public class Socks5Connector:ProxyConnector{
                 }
                 
                 stage = .Connected
-               AxLogger.log("\(cIDString) recv .Bind respon and Connected now \(recvBuffer as? NSData)",level: .Debug)
+               
                 sock5connected()
                 reserved.deallocate(capacity: 1)
                 type.deallocate(capacity: 1)

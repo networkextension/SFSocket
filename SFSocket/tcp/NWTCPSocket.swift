@@ -239,10 +239,10 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
                         
                         return
                     }
-                    if let strong = self {autoreleasepool {
+                    if let strong = self {
                         strong.readCallback(data: data, tag: tag)
                         
-                        }
+                        
                         strong.readPending = false
                     }
                     

@@ -202,7 +202,7 @@ class enc_ctx {
     static var sodiumInited = false
     var counter:UInt64 = 0
     var IV:Data
-    var ctx:CCCryptorRef?
+    let  ctx:CCCryptorRef
     var cryptoInit:Bool = false
     func test (){
         let abcd = "aaaa"
@@ -218,13 +218,13 @@ class enc_ctx {
             }
         }
     }
-    static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod,cryptor :inout CCCryptorRef?)   {
+    static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod) ->CCCryptorRef?  {
         
         let algorithm:CCAlgorithm =  m.supported_ciphers() // findCCAlgorithm(Int32(m.rawValue))
         //var  cryptor :CCCryptorRef?
         
         let key_size = m.key_size
-        
+         let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
         let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(op, // operation
             m.ccmode, // mode CTR kCCModeRC4= 9
             algorithm,//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
@@ -236,12 +236,12 @@ class enc_ctx {
             0, //size_t tweakLength,
             0, //int numRounds,
             0, //CCModeOptions options,
-            &cryptor); //CCCryptorRef *cryptorRef
+            cryptor); //CCCryptorRef *cryptorRef
         if (createDecrypt == CCCryptorStatus(0)){
-            
+            return cryptor.pointee
         }else {
             AxLogger.log("create crypto ctx error",level: .Error)
-           
+            return nil
         }
         
     }
@@ -272,9 +272,9 @@ class enc_ctx {
         let c = m.supported_ciphers()
         if  c != UInt32.max {
             if encrypt {
-                  enc_ctx.create_enc(op: CCOperation(0), key: true_key,iv: iv,m:method,cryptor: &ctx)
+                  ctx = enc_ctx.create_enc(op: CCOperation(0), key: true_key,iv: iv,m:method)!
             }else {
-                  enc_ctx.create_enc(op: CCOperation(1), key: true_key,iv: iv,m:method,cryptor: &ctx)
+                  ctx = enc_ctx.create_enc(op: CCOperation(1), key: true_key,iv: iv,m:method)!
             }
             IV = iv
         }else {
@@ -287,7 +287,9 @@ class enc_ctx {
             }else {
                 IV = iv
             }
-            
+            //init 
+            //
+            ctx = UnsafeMutablePointer<CCCryptorRef>.allocate(capacity: 1).pointee
         }
         
         
@@ -297,9 +299,8 @@ class enc_ctx {
         
     }
     deinit {
-        if ctx != nil {
-            CCCryptorRelease(ctx)
-        }
+        CCCryptorRelease(ctx)
+        
         
     }
 }
