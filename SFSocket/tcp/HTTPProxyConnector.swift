@@ -57,7 +57,12 @@ public  class HTTPProxyConnector:ProxyConnector {
         if let r = data.range(of:hData, options: Data.SearchOptions.init(rawValue: 0)){
         
             // body found
-            headerData.append( data.subdata(in: r))
+            if headerData.count == 0 {
+                headerData = data
+            }else {
+                headerData.append( data)
+            }
+            //headerData.append( data.subdata(in: r))
             
             respHeader = SFHTTPResponseHeader(data: headerData)
             if let r = respHeader, r.sCode != 200 {
@@ -71,12 +76,9 @@ public  class HTTPProxyConnector:ProxyConnector {
                 //NSLog("CONNECT status\(r.sCode) ")
             }
         
-            //let code = NSString.init(data: headerData, encoding: NSUTF8StringEncoding)!
-            //AxLogger.log("\(cIDString) resp \(code)",level: .Debug)
-            //reqHeader = nil
-            //headerData = NSMutableData()
+           
             
-            return r.length() + 4 // https need delete CONNECT respond
+            return r.upperBound // https need delete CONNECT respond
         }else {
             headerData.append(data)
             

@@ -38,6 +38,19 @@ public class SFTraffic {
         if !speed {
             s = ""
         }
+        #if os(macOS)
+            if x < 1024{
+                return label + " \(x) B" + s
+            }else if x >= 1024 && x < 1024*1024 {
+                return label +  String(format: "%.0f KB", Float(x)/1024.0)  + s
+            }else if x >= 1024*1024 && x < 1024*1024*1024 {
+                //return label + "\(x/1024/1024) MB" + s
+                return label +  String(format: "%.0f MB", Float(x)/1024/1024)  + s
+            }else {
+                //return label + "\(x/1024/1024/1024) GB" + s
+                return label +  String(format: "%.0f GB", Float(x)/1024/1024/1024)  + s
+            }
+            #else
         if x < 1024{
             return label + " \(x) B" + s
         }else if x >= 1024 && x < 1024*1024 {
@@ -49,7 +62,7 @@ public class SFTraffic {
             //return label + "\(x/1024/1024/1024) GB" + s
             return label +  String(format: "%.2f GB", Float(x)/1024/1024/1024)  + s
         }
-        
+        #endif
     }
     public func report() ->String{
         return "\(toString(x: tx, label: "TX:",speed: true)) \(toString(x: rx, label: "RX:",speed: true))"
