@@ -25,6 +25,19 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBAction func testEncrypt(_ sender: Any) {
+        let t  = Date()
+        for _ in 0 ..<  100 {
+            let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-cfb")
+            let data = "sdlfjlsadfjalsdjfalsdfjlasf".data(using: .utf8)!
+            let out  = enc.encrypt(encrypt_bytes: data)
+            
+            //print(out! as NSData)
+        }
+        let tw = Date().timeIntervalSince(t)
+        print(tw)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

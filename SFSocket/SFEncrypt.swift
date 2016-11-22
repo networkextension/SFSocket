@@ -202,7 +202,7 @@ class enc_ctx {
     static var sodiumInited = false
     var counter:UInt64 = 0
     var IV:Data
-    let  ctx:CCCryptorRef
+    var  ctx:CCCryptorRef?
     var cryptoInit:Bool = false
     func test (){
         let abcd = "aaaa"
@@ -238,7 +238,9 @@ class enc_ctx {
             0, //CCModeOptions options,
             cryptor); //CCCryptorRef *cryptorRef
         if (createDecrypt == CCCryptorStatus(0)){
-            return cryptor.pointee
+            let ptr = cryptor.pointee
+            cryptor.deallocate(capacity: 1)
+            return ptr
         }else {
             AxLogger.log("create crypto ctx error",level: .Error)
             return nil
@@ -287,9 +289,7 @@ class enc_ctx {
             }else {
                 IV = iv
             }
-            //init 
-            //
-            ctx = UnsafeMutablePointer<CCCryptorRef>.allocate(capacity: 1).pointee
+            //init
         }
         
         
@@ -299,20 +299,24 @@ class enc_ctx {
         
     }
     deinit {
-        CCCryptorRelease(ctx)
+        if ctx != nil {
+            
+             CCCryptorRelease(ctx)
+        }
+       
         
         
     }
 }
-class SSEncrypt {
+public class SSEncrypt {
     
     var m:CryptoMethod
     var testenable:Bool = false
     var send_ctx:enc_ctx?
     var recv_ctx:enc_ctx?
     //let block_size = 16
-    var ramdonKey:Data?
-    var ivBuffer:Data = Data.init()
+    public var ramdonKey:Data?
+    var ivBuffer:Data = Data()
     static var iv_cache:[Data] = []
     static func have_iv(i:Data,m:CryptoMethod) ->Bool {
         let x = CryptoMethod.RC4_MD5
@@ -342,7 +346,7 @@ class SSEncrypt {
         }
         return data.data
     }
-    init(password:String,method:String) {
+    public init(password:String,method:String) {
         
         m = CryptoMethod.init(cipher: method)
         //print("method:\(m.description)")
@@ -478,7 +482,7 @@ class SSEncrypt {
         return cipher as Data?
         
     }
-    func decrypt(encrypt_bytes:Data) ->Data?{
+    public func decrypt(encrypt_bytes:Data) ->Data?{
         if (  encrypt_bytes.count == 0 ) {
             
             return nil;
@@ -624,7 +628,7 @@ class SSEncrypt {
     //            return d
     //        }
     //    }
-    func encrypt(encrypt_bytes:Data) ->Data?{
+    public func encrypt(encrypt_bytes:Data) ->Data?{
         
         //let iv:NSData = NSData();
         //[NSMutableData dataWithLength:kCCBlockSizeAES128]
