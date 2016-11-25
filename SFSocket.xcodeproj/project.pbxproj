@@ -12,7 +12,7 @@
 		692DD53C1DD5C9940079493D /* HTTPProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */; };
 		692DD53E1DD5C99E0079493D /* Socks5Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53D1DD5C99E0079493D /* Socks5Connector.swift */; };
 		692DD5401DD5C9F10079493D /* SFProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53F1DD5C9F10079493D /* SFProxy.swift */; };
-		692DD57E1DD5CA630079493D /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57D1DD5CA630079493D /* HTTPHeader.swift */; };
+		692DD57E1DD5CA630079493D /* SFHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */; };
 		692DD5801DD5CAB50079493D /* SwiftExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57F1DD5CAB50079493D /* SwiftExtension.swift */; };
 		692DD5821DD5CB250079493D /* SFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5811DD5CB250079493D /* SFData.swift */; };
 		692DD5AC1DD5CE310079493D /* UDPDirectStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AB1DD5CE310079493D /* UDPDirectStack.swift */; };
@@ -61,7 +61,7 @@
 		69B955081DDF8212006AF669 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AD1DD5CE490079493D /* IPStackProtocol.swift */; };
 		69B955091DDF8216006AF669 /* UDPDirectStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD5AB1DD5CE310079493D /* UDPDirectStack.swift */; };
 		69B9550A1DDF8219006AF669 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A081A1DD5C603009BFFC9 /* NWUDPSocket.swift */; };
-		69B9550B1DDF821F006AF669 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57D1DD5CA630079493D /* HTTPHeader.swift */; };
+		69B9550B1DDF821F006AF669 /* SFHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */; };
 		69B9550C1DDF8221006AF669 /* SFProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53F1DD5C9F10079493D /* SFProxy.swift */; };
 		69B9550D1DDF8224006AF669 /* Socks5Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53D1DD5C99E0079493D /* Socks5Connector.swift */; };
 		69B9550E1DDF8227006AF669 /* HTTPProxyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */; };
@@ -72,6 +72,52 @@
 		69B955131DDF8238006AF669 /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
 		69B955141DDF823A006AF669 /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
 		69B955151DDF823D006AF669 /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
+		69BF6C221DE579D9000ABF09 /* SFConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C211DE579D9000ABF09 /* SFConnection.swift */; };
+		69BF6C231DE579D9000ABF09 /* SFConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C211DE579D9000ABF09 /* SFConnection.swift */; };
+		69BF6C261DE57BFA000ABF09 /* GCDHTTPProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C251DE57BFA000ABF09 /* GCDHTTPProxyServer.swift */; };
+		69BF6C271DE57BFA000ABF09 /* GCDHTTPProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C251DE57BFA000ABF09 /* GCDHTTPProxyServer.swift */; };
+		69BF6C291DE57C36000ABF09 /* GCDProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C281DE57C36000ABF09 /* GCDProxyServer.swift */; };
+		69BF6C2A1DE57C36000ABF09 /* GCDProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C281DE57C36000ABF09 /* GCDProxyServer.swift */; };
+		69BF6C2C1DE57CAE000ABF09 /* ProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C2B1DE57CAE000ABF09 /* ProxyServer.swift */; };
+		69BF6C2D1DE57CAE000ABF09 /* ProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C2B1DE57CAE000ABF09 /* ProxyServer.swift */; };
+		69BF6C2F1DE57D05000ABF09 /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C2E1DE57D05000ABF09 /* Tunnel.swift */; };
+		69BF6C301DE57D05000ABF09 /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C2E1DE57D05000ABF09 /* Tunnel.swift */; };
+		69BF6C321DE57D5A000ABF09 /* SocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C311DE57D5A000ABF09 /* SocketProtocol.swift */; };
+		69BF6C331DE57D5A000ABF09 /* SocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C311DE57D5A000ABF09 /* SocketProtocol.swift */; };
+		69BF6C351DE57D72000ABF09 /* ProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C341DE57D72000ABF09 /* ProxySocket.swift */; };
+		69BF6C361DE57D72000ABF09 /* ProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C341DE57D72000ABF09 /* ProxySocket.swift */; };
+		69BF6C381DE57DAE000ABF09 /* SocketTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C371DE57DAE000ABF09 /* SocketTag.swift */; };
+		69BF6C391DE57DAE000ABF09 /* SocketTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C371DE57DAE000ABF09 /* SocketTag.swift */; };
+		69BF6C3B1DE57DD1000ABF09 /* AdapterSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C3A1DE57DD1000ABF09 /* AdapterSocket.swift */; };
+		69BF6C3C1DE57DD1000ABF09 /* AdapterSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C3A1DE57DD1000ABF09 /* AdapterSocket.swift */; };
+		69BF6C3E1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C3D1DE57DE1000ABF09 /* ConnectResponse.swift */; };
+		69BF6C3F1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C3D1DE57DE1000ABF09 /* ConnectResponse.swift */; };
+		69BF6C411DE57DF5000ABF09 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C401DE57DF5000ABF09 /* Observer.swift */; };
+		69BF6C421DE57DF5000ABF09 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C401DE57DF5000ABF09 /* Observer.swift */; };
+		69BF6C441DE57E07000ABF09 /* TunnelEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C431DE57E07000ABF09 /* TunnelEvent.swift */; };
+		69BF6C451DE57E07000ABF09 /* TunnelEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C431DE57E07000ABF09 /* TunnelEvent.swift */; };
+		69BF6C471DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C461DE57E15000ABF09 /* TunnelQueueFactory.swift */; };
+		69BF6C481DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C461DE57E15000ABF09 /* TunnelQueueFactory.swift */; };
+		69BF6C4A1DE57E28000ABF09 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C491DE57E28000ABF09 /* ObserverFactory.swift */; };
+		69BF6C4B1DE57E28000ABF09 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C491DE57E28000ABF09 /* ObserverFactory.swift */; };
+		69BF6C4D1DE57E3A000ABF09 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C4C1DE57E3A000ABF09 /* EventType.swift */; };
+		69BF6C4E1DE57E3A000ABF09 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C4C1DE57E3A000ABF09 /* EventType.swift */; };
+		69BF6C501DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C4F1DE57E51000ABF09 /* AdapterSocketEvent.swift */; };
+		69BF6C511DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C4F1DE57E51000ABF09 /* AdapterSocketEvent.swift */; };
+		69BF6C531DE57E5D000ABF09 /* ProxySocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C521DE57E5D000ABF09 /* ProxySocketEvent.swift */; };
+		69BF6C541DE57E5D000ABF09 /* ProxySocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C521DE57E5D000ABF09 /* ProxySocketEvent.swift */; };
+		69BF6C561DE57E74000ABF09 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C551DE57E74000ABF09 /* Atomic.swift */; };
+		69BF6C571DE57E74000ABF09 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C551DE57E74000ABF09 /* Atomic.swift */; };
+		69BF6C591DE57E82000ABF09 /* ProxyServerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C581DE57E82000ABF09 /* ProxyServerEvent.swift */; };
+		69BF6C5A1DE57E82000ABF09 /* ProxyServerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C581DE57E82000ABF09 /* ProxyServerEvent.swift */; };
+		69BF6C5C1DE57E95000ABF09 /* HTTPProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C5B1DE57E95000ABF09 /* HTTPProxySocket.swift */; };
+		69BF6C5D1DE57E95000ABF09 /* HTTPProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C5B1DE57E95000ABF09 /* HTTPProxySocket.swift */; };
+		69BF6C621DE57F7B000ABF09 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C611DE57F7B000ABF09 /* HTTPHeader.swift */; };
+		69BF6C631DE57F7B000ABF09 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C611DE57F7B000ABF09 /* HTTPHeader.swift */; };
+		69BF6C651DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C641DE57FCA000ABF09 /* HTTPStreamScanner.swift */; };
+		69BF6C661DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C641DE57FCA000ABF09 /* HTTPStreamScanner.swift */; };
+		69BF6C681DE57FDB000ABF09 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C671DE57FDB000ABF09 /* Utils.swift */; };
+		69BF6C691DE57FDB000ABF09 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF6C671DE57FDB000ABF09 /* Utils.swift */; };
 		69C298931DD593FF00E4C3BD /* SFSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 69C298911DD593FF00E4C3BD /* SFSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
@@ -128,7 +174,7 @@
 		692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxyConnector.swift; sourceTree = "<group>"; };
 		692DD53D1DD5C99E0079493D /* Socks5Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socks5Connector.swift; sourceTree = "<group>"; };
 		692DD53F1DD5C9F10079493D /* SFProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFProxy.swift; sourceTree = "<group>"; };
-		692DD57D1DD5CA630079493D /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
+		692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFHTTPHeader.swift; sourceTree = "<group>"; };
 		692DD57F1DD5CAB50079493D /* SwiftExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftExtension.swift; sourceTree = "<group>"; };
 		692DD5811DD5CB250079493D /* SFData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFData.swift; sourceTree = "<group>"; };
 		692DD5AB1DD5CE310079493D /* UDPDirectStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UDPDirectStack.swift; sourceTree = "<group>"; };
@@ -164,6 +210,29 @@
 		69B954F21DDF81CF006AF669 /* SFSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SFSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69B954F41DDF81CF006AF669 /* SFSocketOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSocketOSX.h; sourceTree = "<group>"; };
 		69B954F51DDF81CF006AF669 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69BF6C211DE579D9000ABF09 /* SFConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFConnection.swift; sourceTree = "<group>"; };
+		69BF6C251DE57BFA000ABF09 /* GCDHTTPProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDHTTPProxyServer.swift; sourceTree = "<group>"; };
+		69BF6C281DE57C36000ABF09 /* GCDProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDProxyServer.swift; sourceTree = "<group>"; };
+		69BF6C2B1DE57CAE000ABF09 /* ProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyServer.swift; sourceTree = "<group>"; };
+		69BF6C2E1DE57D05000ABF09 /* Tunnel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tunnel.swift; sourceTree = "<group>"; };
+		69BF6C311DE57D5A000ABF09 /* SocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketProtocol.swift; sourceTree = "<group>"; };
+		69BF6C341DE57D72000ABF09 /* ProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxySocket.swift; sourceTree = "<group>"; };
+		69BF6C371DE57DAE000ABF09 /* SocketTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTag.swift; sourceTree = "<group>"; };
+		69BF6C3A1DE57DD1000ABF09 /* AdapterSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterSocket.swift; sourceTree = "<group>"; };
+		69BF6C3D1DE57DE1000ABF09 /* ConnectResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectResponse.swift; sourceTree = "<group>"; };
+		69BF6C401DE57DF5000ABF09 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		69BF6C431DE57E07000ABF09 /* TunnelEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TunnelEvent.swift; sourceTree = "<group>"; };
+		69BF6C461DE57E15000ABF09 /* TunnelQueueFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TunnelQueueFactory.swift; sourceTree = "<group>"; };
+		69BF6C491DE57E28000ABF09 /* ObserverFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverFactory.swift; sourceTree = "<group>"; };
+		69BF6C4C1DE57E3A000ABF09 /* EventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
+		69BF6C4F1DE57E51000ABF09 /* AdapterSocketEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterSocketEvent.swift; sourceTree = "<group>"; };
+		69BF6C521DE57E5D000ABF09 /* ProxySocketEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxySocketEvent.swift; sourceTree = "<group>"; };
+		69BF6C551DE57E74000ABF09 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		69BF6C581DE57E82000ABF09 /* ProxyServerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyServerEvent.swift; sourceTree = "<group>"; };
+		69BF6C5B1DE57E95000ABF09 /* HTTPProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxySocket.swift; sourceTree = "<group>"; };
+		69BF6C611DE57F7B000ABF09 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
+		69BF6C641DE57FCA000ABF09 /* HTTPStreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStreamScanner.swift; sourceTree = "<group>"; };
+		69BF6C671DE57FDB000ABF09 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		69C2988E1DD593FF00E4C3BD /* SFSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SFSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69C298911DD593FF00E4C3BD /* SFSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSocket.h; sourceTree = "<group>"; };
 		69C298921DD593FF00E4C3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -271,6 +340,43 @@
 			path = SFSocketOSX;
 			sourceTree = "<group>";
 		};
+		69BF6C201DE579C9000ABF09 /* connection */ = {
+			isa = PBXGroup;
+			children = (
+				69BF6C211DE579D9000ABF09 /* SFConnection.swift */,
+			);
+			path = connection;
+			sourceTree = "<group>";
+		};
+		69BF6C241DE57AC4000ABF09 /* HTTPProxyServer */ = {
+			isa = PBXGroup;
+			children = (
+				69BF6C671DE57FDB000ABF09 /* Utils.swift */,
+				69BF6C641DE57FCA000ABF09 /* HTTPStreamScanner.swift */,
+				69BF6C611DE57F7B000ABF09 /* HTTPHeader.swift */,
+				69BF6C5B1DE57E95000ABF09 /* HTTPProxySocket.swift */,
+				69BF6C581DE57E82000ABF09 /* ProxyServerEvent.swift */,
+				69BF6C551DE57E74000ABF09 /* Atomic.swift */,
+				69BF6C521DE57E5D000ABF09 /* ProxySocketEvent.swift */,
+				69BF6C4F1DE57E51000ABF09 /* AdapterSocketEvent.swift */,
+				69BF6C4C1DE57E3A000ABF09 /* EventType.swift */,
+				69BF6C491DE57E28000ABF09 /* ObserverFactory.swift */,
+				69BF6C461DE57E15000ABF09 /* TunnelQueueFactory.swift */,
+				69BF6C431DE57E07000ABF09 /* TunnelEvent.swift */,
+				69BF6C401DE57DF5000ABF09 /* Observer.swift */,
+				69BF6C3D1DE57DE1000ABF09 /* ConnectResponse.swift */,
+				69BF6C3A1DE57DD1000ABF09 /* AdapterSocket.swift */,
+				69BF6C371DE57DAE000ABF09 /* SocketTag.swift */,
+				69BF6C341DE57D72000ABF09 /* ProxySocket.swift */,
+				69BF6C311DE57D5A000ABF09 /* SocketProtocol.swift */,
+				69BF6C2E1DE57D05000ABF09 /* Tunnel.swift */,
+				69BF6C2B1DE57CAE000ABF09 /* ProxyServer.swift */,
+				69BF6C281DE57C36000ABF09 /* GCDProxyServer.swift */,
+				69BF6C251DE57BFA000ABF09 /* GCDHTTPProxyServer.swift */,
+			);
+			path = HTTPProxyServer;
+			sourceTree = "<group>";
+		};
 		69C298841DD593FF00E4C3BD = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +403,8 @@
 		69C298901DD593FF00E4C3BD /* SFSocket */ = {
 			isa = PBXGroup;
 			children = (
+				69BF6C241DE57AC4000ABF09 /* HTTPProxyServer */,
+				69BF6C201DE579C9000ABF09 /* connection */,
 				69DD43571DDC4F8200080CF1 /* state */,
 				692DD5811DD5CB250079493D /* SFData.swift */,
 				692DD57F1DD5CAB50079493D /* SwiftExtension.swift */,
@@ -316,7 +424,7 @@
 		69C298991DD5946200E4C3BD /* tcp */ = {
 			isa = PBXGroup;
 			children = (
-				692DD57D1DD5CA630079493D /* HTTPHeader.swift */,
+				692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */,
 				692DD53F1DD5C9F10079493D /* SFProxy.swift */,
 				692DD53D1DD5C99E0079493D /* Socks5Connector.swift */,
 				692DD53B1DD5C9940079493D /* HTTPProxyConnector.swift */,
@@ -535,33 +643,56 @@
 			buildActionMask = 2147483647;
 			files = (
 				69B9550E1DDF8227006AF669 /* HTTPProxyConnector.swift in Sources */,
-				69B9550B1DDF821F006AF669 /* HTTPHeader.swift in Sources */,
+				69B9550B1DDF821F006AF669 /* SFHTTPHeader.swift in Sources */,
 				69B955121DDF8235006AF669 /* RawSocketFactory.swift in Sources */,
 				69B9550F1DDF822B006AF669 /* DirectConnector.swift in Sources */,
 				69B9550A1DDF8219006AF669 /* NWUDPSocket.swift in Sources */,
+				69BF6C2D1DE57CAE000ABF09 /* ProxyServer.swift in Sources */,
+				69BF6C4B1DE57E28000ABF09 /* ObserverFactory.swift in Sources */,
 				69B955071DDF820F006AF669 /* PacketProtocolParser.swift in Sources */,
+				69BF6C301DE57D05000ABF09 /* Tunnel.swift in Sources */,
 				69B955101DDF822E006AF669 /* ProxyConnector.swift in Sources */,
+				69BF6C4E1DE57E3A000ABF09 /* EventType.swift in Sources */,
 				69B954FB1DDF81E0006AF669 /* SFData.swift in Sources */,
 				69B954FA1DDF81DC006AF669 /* SFVPNStatistics.swift in Sources */,
 				69B955151DDF823D006AF669 /* RawTCPSocketProtocol.swift in Sources */,
 				69B955031DDF8201006AF669 /* IPPacket.swift in Sources */,
+				69BF6C421DE57DF5000ABF09 /* Observer.swift in Sources */,
+				69BF6C361DE57D72000ABF09 /* ProxySocket.swift in Sources */,
 				69B955061DDF820C006AF669 /* ConnectRequest.swift in Sources */,
+				69BF6C481DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */,
+				69BF6C511DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */,
+				69BF6C331DE57D5A000ABF09 /* SocketProtocol.swift in Sources */,
 				69B9550D1DDF8224006AF669 /* Socks5Connector.swift in Sources */,
+				69BF6C571DE57E74000ABF09 /* Atomic.swift in Sources */,
 				69B955141DDF823A006AF669 /* NWTCPSocket.swift in Sources */,
+				69BF6C271DE57BFA000ABF09 /* GCDHTTPProxyServer.swift in Sources */,
+				69BF6C451DE57E07000ABF09 /* TunnelEvent.swift in Sources */,
+				69BF6C691DE57FDB000ABF09 /* Utils.swift in Sources */,
+				69BF6C631DE57F7B000ABF09 /* HTTPHeader.swift in Sources */,
+				69BF6C231DE579D9000ABF09 /* SFConnection.swift in Sources */,
+				69BF6C541DE57E5D000ABF09 /* ProxySocketEvent.swift in Sources */,
 				69B954FC1DDF81E3006AF669 /* SwiftExtension.swift in Sources */,
+				69BF6C2A1DE57C36000ABF09 /* GCDProxyServer.swift in Sources */,
 				69B955131DDF8238006AF669 /* GCDTCPSocket.swift in Sources */,
 				69B954FE1DDF81ED006AF669 /* SFEncrypt.swift in Sources */,
 				69B955011DDF81FB006AF669 /* Checksum.swift in Sources */,
+				69BF6C5A1DE57E82000ABF09 /* ProxyServerEvent.swift in Sources */,
 				69B9550C1DDF8221006AF669 /* SFProxy.swift in Sources */,
 				69B955111DDF8232006AF669 /* TCPSSConnector.swift in Sources */,
+				69BF6C391DE57DAE000ABF09 /* SocketTag.swift in Sources */,
 				69B955021DDF81FE006AF669 /* IPAddress.swift in Sources */,
 				69B955091DDF8216006AF669 /* UDPDirectStack.swift in Sources */,
 				69B955051DDF8208006AF669 /* BinaryDataScanner.swift in Sources */,
 				69B954FD1DDF81E9006AF669 /* EncryptExtension.swift in Sources */,
 				69B955041DDF8205006AF669 /* Port.swift in Sources */,
 				69B955001DDF81F6006AF669 /* StreamScanner.swift in Sources */,
+				69BF6C5D1DE57E95000ABF09 /* HTTPProxySocket.swift in Sources */,
+				69BF6C3C1DE57DD1000ABF09 /* AdapterSocket.swift in Sources */,
 				69B954FF1DDF81F3006AF669 /* Opt.swift in Sources */,
 				69B955081DDF8212006AF669 /* IPStackProtocol.swift in Sources */,
+				69BF6C661DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */,
+				69BF6C3F1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,29 +705,52 @@
 				692DD5B01DD5CE620079493D /* IPPacket.swift in Sources */,
 				692DD5821DD5CB250079493D /* SFData.swift in Sources */,
 				69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */,
+				69BF6C2C1DE57CAE000ABF09 /* ProxyServer.swift in Sources */,
+				69BF6C4A1DE57E28000ABF09 /* ObserverFactory.swift in Sources */,
 				692DD5401DD5C9F10079493D /* SFProxy.swift in Sources */,
+				69BF6C2F1DE57D05000ABF09 /* Tunnel.swift in Sources */,
 				691883591DDDA52E0051DAAE /* Port.swift in Sources */,
+				69BF6C4D1DE57E3A000ABF09 /* EventType.swift in Sources */,
 				692DD5AE1DD5CE490079493D /* IPStackProtocol.swift in Sources */,
 				698A08221DD5C6D4009BFFC9 /* SFEncrypt.swift in Sources */,
 				692DD5801DD5CAB50079493D /* SwiftExtension.swift in Sources */,
 				698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */,
+				69BF6C411DE57DF5000ABF09 /* Observer.swift in Sources */,
+				69BF6C351DE57D72000ABF09 /* ProxySocket.swift in Sources */,
 				692DD5B81DD5CF120079493D /* Checksum.swift in Sources */,
+				69BF6C471DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */,
+				69BF6C501DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */,
+				69BF6C321DE57D5A000ABF09 /* SocketProtocol.swift in Sources */,
 				692DD5B41DD5CEA30079493D /* ConnectRequest.swift in Sources */,
+				69BF6C561DE57E74000ABF09 /* Atomic.swift in Sources */,
 				69A0D2731DD5964F00227353 /* IPAddress.swift in Sources */,
+				69BF6C261DE57BFA000ABF09 /* GCDHTTPProxyServer.swift in Sources */,
+				69BF6C441DE57E07000ABF09 /* TunnelEvent.swift in Sources */,
+				69BF6C681DE57FDB000ABF09 /* Utils.swift in Sources */,
+				69BF6C621DE57F7B000ABF09 /* HTTPHeader.swift in Sources */,
+				69BF6C221DE579D9000ABF09 /* SFConnection.swift in Sources */,
+				69BF6C531DE57E5D000ABF09 /* ProxySocketEvent.swift in Sources */,
 				692DD53A1DD5C98C0079493D /* DirectConnector.swift in Sources */,
+				69BF6C291DE57C36000ABF09 /* GCDProxyServer.swift in Sources */,
 				692DD53E1DD5C99E0079493D /* Socks5Connector.swift in Sources */,
 				698A081D1DD5C648009BFFC9 /* TCPSSConnector.swift in Sources */,
 				698A081B1DD5C603009BFFC9 /* NWUDPSocket.swift in Sources */,
-				692DD57E1DD5CA630079493D /* HTTPHeader.swift in Sources */,
+				69BF6C591DE57E82000ABF09 /* ProxyServerEvent.swift in Sources */,
+				692DD57E1DD5CA630079493D /* SFHTTPHeader.swift in Sources */,
 				69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */,
+				69BF6C381DE57DAE000ABF09 /* SocketTag.swift in Sources */,
 				69DD43591DDC4FBA00080CF1 /* SFVPNStatistics.swift in Sources */,
 				69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */,
 				69A0D2761DD5971A00227353 /* StreamScanner.swift in Sources */,
 				692DD5AC1DD5CE310079493D /* UDPDirectStack.swift in Sources */,
 				69A0D2781DD5975800227353 /* Opt.swift in Sources */,
 				692DD5B61DD5CEFD0079493D /* BinaryDataScanner.swift in Sources */,
+				69BF6C5C1DE57E95000ABF09 /* HTTPProxySocket.swift in Sources */,
+				69BF6C3B1DE57DD1000ABF09 /* AdapterSocket.swift in Sources */,
 				698A08241DD5C6DD009BFFC9 /* EncryptExtension.swift in Sources */,
 				692DD5B21DD5CE920079493D /* PacketProtocolParser.swift in Sources */,
+				69BF6C651DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */,
+				69BF6C3E1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

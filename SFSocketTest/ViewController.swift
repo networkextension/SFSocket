@@ -27,7 +27,7 @@ class ViewController: UIViewController {
 
     @IBAction func testEncrypt(_ sender: Any) {
         let t  = Date()
-        for _ in 0 ..<  100 {
+        for _ in 0 ..<  1 {
             let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-cfb")
             let data = "sdlfjlsadfjalsdjfalsdfjlasf".data(using: .utf8)!
             let out  = enc.encrypt(encrypt_bytes: data)

@@ -382,7 +382,7 @@ public class SSEncrypt {
         
         // Repeatedly call md5 until bytes generated is enough.
         // Each call to md5 uses data: prev md5 sum + password.
-        var d = Data.init(count:md5Len+(bytes?.count)!)
+        var d = Data()//.init(count:md5Len+(bytes?.count)!)
         //d := make([]byte, md5Len+len(password))
         var start = 0
         for _ in 0 ..< cnt {//最长32,算法还不支持>32 的情况
