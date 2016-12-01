@@ -76,16 +76,19 @@ open class  SFHTTPHeader {
             bodyContentLength = newValue
         }
     }
-    open var params:[String:String] = [:]
+    open var params:[(String,String)] = []
     public init? (data:Data) {
         length = data.count + 4
         
     }
     open var app:String {
-        if let app = params["User-Agent"]{
-            return app
+        for (k,v) in params {
+            if k == "User-Agent" {
+                return v
+            }
         }
-        return ""
+        
+        return "A.BIT.T"
     }
     open func bodyReadFinish() ->Bool{
         return false
@@ -98,16 +101,16 @@ open class  SFHTTPHeader {
             }
             let key = (String(header[0]).trimmingCharacters(in: CharacterSet.whitespaces))
             let value = (String(header[1]).trimmingCharacters(in: CharacterSet.whitespaces))
-
-            params[key] = value
-            //memory leak 
+            
+            params.append((key,value))
+            //memory leak
             //change to [(String,String)]
-//            if let r = line.range(of: ": ") {
-//                
-//                let key = line.substring(to: r.lowerBound) //
-//                let v = line.substring(from: r.upperBound)//
-//                params[key] = v
-//            }
+            //            if let r = line.range(of: ": ") {
+            //
+            //                let key = line.substring(to: r.lowerBound) //
+            //                let v = line.substring(from: r.upperBound)//
+            //                params[key] = v
+            //            }
         }
         
     }
@@ -201,68 +204,67 @@ open  class  SFHTTPResponseHeader :SFHTTPHeader{
             self.parserData(lines)
         }
         if params.count > 0 {
-            if let len = params["Content-Length"]{
-                if let x = Int(len){
-                    contentLength = x
-                    if let ContentRange = params["Content-Range"]{
+            
+            for (key ,value) in params {
+                if key  == "Content-Length" {
+                    if let x = Int(value){
+                        contentLength = x
+                        //                        if let ContentRange = params["Content-Range"]{
+                        //                            //Content-Range parser  bytes 一般是这个
+                        //                            // 500-1023/1024
+                        //                            let dwW = ContentRange.components(separatedBy: " " )
+                        //                            let x = dwW.last!.components(separatedBy: "/")
+                        //                            let total = Int(x.last!)
+                        //                            let yy = x.first!.components(separatedBy: "-")
+                        //                            let index = Int(yy.first!)
+                        //                            if let end = x.last {
+                        //                                bodyLeftLength = Int(end)! - index! + 1
+                        //                            }else {
+                        //                                bodyLeftLength = total! - index!
+                        //                            }
+                        //
+                        //                        }else {
+                        //
+                        //                        }
+                        //
+                        //                    }
+                        bodyLeftLength = self.contentLength
+                        self.mode = .ContentLength
+                    }else if key == "Content-Range" {
                         //Content-Range parser  bytes 一般是这个
                         // 500-1023/1024
-                        let dwW = ContentRange.components(separatedBy: " " )
-                        let x = dwW.last!.components(separatedBy: "/")
+                        let dwW = value.components(separatedBy: " ")
+                        let x = dwW.last!.components(separatedBy:"/")
                         let total = Int(x.last!)
-                        let yy = x.first!.components(separatedBy: "-")
+                        let yy = x.first!.components(separatedBy:"-")
                         let index = Int(yy.first!)
                         if let end = x.last {
-                            bodyLeftLength = Int(end)! - index! + 1
+                            bodyLeftLength = Int(end)! - index! + 1 //fix less 1
                         }else {
                             bodyLeftLength = total! - index!
                         }
+                    }else if key == "Transfer-Encoding" {
+                        self.mode = .TransferEncoding
                         
-                    }else {
-                        bodyLeftLength = self.contentLength
-                    }
-                    
-                }
-                self.mode = .ContentLength
-            }else if  let ContentRange = params["Content-Range"]{
-                //Content-Range parser  bytes 一般是这个
-                // 500-1023/1024
-                let dwW = ContentRange.components(separatedBy: " ")
-                let x = dwW.last!.components(separatedBy:"/")
-                let total = Int(x.last!)
-                let yy = x.first!.components(separatedBy:"-")
-                let index = Int(yy.first!)
-                if let end = x.last {
-                    bodyLeftLength = Int(end)! - index! + 1 //fix less 1
-                }else {
-                    bodyLeftLength = total! - index!
-                }
-            }else {
-                
-                if let _ = params["Transfer-Encoding"]{
-                    //ContentLength = Int(len)!
-                    self.mode = .TransferEncoding
-                    //NSLog("%@", params)
-                }else {
-                    if let _ = params["Content-Encoding"] {
+                    }else if key == "Content-Encoding" {
                         self.mode = .ContentEncoding
-                    }else {
-                        self.mode = .ContentEncoding //啥也没有饿
+                    }else if key == "Connection" {
+                        if value == "close" {
+                            close = true
+                        }else {
+                            close = false
+                        }
                     }
-                    // NSLog("Connection:\(params["Connection"])")
                 }
+                
+                
             }
+            
+            
+            
         }
-        if let x = params["Connection"] {
-            if x == "close" {
-                close = true
-            }else {
-                close = false
-            }
-        }
-        
     }
-    open func statusLine() ->String{
+    public func statusLine() ->String{
         return "\(version) \(sCode) \(statusCodeDescriptions[sCode])"
     }
     public var finished:Bool  = false
@@ -277,50 +279,33 @@ open  class  SFHTTPResponseHeader :SFHTTPHeader{
         
         return false
     }
-    open func contentLengthFunc () -> Int {
+    public func contentLengthFunc () -> Int {
         
         if self.mode == .ContentLength {
-            if let len = params["Content-Length"]{
-                if let ContentRange = params["Content-Range"]{
+            var length:Int = 0
+            for (key,value) in params {
+                if key == "Content-Length" {
+                    if let x =  Int(value) {
+                         length = x
+                    }
+                } else if   key == "Content-Range" {
                     //Content-Range parser  bytes 一般是这个
                     // 500-1023/1024
-                    let dwW = ContentRange.components(separatedBy:" ")
-                    let x = dwW.last!.components(separatedBy:"/")
+                    let dwW = value.components(separatedBy: " ")
+                    let x = dwW.last!.components(separatedBy: "/")
                     let total = Int(x.last!)
-                    let yy = x.first!.components(separatedBy:"-")
+                    let yy = x.first!.components(separatedBy: "-")
                     let index = Int(yy.first!)
                     if let end = x.last {
-                        bodyLeftLength = Int(end)! - index! + 1
+                        bodyLeftLength = Int(end)! - index! + 1 //fix less 1
                     }else {
                         bodyLeftLength = total! - index!
                     }
-                    
-                }else {
-                    if let x =  Int(len) {
-                        return x
-                    }
-                    //bodyLeftLength = contentLength
+                    bodyLeftLength = bodyLeftLength
                 }
-                
-                
-            } else if  let ContentRange = params["Content-Range"]{
-                //Content-Range parser  bytes 一般是这个
-                // 500-1023/1024
-                let dwW = ContentRange.components(separatedBy: " ")
-                let x = dwW.last!.components(separatedBy: "/")
-                let total = Int(x.last!)
-                let yy = x.first!.components(separatedBy: "-")
-                let index = Int(yy.first!)
-                if let end = x.last {
-                    bodyLeftLength = Int(end)! - index! + 1 //fix less 1
-                }else {
-                    bodyLeftLength = total! - index!
-                }
-                bodyLeftLength = bodyLeftLength
-            }else {
-                return 0
             }
             
+            return length
         }
         return 0
         
@@ -454,9 +439,14 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         
     }
     public func forceSend() -> Bool{
-        if let status = params["Proxy-Connection"], status == "close" {
-            return true
+        for (key,value) in params {
+            if key == "Proxy-Connection"{
+                if value == "close" {
+                    return true
+                }
+            }
         }
+        
         return false
     }
     deinit {
@@ -481,20 +471,24 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         }
         
         if self.Host.isEmpty {
-            if let h = params["Host"]{
-                var  x =  h.components(separatedBy:":")
-                if x.count == 2 {
-                    self.Host = x.first!
-                    self.Port = Int(x.last!)!
-                }else if x.count == 1 {
-                    self.Host = h
-                }else {
-                    // > 3 IPv6
-                    self.Port = Int(x.last!)!
-                    x.removeLast()
-                    self.Host = x.joined(separator: ":")
+            for (key ,value ) in params {
+                if key == "Host" {
+                    var  x =  value.components(separatedBy:":")
+                    if x.count == 2 {
+                        self.Host = x.first!
+                        self.Port = Int(x.last!)!
+                    }else if x.count == 1 {
+                        self.Host = value
+                    }else {
+                        // > 3 IPv6
+                        self.Port = Int(x.last!)!
+                        x.removeLast()
+                        self.Host = x.joined(separator: ":")
+                    }
+
                 }
             }
+            
         }
         let c = f.components(separatedBy:" ")
         if c.count == 3 {
@@ -597,20 +591,17 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         //            }
         //        }
         if params.count > 0 {
-            if let len = params["Content-Length"]{
-                if let x = Int(len){
-                    contentLength = x
-                    bodyLeftLength = x
-                }
-                
-            }else {
-                
-                if let _ = params["Transfer-Encoding"]{
-                    //ContentLength = Int(len)!
+            for (key ,value ) in params {
+                if key == "Content-Length" {
+                    if let x = Int(value){
+                        contentLength = x
+                        bodyLeftLength = x
+                    }
+                }else if key == "Transfer-Encoding"{
                     self.mode = .TransferEncoding
-                    
                 }
             }
+            
         }
         
         if self.Url.characters.count == 0 {
@@ -633,8 +624,12 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
         }else {
             
         }
-        
-        if let x = p.removeValue(forKey: "Proxy-Connection") {
+        for (index,) in params {
+            if key == "Proxy-Connection" {
+                params.
+            }
+        }
+        if let x = p.removeValue(forKey: ) {
             p["Connection"] = x
         }
         return p
