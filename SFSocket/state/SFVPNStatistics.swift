@@ -42,13 +42,13 @@ public class SFTraffic {
             if x < 1024{
                 return label + " \(x) B" + s
             }else if x >= 1024 && x < 1024*1024 {
-                return label +  String(format: "%.0f KB", Float(x)/1024.0)  + s
+                return label +  String(format: "%d KB", Int(Float(x)/1024.0))  + s
             }else if x >= 1024*1024 && x < 1024*1024*1024 {
                 //return label + "\(x/1024/1024) MB" + s
-                return label +  String(format: "%.0f MB", Float(x)/1024/1024)  + s
+                return label +  String(format: "%d MB", Int(Float(x)/1024/1024))  + s
             }else {
                 //return label + "\(x/1024/1024/1024) GB" + s
-                return label +  String(format: "%.0f GB", Float(x)/1024/1024/1024)  + s
+                return label +  String(format: "%d GB", Int(Float(x)/1024/1024/1024))  + s
             }
             #else
         if x < 1024{

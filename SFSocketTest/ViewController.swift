@@ -12,7 +12,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let a:Float = 10.23
+        print(String.init(format: "%.0f", a))
+        return
         if let h = SFHTTPHeader.init(data: http503.data(using: .utf8)!){
             print(h.app)
         }

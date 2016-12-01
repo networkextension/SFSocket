@@ -231,6 +231,8 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
        // dispatch_async(socketQueue) {[weak self] in
        //     if let strong = self {
                 self.connection!.readMinimumLength(0, maximumLength: readBufferSize) { [weak self]data, error in
+                    guard let  strong = self else {return}
+                    strong.readPending = false
                     guard error == nil else {
                         if let s = self , let c = s.connection, c.state != .connected {
                             AxLogger.log("\(self!.cIDString) NWTCPSocket got an error when reading data: \(error!.localizedDescription) state:\(c.state.description) ",level: .Error)
@@ -239,14 +241,8 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
                         
                         return
                     }
-                    if let strong = self {
-                        strong.readCallback(data: data, tag: tag)
-                        
-                        
-                        strong.readPending = false
-                    }
                     
-                    
+                    strong.readCallback(data: data, tag: tag)
                 }
            // }
            

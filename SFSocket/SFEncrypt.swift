@@ -218,13 +218,13 @@ class enc_ctx {
             }
         }
     }
-    static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod) ->CCCryptorRef?  {
+    static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod,cryptor: inout UnsafeMutablePointer<CCCryptorRef?>)   {//->CCCryptorRef?
         
         let algorithm:CCAlgorithm =  m.supported_ciphers() // findCCAlgorithm(Int32(m.rawValue))
         //var  cryptor :CCCryptorRef?
         
         let key_size = m.key_size
-         let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
+        
         let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(op, // operation
             m.ccmode, // mode CTR kCCModeRC4= 9
             algorithm,//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
@@ -238,12 +238,12 @@ class enc_ctx {
             0, //CCModeOptions options,
             cryptor); //CCCryptorRef *cryptorRef
         if (createDecrypt == CCCryptorStatus(0)){
-            let ptr = cryptor.pointee
-            cryptor.deallocate(capacity: 1)
-            return ptr
+            //let ptr = cryptor.pointee
+            //cryptor.deallocate(capacity: 1)
+            //return ptr
         }else {
             AxLogger.log("create crypto ctx error",level: .Error)
-            return nil
+            //return nil
         }
         
     }
@@ -273,11 +273,34 @@ class enc_ctx {
         m = method
         let c = m.supported_ciphers()
         if  c != UInt32.max {
+            //let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
+            var opt:CCOperation = CCOperation(1)
             if encrypt {
-                  ctx = enc_ctx.create_enc(op: CCOperation(0), key: true_key,iv: iv,m:method)!
-            }else {
-                  ctx = enc_ctx.create_enc(op: CCOperation(1), key: true_key,iv: iv,m:method)!
+                opt = CCOperation(1)
+                
             }
+            
+            let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(opt, // operation
+                m.ccmode, // mode CTR kCCModeRC4= 9
+                m.supported_ciphers(),//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
+                CCPadding(0), // padding
+                (iv as NSData).bytes, // can be NULL, because null is full of zeros
+                (true_key  as NSData).bytes, // key
+                m.key_size, // keylength
+                nil, //const void *tweak
+                0, //size_t tweakLength,
+                0, //int numRounds,
+                0, //CCModeOptions options,
+                &ctx); //CCCryptorRef *cryptorRef
+            if (createDecrypt == CCCryptorStatus(0)){
+                cryptoInit = true
+            }else {
+                AxLogger.log("create crypto ctx error",level: .Error)
+                
+            }
+            
+            //ctx = cryptor.pointee
+            //cryptor.deallocate(capacity: 1)
             IV = iv
         }else {
             //ctx = nil

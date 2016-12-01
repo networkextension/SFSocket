@@ -37,13 +37,11 @@ open class NWUDPSocket {
      - parameter port: The port.
      */
     init?(host: String, port: Int) {
-        guard let provider = RawSocketFactory.TunnelProvider  else {
-             return nil
+        guard let udpsession = RawSocketFactory.TunnelProvider?.createUDPSession(to: NWHostEndpoint(hostname: host, port: "\(port)"), from: nil) else {
+            return nil
         }
-        let p = String(port)
-        session = provider.createUDPSession(to: NWHostEndpoint(hostname: host, port: p), from: nil)
-           
         
+        session = udpsession
         
         session.setReadHandler({ [ weak self ] dataArray, error in
             guard let sSelf = self else {
@@ -53,18 +51,13 @@ open class NWUDPSocket {
             sSelf.updateActivityTimer()
             
             guard error == nil else {
-                AxLogger.log("Error when reading from remote server. \(error)",level: .Error)
+                AxLogger.log("Error when reading from remote server. \(error)",level:.Error)
                 return
             }
-            #if swift( >=3.0)
-                for data in dataArray! {
-                    sSelf.delegate?.didReceiveData(data, from: sSelf)
-                }
-            #else
-                for data in dataArray {
+            
+            for data in dataArray! {
                 sSelf.delegate?.didReceiveData(data, from: sSelf)
-                }
-            #endif
+            }
             }, maxDatagrams: 32)
     }
     

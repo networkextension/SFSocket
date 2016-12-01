@@ -69,7 +69,13 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
             return
         }
         if proxy.type == .SS {
-            try! self.connectTo(proxy.serverAddress, port: port, enableTLS: false, tlsSettings: nil)
+            if !proxy.serverIP.isEmpty{
+                //by pass dns resolv
+                try! self.connectTo(proxy.serverIP, port: port, enableTLS: false, tlsSettings: nil)
+            }else {
+                try! self.connectTo(proxy.serverAddress, port: port, enableTLS: false, tlsSettings: nil)
+            }
+            
         }else {
             try! self.connectTo(proxy.serverAddress, port: port, enableTLS: proxy.tlsEnable, tlsSettings: nil)
         }
