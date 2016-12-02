@@ -201,7 +201,9 @@ class enc_ctx {
     var m:CryptoMethod
     static var sodiumInited = false
     var counter:UInt64 = 0
+    //let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
     var IV:Data
+    
     var  ctx:CCCryptorRef?
     var cryptoInit:Bool = false
     func test (){
@@ -273,13 +275,13 @@ class enc_ctx {
         m = method
         let c = m.supported_ciphers()
         if  c != UInt32.max {
-            //let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
+            
             var opt:CCOperation = CCOperation(1)
             if encrypt {
-                opt = CCOperation(1)
+                opt = CCOperation(0)
                 
             }
-            
+            //var temp:CCCryptorRef?
             let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(opt, // operation
                 m.ccmode, // mode CTR kCCModeRC4= 9
                 m.supported_ciphers(),//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
@@ -294,6 +296,7 @@ class enc_ctx {
                 &ctx); //CCCryptorRef *cryptorRef
             if (createDecrypt == CCCryptorStatus(0)){
                 cryptoInit = true
+               
             }else {
                 AxLogger.log("create crypto ctx error",level: .Error)
                 
@@ -301,31 +304,33 @@ class enc_ctx {
             
             //ctx = cryptor.pointee
             //cryptor.deallocate(capacity: 1)
-            IV = iv
+            
         }else {
             //ctx = nil
             if method == .SALSA20 || method == .CHACHA20 || method == .CHACHA20IETF {
                 //let sIV = NSMutableData.init(data: iv)
                 //sIV.length = 16
-                IV = iv
+                
                 enc_ctx.setupSodium()
-            }else {
-                IV = iv
             }
             //init
         }
         
-        
+        IV = iv
         
     }
     func setIV(iv:Data){
         
     }
     deinit {
+        //cryptor.deallocate(capacity: 1)
         if ctx != nil {
-            
-             CCCryptorRelease(ctx)
+            CCCryptorRelease(ctx)
         }
+//        if ctx != nil {
+//            
+//             CCCryptorRelease(ctx)
+//        }
        
         
         
