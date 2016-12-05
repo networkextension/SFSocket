@@ -283,7 +283,7 @@ open class IPPacket {
         protocolParser.packetData = packetData
         protocolParser.offset = Int(headerLength)
         protocolParser.buildSegment(computePseudoHeaderChecksum())
-        
+        packetData = protocolParser.packetData
         setPayloadWithUInt16(Checksum.computeChecksum(packetData, from: 0, to: Int(headerLength)), at: 10, swap: false)
     }
     

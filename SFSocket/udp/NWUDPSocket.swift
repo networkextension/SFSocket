@@ -1,7 +1,6 @@
 import Foundation
 import NetworkExtension
 import AxLogger
-
 /// The delegate protocol of `NWUDPSocket`.
 public protocol NWUDPSocketDelegate: class {
     /**
@@ -51,7 +50,7 @@ open class NWUDPSocket {
             sSelf.updateActivityTimer()
             
             guard error == nil else {
-                AxLogger.log("Error when reading from remote server. \(error)",level:.Error)
+                AxLogger.log("Error when reading from remote server. \(error)",level: .Error)
                 return
             }
             
@@ -68,6 +67,8 @@ open class NWUDPSocket {
      */
     func writeData(_ data: Data) {
         queue.async {
+            AxLogger.log("udp socket  prepare write", level: .Debug)
+
             self.pendingWriteData.append(data)
             self.checkWrite()
         }
@@ -83,9 +84,9 @@ open class NWUDPSocket {
         queue.async {
             self.updateActivityTimer()
             
-            guard !self.writing else {
-                return
-            }
+//            guard !self.writing else {
+//                return
+//            }
             
             guard self.pendingWriteData.count > 0 else {
                 return
@@ -93,6 +94,8 @@ open class NWUDPSocket {
             
             self.writing = true
             self.session.writeMultipleDatagrams(self.pendingWriteData) {_ in
+                AxLogger.log("udp socket  write ok", level: .Debug)
+
                 self.writing = false
                 self.checkWrite()
             }

@@ -36,24 +36,22 @@ public final class ConnectRequest {
             guard self.fakeIPEnabled else {
                 return ip
             }
-            /*
-            guard let dnsServer = DNSServer.currentServer else {
-                return ip
-            }
-            */
+            
+//            guard let dnsServer = DNSServer.currentServer else {
+//                return ip
+//            }
             
             guard let address = IPv4Address(fromString: ip) else {
                 return ip
             }
-            /*
-            guard dnsServer.isFakeIP(address) else {
-                return ip
-            }
             
-            guard let session = dnsServer.lookupFakeIP(address) else {
-                return ip
-            }
- */
+//            guard dnsServer.isFakeIP(address) else {
+//                return ip
+//            }
+//            
+//            guard let session = dnsServer.lookupFakeIP(address) else {
+//                return ip
+//            }
             return ""
             //return session.realIP?.presentation ?? ""
         }
@@ -75,31 +73,31 @@ public final class ConnectRequest {
         self.fakeIPEnabled = fakeIPEnabled
         
         self.host = host
+        /* disable
         if fakeIPEnabled {
             guard lookupRealIP() else {
                 return nil
             }
         }
+         */
     }
     
     public convenience init?(ipAddress: IPv4Address, port: Port, fakeIPEnabled: Bool = true) {
         self.init(host: ipAddress.presentation, port: Int(port.value), fakeIPEnabled: fakeIPEnabled)
     }
-    
+    /*
     fileprivate func lookupRealIP() -> Bool {
         /// If custom DNS server is set up.
-        /*
         guard let dnsServer = DNSServer.currentServer else {
             return true
         }
-        */
+        
         // Only IPv4 is supported as of now.
         guard isIPv4() else {
             return true
         }
         
         let address = IPv4Address(fromString: requestedHost)!
-        /*
         guard dnsServer.isFakeIP(address) else {
             return true
         }
@@ -108,18 +106,17 @@ public final class ConnectRequest {
         guard let session = dnsServer.lookupFakeIP(address) else {
             return false
         }
-        */
         
-//        host = session.requestMessage.queries[0].name
-//        ipAddress = session.realIP?.presentation ?? ""
-//        matchedRule = session.matchedRule
-//        
-//        if session.countryCode != nil {
-//            country = session.countryCode!
-//        }
-        return false
+        host = session.requestMessage.queries[0].name
+        ipAddress = session.realIP?.presentation ?? ""
+        matchedRule = session.matchedRule
+        
+        if session.countryCode != nil {
+            country = session.countryCode!
+        }
+        return true
     }
-    
+    */
     public func isIPv4() -> Bool {
         return Utils.IP.isIPv4(host)
     }
