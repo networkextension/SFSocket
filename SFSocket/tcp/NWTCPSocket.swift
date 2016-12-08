@@ -73,7 +73,8 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
     var cID:Int = 0
     var cIDString:String {
         get {
-            return ""
+            
+            return "Socket-\(cID)"
             //return "[" + objectClassString(self) + "-\(cID)" + "]" //self.classSFName()
         }
     }
@@ -219,7 +220,12 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
     public func readDataWithTag(_ tag: Int) {
         if readPending {
             // 非常管用
-            AxLogger.log("\(cIDString) readPending ", level: .Debug)
+            guard  let c = connection else {return }
+            let addr = c.localAddress as! NWHostEndpoint
+            AxLogger.log("\(cIDString) \(addr) readPending ", level: .Debug)
+                
+            
+            
             return
         }
         readPending = true
@@ -374,34 +380,12 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 
     func readCallback(data: Data?, tag: Int) {
         queueCall { [weak self] in
-//            guard let data = self.consumeReadData(data) else {
-//                // remote read is closed, but this is okay, nothing need to be done, if this socket is read again, then error occurs.
-//                return
-//            }
-//
-//            if tag == NWTCPSocket.ScannerReadTag {
-//                guard let (match, rest) = self.scanner.addAndScan(data) else {
-//                    self.readDataWithTag(NWTCPSocket.ScannerReadTag)
-//                    return
-//                }
-//
-//                self.scanner = nil
-//
-//                guard let matchData = match else {
-//                    // do not find match in the given length, stop now
-//                    return
-//                }
-//
-//                self.readDataPrefix = rest
-//                self.delegate?.didReadData(matchData, withTag: self.scannerTag, from: self)
-//            } else {
-//                self.delegate?.didReadData(data, withTag: tag, from: self)
-//            }
+
             
             guard let data = data else {return}
             if let strong = self {
                 if let delegate = strong.delegate{
-                    delegate.didReadData(data, withTag: tag, from: strong)
+                    delegate.didReadData( data, withTag: tag, from: strong)
                 }else {
                      AxLogger.log("delegate nil", level: .Error)
                 }
@@ -415,6 +399,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 
     public func sendData(data: Data, withTag tag: Int) {
         if writePending {
+            AxLogger.log("Socket-\(cID)  writePending error", level: .Debug)
             return
         }
         writePending = true

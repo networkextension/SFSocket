@@ -100,17 +100,19 @@ public class  TCPSSConnector:ProxyConnector{
     override func readCallback(data: Data?, tag: Int) {
         queueCall {
             
-            if let cipher = self.aes.decrypt(encrypt_bytes: data!){
-                if let d = self.delegate {
-                    //debugLog("recv:\(cipher)")
-                    //d.connector(self, didReadData: cipher, withTag: Int64(tag))
-                    d.didReadData(cipher, withTag: tag, from: self)
+                if let cipher = self.aes.decrypt(encrypt_bytes: data!){
+                    if let d = self.delegate {
+                        //debugLog("recv:\(cipher)")
+                        //d.connector(self, didReadData: cipher, withTag: Int64(tag))
+                        d.didReadData(cipher, withTag: tag, from: self)
+                    }else {
+                        AxLogger.log(" didReadData Connection deal drop data ",level: .Error)
+                    }
                 }else {
-                    AxLogger.log(" didReadData Connection deal drop data ",level: .Error)
+                    AxLogger.log("SS Engine Decrypt Error ",level: .Error)
                 }
-            }else {
-                AxLogger.log("SS Engine Decrypt Error ",level: .Error)
-            }
+            
+            
 
         }
     }

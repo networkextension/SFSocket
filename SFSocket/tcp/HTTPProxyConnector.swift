@@ -133,6 +133,7 @@ public  class HTTPProxyConnector:ProxyConnector {
 
     public override func sendData(data: Data, withTag tag: Int) {
         if writePending {
+            AxLogger.log("Socket-\(cID)  writePending error", level: .Debug)
             return
         }
         writePending = true

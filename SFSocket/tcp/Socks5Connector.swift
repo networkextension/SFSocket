@@ -328,11 +328,12 @@ public class Socks5Connector:ProxyConnector{
     
     public override func sendData(data: Data, withTag tag: Int) {
         if writePending {
+            AxLogger.log("Socket-\(cID) writePending error", level: .Debug)
             return
         }
         writePending = true
         if isConnected == false {
-            AxLogger.log("isConnected error", level: .Error)
+            AxLogger.log("Socket-\(cID)  isConnected error", level: .Error)
             return
         }
         self.connection!.write(data) {[weak self] error in
@@ -340,7 +341,7 @@ public class Socks5Connector:ProxyConnector{
             strong.writePending = false
             
             guard error == nil else {
-                AxLogger.log("NWTCPSocket got an error when writing data: \(error!.localizedDescription)",level: .Debug)
+                AxLogger.log("  NWTCPSocket got an error when writing data: \(error!.localizedDescription)",level: .Debug)
                 strong.forceDisconnect()
                 return
             }

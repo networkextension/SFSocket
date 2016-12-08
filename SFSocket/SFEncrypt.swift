@@ -174,21 +174,6 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
 }
 
 
-let  config_ciphers = [
-    "table":false,
-    "rc4":false,
-    "rc4-md5":false,
-    "aes-128-cfb":false,
-    "aes-192-cfb":false,
-    "aes-256-cfb":true,
-    "bf-cfb":false,
-    "camellia-128-cfb":false,
-    "camellia-192-cfb":false,
-    "camellia-256-cfb":false,
-    "salsa20":false,
-    "chacha20":false,
-    "chacha20-ietf":false
-]
 
 
 
@@ -281,7 +266,7 @@ class enc_ctx {
                 opt = CCOperation(0)
                 
             }
-            //var temp:CCCryptorRef?
+            var temp:CCCryptorRef?
             let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(opt, // operation
                 m.ccmode, // mode CTR kCCModeRC4= 9
                 m.supported_ciphers(),//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
@@ -293,10 +278,10 @@ class enc_ctx {
                 0, //size_t tweakLength,
                 0, //int numRounds,
                 0, //CCModeOptions options,
-                &ctx); //CCCryptorRef *cryptorRef
+                &temp); //CCCryptorRef *cryptorRef
             if (createDecrypt == CCCryptorStatus(0)){
                 cryptoInit = true
-               
+                ctx = temp
             }else {
                 AxLogger.log("create crypto ctx error",level: .Error)
                 
@@ -319,20 +304,15 @@ class enc_ctx {
         IV = iv
         
     }
-    func setIV(iv:Data){
-        
-    }
+    
     deinit {
-        //cryptor.deallocate(capacity: 1)
+        
         if ctx != nil {
             CCCryptorRelease(ctx)
         }
-//        if ctx != nil {
-//            
-//             CCCryptorRelease(ctx)
-//        }
+
        
-        
+        print("enc deinit")
         
     }
 }
@@ -340,8 +320,8 @@ public class SSEncrypt {
     
     var m:CryptoMethod
     var testenable:Bool = false
-    var send_ctx:enc_ctx?
-    var recv_ctx:enc_ctx?
+    var send_ctx:enc_ctx
+    var recv_ctx:enc_ctx!
     //let block_size = 16
     public var ramdonKey:Data?
     var ivBuffer:Data = Data()
@@ -360,7 +340,7 @@ public class SSEncrypt {
         
     }
     deinit {
-        
+        print("SFEncrypt deinit")
     }
     func dataWithHexString(hex: String) -> Data {
         var hex = hex
@@ -435,8 +415,6 @@ public class SSEncrypt {
         
         var ret:Int32 = -1
         
-        
-        
         var outptr:UnsafeMutablePointer<UInt8>?
         
         
@@ -459,7 +437,7 @@ public class SSEncrypt {
         _ = nd.withUnsafeBytes({ (ptr:UnsafePointer<UInt8>)  in
             nptr = ptr
         })
-        switch send_ctx!.m{
+        switch send_ctx.m{
         case .SALSA20:
             
             ret = crypto_stream_salsa20_xor_ic(outptr!, inptr, mlen, nptr!, ic, kptr!)
@@ -484,7 +462,7 @@ public class SSEncrypt {
         let cipher:Data?
         if recv_ctx == nil {
             
-            let iv_len = send_ctx!.m.iv_size
+            let iv_len = send_ctx.m.iv_size
             
             if encrypt_bytes.count + ivBuffer.count < iv_len {
                 ivBuffer.append(encrypt_bytes)
@@ -499,10 +477,7 @@ public class SSEncrypt {
                 //ivBuffer
                 cipher = encrypt_bytes.subdata(in: Range(iv_need_len ..< encrypt_bytes.count ))
             }
-            //            print("iv \(iv) \(iv_len)")
-            //            print("ramdonKey \(ramdonKey!)")
-            //            print("data \(cipher!) \(cipher?.length) \(encrypt_bytes.length - iv_len)")
-            //            print("encrypt_bytes 000 \(encrypt_bytes)")
+            
         }else {
             cipher = encrypt_bytes
         }
@@ -516,7 +491,7 @@ public class SSEncrypt {
             return nil;
             
         }
-        if recv_ctx == nil && encrypt_bytes.count < send_ctx!.m.iv_size {
+        if recv_ctx == nil && encrypt_bytes.count < send_ctx.m.iv_size {
             
             AxLogger.log("socket read less iv_len",level: .Error)
         }
@@ -530,9 +505,7 @@ public class SSEncrypt {
                 return nil }
             
             if ctx.m.rawValue >= CryptoMethod.SALSA20.rawValue {
-                //                print("iv \(ctx.IV)")
-                //                print("ramdonKey \(ramdonKey!)")
-                //                print("data \(left)")
+                
                 let padding = ctx.counter % SODIUM_BLOCK_SIZE;
                 var cipher = Data.init(count:  left.count + Int(padding))
                 
@@ -542,20 +515,12 @@ public class SSEncrypt {
                 if padding != 0 {
                     plain = Data.init(count: Int(padding))
                     plain.append(left)
-                    //plain.length =  plain.length + Int(padding)
-                    //                brealloc(plain, plain->len + padding, capacity);
-                    //                memmove(plain->array + padding, plain->array, plain->len);
-                    //sodium_memzero(plain->array, padding);
+                  
                 }else {
                     plain = Data.init()
                     plain.append(left)
                 }
-                //let enc_key = NSMutableData.init(data: ramdonKey!)
-                //enc_key.length = ctx.m.key_size
-                //            let ptr:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.init((cipher?.mutableBytes)!)
-                //            let ptr2:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init(encrypt_bytes.bytes)
-                //let vvv = NSMutableData.init(data: ctx.IV)
-                //vvv.length = 16
+                
                 _ = crypto_stream_xor_ic(&cipher,
                                          md: plain,
                                          mlen: UInt64(plain.count),
@@ -568,7 +533,7 @@ public class SSEncrypt {
                 return result
                 
             }else {
-                var cipherDataDecrypt:Data = Data.init(count: left.count)
+                var cipherDataDecrypt:Data = Data(count: left.count)
                 
                 //alloc number of bytes written to data Out
                 var  outLengthDecrypt:NSInteger = 0
@@ -592,10 +557,7 @@ public class SSEncrypt {
                     //Cut Data Out with nedded length
                     cipherDataDecrypt.count = outLengthDecrypt;
                     
-                    // Data to String
-                    //NSString* cipherFinalDecrypt = [[NSString alloc] initWithData:cipherDataDecrypt encoding:NSUTF8StringEncoding];
                     
-                    //Final Cryptor
                     var ptr :UnsafeMutableRawPointer?
                     
                     _ = cipherDataDecrypt.withUnsafeMutableBytes {mutableBytes in
@@ -610,9 +572,7 @@ public class SSEncrypt {
                     if (final != CCCryptorStatus( 0))
                     {
                         AxLogger.log("decrypt CCCryptorFinal failure",level: .Error)
-                        //Release Cryptor
-                        //CCCryptorStatus release =
-                        //CCCryptorRelease(cryptor); //CCCryptorRef cryptorRef
+                       
                     }
                     
                     return cipherDataDecrypt as Data ;//cipherFinalDecrypt;
@@ -658,34 +618,19 @@ public class SSEncrypt {
     //    }
     public func encrypt(encrypt_bytes:Data) ->Data?{
         
-        //let iv:NSData = NSData();
-        //[NSMutableData dataWithLength:kCCBlockSizeAES128]
         
-        
-        
-        //let encrypt_bytes = padding(encrypt_bytes_org)
-        //alloc number of bytes written to data Out
-        guard let ctx = send_ctx else {
-            AxLogger.log("ss ctx error",level:.Error)
-            return nil
-        }
-        
+        let ctx = send_ctx
         //Update Cryptor
         if ctx.m.rawValue >= CryptoMethod.SALSA20.rawValue {
             //debugLog("111 encrypt")
             let padding = ctx.counter % SODIUM_BLOCK_SIZE;
             var cipher = Data.init(count:  2*(encrypt_bytes.count + Int(padding)))
             
-            //cipher.length += encrypt_bytes.length
-            //            brealloc(cipher, iv_len + (padding + cipher->len) * 2, capacity);
             var  plain:Data
             if padding != 0 {
-                plain = Data.init(count: Int(padding))
+                plain = Data(count: Int(padding))
                 plain.append(encrypt_bytes)
-                //plain.length =  plain.length + Int(padding)
-                //                brealloc(plain, plain->len + padding, capacity);
-                //                memmove(plain->array + padding, plain->array, plain->len);
-                //sodium_memzero(plain->array, padding);
+               
             }else {
                 plain = Data()
                 plain.append(encrypt_bytes)
@@ -693,12 +638,7 @@ public class SSEncrypt {
             var riv =  ctx.IV
             
             riv.count = 32
-            //debugLog("222 encrypt ")
-            //let enc_key = NSMutableData.init(data: ramdonKey!)
-            //enc_key.length = send_ctx!.m.key_size
-            //            let ptr:UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.init((cipher?.mutableBytes)!)
-            //            let ptr2:UnsafePointer<UInt8> = UnsafePointer<UInt8>.init(encrypt_bytes.bytes)
-            //debugLog("333 encrypt")
+            
             _ =  crypto_stream_xor_ic(&cipher ,
                                       md: plain,
                                       mlen: UInt64(plain.count),
@@ -716,17 +656,7 @@ public class SSEncrypt {
             
             ctx.counter += UInt64(encrypt_bytes.count)
             
-            // print("cipher \(cipher)")
-            //            if padding != 0 {
-            ////                memmove(cipher->array + iv_len,
-            ////                    cipher->array + iv_len + padding, cipher->len);
-            //                result.appendData(cipher!.subdataWithRange(NSMakeRange(Int(padding), encrypt_bytes.length
-            //                    )))
-            //            }else {
-            //                result.appendData(cipher!.subdataWithRange(NSMakeRange(0, encrypt_bytes.length
-            //                    )))
-            //
-            //            }
+            
             result.append(cipher.subdata(in: Range(Int(padding) ..< encrypt_bytes.count
             )))
             //debugLog("000 encrypt")
@@ -817,7 +747,7 @@ public class SSEncrypt {
     func ss_onetimeauth(buffer:Data) ->Data {
         
         var keyData = Data()
-        keyData.append( send_ctx!.IV)
+        keyData.append( send_ctx.IV)
         
         
         keyData.append(ramdonKey!)
@@ -832,7 +762,7 @@ public class SSEncrypt {
         let c =  UInt32(counter.bigEndian)
         
         let keyData = SFData()
-        keyData.append(send_ctx!.IV)
+        keyData.append(send_ctx.IV)
         keyData.append(c)
         let hash = buffer.hmacsha1(keyData: keyData.data)
         let result = SFData()
@@ -842,4 +772,5 @@ public class SSEncrypt {
         
         return result.data
     }
+    
 }
