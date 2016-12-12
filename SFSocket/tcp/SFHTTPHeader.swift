@@ -208,14 +208,22 @@ open  class  SFHTTPResponseHeader :SFHTTPHeader{
                         //Content-Range parser  bytes 一般是这个
                         // 500-1023/1024
                         let dwW = ContentRange.components(separatedBy: " " )
-                        let x = dwW.last!.components(separatedBy: "/")
-                        let total = Int(x.last!)
-                        let yy = x.first!.components(separatedBy: "-")
-                        let index = Int(yy.first!)
-                        if let end = x.last {
-                            bodyLeftLength = Int(end)! - index! + 1
-                        }else {
-                            bodyLeftLength = total! - index!
+                        if dwW.count == 2 {
+                            let x = dwW.last!.components(separatedBy: "/")
+                            let total = Int(x.last!)
+                            let yy = x.first!.components(separatedBy: "-")
+                            var index = 0
+                            if let s = Int(yy.first!) {
+                                index = s
+                            }
+                            //var bodyLeftLength = 0
+                            if let end = yy.last,let endx = Int(end) {
+                                
+                                bodyLeftLength = endx - (index - 1)
+                                
+                            }else {
+                                bodyLeftLength = total! - index
+                            }
                         }
                         
                     }else {

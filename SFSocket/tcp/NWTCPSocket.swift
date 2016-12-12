@@ -335,9 +335,13 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
             AxLogger.log("\(cIDString) error:connection error", level: .Error)
             //return
         }
+        
         //guard let connection = object as! NWTCPConnection else {return}
         //crash 
         guard let connection = connection else {return}
+        if let error = connection.error {
+            AxLogger.log("Socket-\(cIDString) state: \(error.localizedDescription)", level: .Debug)
+        }
         switch connection.state {
         case .connected:
             queueCall {[weak self] in
@@ -375,7 +379,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 //        if let  x = connection.endpoint as! NWHostEndpoint {
 //            
 //        }
-        AxLogger.log("\(cIDString) stat: \(connection.state.description)", level: .Debug)
+        AxLogger.log("\(cIDString) state: \(connection.state.description)", level: .Debug)
     }
 
     func readCallback(data: Data?, tag: Int) {
@@ -460,6 +464,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 
     public func checkStatus() {
         if closeAfterWriting && !writePending {
+            AxLogger.log("Socket-\(cID) cancle", level: .Debug)
             cancel()
         }
     }
