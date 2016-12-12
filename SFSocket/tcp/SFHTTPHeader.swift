@@ -65,12 +65,12 @@ public protocol HTTPProtocol {
 }
 open class  SFHTTPHeader {
     open var length:Int = 0
-    open var bodyLeftLength:Int = 0
+    open var bodyLeftLength:Int = Int.max
     open var version:String = ""
     var bodyContentLength:Int = 0
     open var contentLength:Int {
         get {
-            return 0
+            return bodyContentLength
         }
         set {
             bodyContentLength = newValue
@@ -736,8 +736,13 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
             }else {
                 let path = genPath()
                 if !path.isEmpty{
-                    f = method.rawValue + " " + path + " " + version + s
-                    AxLogger.log("new request send line \(self.Host)",level:.Trace)
+                    if !self.location.isEmpty && method == .POST {
+                        f =  "GET " + path + " " + version + s
+                    }else {
+                        f = method.rawValue + " " + path + " " + version + s
+                    }
+                    
+                    AxLogger.log("new request send line \(f)",level:.Trace)
                 }else {
                     // fatalError()
                     f = method.rawValue + " / " + version + s
