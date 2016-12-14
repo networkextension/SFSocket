@@ -88,9 +88,12 @@ public  class HTTPProxyConnector:ProxyConnector {
  
     override func readCallback(data: Data?, tag: Int) {
         
-        
+        guard let data = data else {
+            AxLogger.log("\(cIDString) read nil", level: .Debug)
+            return
+        }
         queueCall {
-            guard let data = data else {return}
+          
             //AxLogger.log("read data \(data)", level: .Debug)
             if self.httpConnected == false {
                 if self.respHeader == nil {
@@ -107,7 +110,10 @@ public  class HTTPProxyConnector:ProxyConnector {
                         if len < data.count {
                             let dataX = data.subdata(in: Range(len ..< data.count ))
                             //delegate?.connector(self, didReadData: dataX, withTag: 0)
-                            self.delegate?.didReadData( dataX, withTag: tag, from: self)
+                            autoreleasepool(invoking: {
+                                self.delegate?.didReadData( dataX, withTag: tag, from: self)
+                            })
+                            
                             //AxLogger.log("\(cIDString) CONNECT response data\(data)",level: .Error)
                         }
                     }
@@ -115,7 +121,10 @@ public  class HTTPProxyConnector:ProxyConnector {
 
                 //self.readDataWithTag(-1)
             }else {
-                self.delegate?.didReadData( data, withTag: tag, from: self)
+                autoreleasepool(invoking: {
+                    self.delegate?.didReadData( data, withTag: tag, from: self)
+                })
+                
             }
             
         }
@@ -177,7 +186,9 @@ public  class HTTPProxyConnector:ProxyConnector {
             disconnect()
             return
         }
-        
+        if let error = connection?.error {
+            AxLogger.log("Socket-\(cIDString) state: \(error.localizedDescription)", level: .Debug)
+        }
         
         switch connection!.state {
         case .connected:

@@ -236,7 +236,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
         
        // dispatch_async(socketQueue) {[weak self] in
        //     if let strong = self {
-                self.connection!.readMinimumLength(0, maximumLength: readBufferSize) { [weak self]data, error in
+                self.connection!.readMinimumLength(0, maximumLength: readBufferSize) { [weak self] data, error in
                     guard let  strong = self else {return}
                     strong.readPending = false
                     guard error == nil else {
@@ -310,7 +310,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
         readDataWithTag(NWTCPSocket.ScannerReadTag)
     }
 
-    public func queueCall( block: @escaping ()->()) {
+    public func queueCall( block: @escaping  ()->()) {
         //dispatch_async(queue, block)
         queue.async(execute: block)
     }
@@ -383,13 +383,22 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
     }
 
     func readCallback(data: Data?, tag: Int) {
+        guard let data = data else {
+            AxLogger.log("\(cIDString) read nil", level: .Debug)
+            return
+        }
+//        guard !cancelled else {
+//            return
+//        }
         queueCall { [weak self] in
 
             
-            guard let data = data else {return}
-            if let strong = self {
+                        if let strong = self {
                 if let delegate = strong.delegate{
-                    delegate.didReadData( data, withTag: tag, from: strong)
+                    autoreleasepool {
+                        delegate.didReadData( data, withTag: tag, from: strong)
+                    }
+                    
                 }else {
                      AxLogger.log("delegate nil", level: .Error)
                 }

@@ -136,14 +136,17 @@ public class Socks5Connector:ProxyConnector{
 
     override func readCallback(data: Data?, tag: Int) {
         
-        
-        AxLogger.log("\(cIDString) recv new data  \(data! as NSData)",level: .Debug)
+        guard let data = data else {
+            AxLogger.log("\(cIDString) read nil", level: .Debug)
+            return
+        }
+        AxLogger.log("\(cIDString) recv new data  \(data as NSData)",level: .Debug)
         if stage == .Auth {
             //ans 0500
             if recvBuffer == nil {
-                recvBuffer = data!
+                recvBuffer = data
             }else {
-                recvBuffer?.append(data!)
+                recvBuffer?.append(data)
             }
             
            
@@ -195,7 +198,7 @@ public class Socks5Connector:ProxyConnector{
             if recvBuffer == nil {
                 recvBuffer = Data()
             }
-            recvBuffer?.append(data!)
+            recvBuffer?.append(data)
             //05020004 00000000 0000
             
            
@@ -234,7 +237,7 @@ public class Socks5Connector:ProxyConnector{
             if recvBuffer == nil {
                 recvBuffer = Data()
             }
-            recvBuffer?.append(data!)
+            recvBuffer?.append(data)
            
             //05000001 c0a80251 c4bf
             guard let buffer = recvBuffer else {return }
@@ -298,17 +301,23 @@ public class Socks5Connector:ProxyConnector{
         }else if stage == .Connected {
             queueCall {
                 if let buffer = self.recvBuffer  {
-                    self.recvBuffer!.append(data!)
+                    self.recvBuffer!.append(data)
                     if let d = self.delegate {
                         //d.connector(self, didReadData: buffer, withTag: Int64(tag))
-                        d.didReadData(buffer, withTag: tag, from: self)
+                        autoreleasepool(invoking: {
+                             d.didReadData(buffer, withTag: tag, from: self)
+                        })
+                       
                     }
                     
                     self.recvBuffer = nil
                 }else {
                     if let d = self.delegate {
+                        autoreleasepool(invoking: {
+                            d.didReadData( data, withTag: tag, from: self)
+                        })
                         //d.connector(self, didReadData: data, withTag: Int64(tag))
-                        d.didReadData( data!, withTag: tag, from: self)
+                        
                     }
                     
                     

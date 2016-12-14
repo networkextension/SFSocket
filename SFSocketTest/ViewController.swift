@@ -34,27 +34,30 @@ class ViewController: UIViewController {
         
         q.async {
             let t  = Date()
-            let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-cfb")
-            //for _ in 0 ..<  10000 {
+            autoreleasepool(invoking: {
+                
+                
+                let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-cfb")
+                //for _ in 0 ..<  10000 {
                 
                 
                 let data = "sdlfjlsadfjalsdjfalsdfjlasf".data(using: .utf8)!
                 
                 let out  = enc.encrypt(encrypt_bytes: data)
-//                result.append(out!)
-//                let x = enc.decrypt(encrypt_bytes: out!)
+                //                result.append(out!)
+                //                let x = enc.decrypt(encrypt_bytes: out!)
                 print(out! as NSData)
                 //print(x! as NSData)
                 //result.append(out!)
                 DispatchQueue.main.async {[weak self] in
                     self!.update(out!)
                 }
-               // usleep(5000)
-            //}
-            let tw = Date().timeIntervalSince(t)
-            print(tw)
-            
-            
+                // usleep(5000)
+                //}
+                let tw = Date().timeIntervalSince(t)
+                print(tw)
+                
+            })
             //usleep(500)
            
         }

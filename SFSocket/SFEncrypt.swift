@@ -286,7 +286,7 @@ class enc_ctx {
                 AxLogger.log("create crypto ctx error",level: .Error)
                 
             }
-            
+            //CCCryptorRelease(temp)
             //ctx = cryptor.pointee
             //cryptor.deallocate(capacity: 1)
             
@@ -495,7 +495,7 @@ public class SSEncrypt {
             
             AxLogger.log("socket read less iv_len",level: .Error)
         }
-        
+        //leaks
         if let left = genData(encrypt_bytes: encrypt_bytes) {
             
             // Alloc Data Out
