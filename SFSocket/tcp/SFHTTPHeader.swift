@@ -742,7 +742,7 @@ open class  SFHTTPRequestHeader :SFHTTPHeader{
                         f = method.rawValue + " " + path + " " + version + s
                     }
                     
-                    AxLogger.log("new request send line \(f)",level:.Trace)
+                    //AxLogger.log("new request send line \(f)",level:.Trace)
                 }else {
                     // fatalError()
                     f = method.rawValue + " / " + version + s

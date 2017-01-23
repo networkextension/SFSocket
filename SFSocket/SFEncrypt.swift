@@ -752,7 +752,7 @@ public class SSEncrypt {
         
         keyData.append(ramdonKey!)
         let hash = buffer.hmacsha1(keyData: keyData)
-        
+        AxLogger.log("ss_onetimeauth \(hash)",level: .Debug)
         return hash
     }
     func ss_gen_hash(buffer:Data,counter:Int32) ->Data {

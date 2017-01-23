@@ -87,8 +87,10 @@ public class  TCPSSConnector:ProxyConnector{
             atype |= ONETIMEAUTH_FLAG
             //fixme
             //header.replaceSubrange(Range( 0 ... 0), with: atype)
+            header.data.replaceSubrange(0 ..< 1, with: [atype])
             let hash = aes!.ss_onetimeauth(buffer: header.data)
             header.append(hash)
+            AxLogger.log("ota enabled", level: .Debug)
         }
         return header.data
 
