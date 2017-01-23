@@ -759,7 +759,7 @@ public class SSEncrypt {
         
         let blen = buffer.count
         let chunk_len:UInt16 = UInt16(blen).bigEndian
-        let c =  UInt32(counter.bigEndian)
+        let c =  UInt32(counter).bigEndian
         
         let keyData = SFData()
         keyData.append(send_ctx.IV)
