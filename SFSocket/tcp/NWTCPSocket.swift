@@ -391,16 +391,16 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 //            return
 //        }
         queueCall { [weak self] in
-
             
-                        if let strong = self {
+            
+            if let strong = self {
                 if let delegate = strong.delegate{
                     autoreleasepool {
                         delegate.didReadData( data, withTag: tag, from: strong)
                     }
                     
                 }else {
-                     AxLogger.log("delegate nil", level: .Error)
+                    AxLogger.log("delegate nil", level: .Error)
                 }
                 
             }else {
