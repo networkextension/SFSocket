@@ -37,18 +37,28 @@ class ViewController: UIViewController {
             autoreleasepool(invoking: {
                 
                 
-                let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-cfb")
+                let enc = SSEncrypt.init(password: "aes-256", method: "chacha20")
                 //for _ in 0 ..<  10000 {
                 
-                
-                let data = "sdlfjlsadfjalsdjfalsdfjlasf".data(using: .utf8)!
+                let st = "sdlfjlsadfjalsdjfalsdfjlasf"
+                let data = st.data(using: .utf8)!
                 
                 let out  = enc.encrypt(encrypt_bytes: data)
                 //                result.append(out!)
                 //                let x = enc.decrypt(encrypt_bytes: out!)
                 print(out! as NSData)
+                let d2 = enc.decrypt(encrypt_bytes: out!)
+                let str = String.init(data: d2!, encoding: .utf8)
+                if str == st {
+                    print("test pass")
+                }
+                print("\(String(describing: str))")
                 //print(x! as NSData)
                 //result.append(out!)
+                let d3 = enc.encrypt(encrypt_bytes: data)
+                let d4 = enc.decrypt(encrypt_bytes: d3!)
+                let str4 = String.init(data: d4!, encoding: .utf8)
+                print("\(str4)")
                 DispatchQueue.main.async {[weak self] in
                     self!.update(out!)
                 }

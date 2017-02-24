@@ -452,6 +452,10 @@ public class SSEncrypt {
             break
         }
         //print("sodium ret \(ret)")
+//        if let o = outptr {
+//            cd = Data.init(buffer: o)
+//        }
+        
         return ret
     }
     func genData(encrypt_bytes:Data) ->Data?{
@@ -529,7 +533,7 @@ public class SSEncrypt {
                                          kd: ramdonKey!)
                 
                 ctx.counter += UInt64(left.count)
-                let result = cipher.subdata(in: Range(Int(padding) ..< left.count))
+                let result = cipher.subdata(in: Range(Int(padding) ..< cipher.count))
                 return result
                 
             }else {
@@ -624,7 +628,7 @@ public class SSEncrypt {
         if ctx.m.rawValue >= CryptoMethod.SALSA20.rawValue {
             //debugLog("111 encrypt")
             let padding = ctx.counter % SODIUM_BLOCK_SIZE;
-            var cipher = Data.init(count:  2*(encrypt_bytes.count + Int(padding)))
+            var cipher = Data.init(count:  1*(encrypt_bytes.count + Int(padding)))
             
             var  plain:Data
             if padding != 0 {
@@ -656,8 +660,8 @@ public class SSEncrypt {
             
             ctx.counter += UInt64(encrypt_bytes.count)
             
-            
-            result.append(cipher.subdata(in: Range(Int(padding) ..< encrypt_bytes.count
+            //let end = Int(padding)+
+            result.append(cipher.subdata(in: Range(Int(padding) ..< cipher.count
             )))
             //debugLog("000 encrypt")
             return result
