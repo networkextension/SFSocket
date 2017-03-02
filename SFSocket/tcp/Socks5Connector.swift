@@ -216,7 +216,7 @@ public class Socks5Connector:ProxyConnector{
             buffer.copyBytes(to: version, count: 1)
             
             let result : UnsafeMutablePointer<UInt8> =  UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
-            buffer.copyBytes(to: result, count: 1)
+            buffer.copyBytes(to: result, from: 1..<2)
             
             if version.pointee == SOCKS_AUTH_VERSION && result.pointee == SOCKS_AUTH_SUCCESS {
                 if buffer.count > 2 {

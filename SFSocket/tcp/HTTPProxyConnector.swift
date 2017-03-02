@@ -221,6 +221,9 @@ public  class HTTPProxyConnector:ProxyConnector {
         //        if let  x = connection.endpoint as! NWHostEndpoint {
         //
         //        }
+        if let error = connection!.error {
+            AxLogger.log("\(cIDString) \(error.localizedDescription)", level: .Error)
+        }
         AxLogger.log("\(cIDString) stat: \(connection!.state.description)", level: .Debug)
     }
 

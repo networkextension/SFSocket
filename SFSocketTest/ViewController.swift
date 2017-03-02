@@ -42,25 +42,22 @@ class ViewController: UIViewController {
                 
                 let st = "sdlfjlsadfjalsdjfalsdfjlasf"
                 let data = st.data(using: .utf8)!
-                
-                let out  = enc.encrypt(encrypt_bytes: data)
-                //                result.append(out!)
-                //                let x = enc.decrypt(encrypt_bytes: out!)
-                print(out! as NSData)
-                let d2 = enc.decrypt(encrypt_bytes: out!)
-                let str = String.init(data: d2!, encoding: .utf8)
-                if str == st {
-                    print("test pass")
+                for i in 0 ..< 10 {
+                    let out  = enc.encrypt(encrypt_bytes: data)
+                    //                result.append(out!)
+                    //                let x = enc.decrypt(encrypt_bytes: out!)
+                    print(out! as NSData)
+                    let d2 = enc.decrypt(encrypt_bytes: out!)
+                    
+                    let str = String.init(data: d2!, encoding: .utf8)
+                    if str == st {
+                        print("test pass")
+                    }
+                    print("\(str!)")
                 }
-                print("\(String(describing: str))")
-                //print(x! as NSData)
-                //result.append(out!)
-                let d3 = enc.encrypt(encrypt_bytes: data)
-                let d4 = enc.decrypt(encrypt_bytes: d3!)
-                let str4 = String.init(data: d4!, encoding: .utf8)
-                print("\(str4)")
+                
                 DispatchQueue.main.async {[weak self] in
-                    self!.update(out!)
+                    //self!.update(out!)
                 }
                 // usleep(5000)
                 //}
