@@ -228,12 +228,16 @@ let CLEN_BYTES = 2
 typealias fCCCryptorGCMAddIV = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt) -> CInt
 typealias fCCCryptorGCMaddAAD = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt) -> CInt
 typealias fgcm_update = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt,UnsafeMutableRawPointer) -> CInt
+typealias fCCCryptorGCMEncrypt = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt,UnsafeMutableRawPointer) -> CInt
+typealias fCCCryptorGCMDecrypt = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt,UnsafeMutableRawPointer) -> CInt
 typealias fCCCryptorGCMFinal = @convention(c) (CCCryptorRef, UnsafeMutableRawPointer,UnsafeMutablePointer<Int>) -> CInt
 class loadSys {
     static var load = false
     static var CCCryptorGCMAddIV:fCCCryptorGCMAddIV!
     static var CCCryptorGCMaddAAD:fCCCryptorGCMaddAAD!
     static var gcm_update:fgcm_update!
+    static var gcmen_update:fCCCryptorGCMEncrypt!
+    static var gcmde_update:fCCCryptorGCMDecrypt!
     static var CCCryptorGCMFinal:fCCCryptorGCMFinal!
     static func loadFuncs() {
         if !load{
@@ -246,7 +250,19 @@ class loadSys {
             let y  = dlsym(d, "CCCryptorGCMaddAAD");
             CCCryptorGCMaddAAD = unsafeBitCast(y, to: fCCCryptorGCMaddAAD.self)
             let z  = dlsym(d, "gcm_update");
+            let err = dlerror()
+            let xx = String.init(cString: err!, encoding: .utf8)
             gcm_update = unsafeBitCast(z, to: fgcm_update.self)
+            
+            let yy  = dlsym(d, "CCCryptorGCMEncrypt");
+            gcmen_update = unsafeBitCast(yy, to: fCCCryptorGCMEncrypt.self)
+            
+            let zz  = dlsym(d, "CCCryptorGCMDecrypt");
+            
+            gcmde_update = unsafeBitCast(zz, to: fCCCryptorGCMDecrypt.self)
+            
+            
+            
             let w  = dlsym(d, "CCCryptorGCMFinal");
             CCCryptorGCMFinal = unsafeBitCast(w, to: fCCCryptorGCMFinal.self)
             load = true
@@ -262,11 +278,20 @@ class loadSys {
         let r = CCCryptorGCMaddAAD(ctx,c,CInt(aData.count))
         AxLogger.log("CCCryptorGCMaddAAD \(r)", level: .Debug)
     }
-    static func  update(ctx:CCCryptorRef,data:Data,dataOut:UnsafeMutableRawPointer,tagOut:UnsafeMutableRawPointer,tagLength:UnsafeMutablePointer<Int>){
+    static func  update(ctx:CCCryptorRef,data:Data,dataOut:UnsafeMutableRawPointer,tagOut:UnsafeMutableRawPointer,tagLength:UnsafeMutablePointer<Int>,en:Bool){
         let c = (data as NSData).bytes
-       let r =  gcm_update(ctx,c,CInt(data.count),dataOut)
+        if en {
+            let r =  gcmen_update(ctx,c,CInt(data.count),dataOut)
+            AxLogger.log("gcm_update \(r)", level: .Debug)
+            print("-- \(r)")
+        }else {
+            let r =  gcmde_update(ctx,c,CInt(data.count),dataOut)
+            AxLogger.log("gcm_update \(r)", level: .Debug)
+             print("-- \(r)")
+        }
+       
         
-        AxLogger.log("gcm_update \(r)", level: .Debug)
+        
         
         let rr = CCCryptorGCMFinal(ctx,tagOut,tagLength)
         AxLogger.log("CCCryptorGCMaddAAD \(rr)", level: .Debug)
@@ -882,8 +907,8 @@ extension SSEncrypt{
         let ctx = self.send_ctx.ctx!
         loadSys.addIV(ctx: ctx, iv: "1234567890qwerty".data(using: .utf8)!)
         loadSys.addAAD(ctx: ctx, aData: "12345678".data(using: .utf8)!)
-    var data = Data.init(capacity: 1024)
-    var data11 = Data.init(capacity: 16)
+    var data = Data.init(count: 16)
+    var data11 = Data.init(count: 16)
     var p:UnsafeMutableRawPointer?
     _ = data.withUnsafeMutableBytes { mutableBytes in
         p = UnsafeMutableRawPointer.init(mutableBytes)
@@ -892,9 +917,25 @@ extension SSEncrypt{
     _ = data11.withUnsafeMutableBytes {mutableBytes in
         tagout = UnsafeMutableRawPointer.init(mutableBytes)
     }
-    loadSys.update(ctx: ctx, data: "1234567890qwerty".data(using: .utf8)!, dataOut: p!, tagOut: tagout!, tagLength: &taglen)
-    print("\(data as NSData)")
-    print("\(data11 as NSData)")
+    loadSys.update(ctx: ctx, data: "1234567890qwerty".data(using: .utf8)!, dataOut: p!, tagOut: tagout!, tagLength: &taglen, en: true)
+    
+    var data2 = Data.init(count: 16)
+    var data111 = Data.init(count: 16)
+    var p2:UnsafeMutableRawPointer?
+    _ = data2.withUnsafeMutableBytes { mutableBytes in
+        p2 = UnsafeMutableRawPointer.init(mutableBytes)
+    }
+//    var tagout2:UnsafeMutableRawPointer?
+//    _ = data111.withUnsafeMutableBytes {mutableBytes in
+//        tagout2 = UnsafeMutableRawPointer.init(mutableBytes)
+//    }
+    self.recv_ctx = enc_ctx.init(key: ramdonKey!, iv: self.send_ctx.IV, encrypt: false,method:m)
+    loadSys.addIV(ctx: self.recv_ctx.ctx!, iv: "1234567890qwerty".data(using: .utf8)!)
+    loadSys.addAAD(ctx: self.recv_ctx.ctx!, aData: "12345678".data(using: .utf8)!)
+    loadSys.update(ctx: self.recv_ctx.ctx!, data: data, dataOut: p2!, tagOut: tagout!, tagLength: &taglen, en: false)
+    print("\(data2 as NSData)")
+    print(String.init(data: data2, encoding: .utf8))
+    //print("\(data11 as NSData)")
         //        char tag[16];
         //        char *aes_key = "1234567890qwerty";
         //        char *aes_iv = "1234567890qwerty";
