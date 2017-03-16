@@ -132,6 +132,8 @@
 		69C8D9FA1E7A792A00A65301 /* TCPSS3Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */; };
 		69C8D9FC1E7A850C00A65301 /* SocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */; };
 		69C8D9FD1E7A850C00A65301 /* SocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */; };
+		69C8D9FF1E7AA5A700A65301 /* AEAD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FE1E7AA5A700A65301 /* AEAD.swift */; };
+		69C8DA001E7AA5A700A65301 /* AEAD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FE1E7AA5A700A65301 /* AEAD.swift */; };
 		69DD43591DDC4FBA00080CF1 /* SFVPNStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */; };
 		69E470AF1E67AADE00AE11FB /* SocksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E470AE1E67AADE00AE11FB /* SocksTest.swift */; };
 		69F698E71DDC151800966272 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
@@ -255,6 +257,7 @@
 		69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
 		69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSS3Connector.swift; sourceTree = "<group>"; };
 		69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketFactory.swift; sourceTree = "<group>"; };
+		69C8D9FE1E7AA5A700A65301 /* AEAD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AEAD.swift; sourceTree = "<group>"; };
 		69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFVPNStatistics.swift; sourceTree = "<group>"; };
 		69E470AE1E67AADE00AE11FB /* SocksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocksTest.swift; sourceTree = "<group>"; };
 		69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -442,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */,
+				69C8D9FE1E7AA5A700A65301 /* AEAD.swift */,
 				692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */,
 				692DD53F1DD5C9F10079493D /* SFProxy.swift */,
 				692DD53D1DD5C99E0079493D /* Socks5Connector.swift */,
@@ -689,6 +693,7 @@
 				69BF6C481DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */,
 				69BF6C511DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */,
 				69BF6C331DE57D5A000ABF09 /* SocketProtocol.swift in Sources */,
+				69C8DA001E7AA5A700A65301 /* AEAD.swift in Sources */,
 				69B9550D1DDF8224006AF669 /* Socks5Connector.swift in Sources */,
 				69BF6C571DE57E74000ABF09 /* Atomic.swift in Sources */,
 				69B955141DDF823A006AF669 /* NWTCPSocket.swift in Sources */,
@@ -752,6 +757,7 @@
 				69BF6C471DE57E15000ABF09 /* TunnelQueueFactory.swift in Sources */,
 				69BF6C501DE57E51000ABF09 /* AdapterSocketEvent.swift in Sources */,
 				69BF6C321DE57D5A000ABF09 /* SocketProtocol.swift in Sources */,
+				69C8D9FF1E7AA5A700A65301 /* AEAD.swift in Sources */,
 				692DD5B41DD5CEA30079493D /* ConnectRequest.swift in Sources */,
 				69BF6C561DE57E74000ABF09 /* Atomic.swift in Sources */,
 				69A0D2731DD5964F00227353 /* IPAddress.swift in Sources */,

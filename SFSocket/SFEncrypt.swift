@@ -131,6 +131,10 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case .SEED_CFB:       return     3
             
             
+        case .AES128GCM:   return      11
+        case .AES192GCM:    return     11
+        case .AES256GCM:     return    11
+            
         default:
             return UInt32.max
         }
@@ -198,12 +202,12 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case "SALSA20":         raw = 15
         case "CHACHA20":         raw = 16
         case "CHACHA20IETF":      raw = 17
-        case "AES-128-GCM": raw = 17
-        case "AES-192-GCM": raw = 18
-        case "AES-256-GCM": raw = 19
+        case "AES-128-GCM": raw = 18
+        case "AES-192-GCM": raw = 19
+        case "AES-256-GCM": raw = 20
             
-        case "chacha20-ietf-poly1305": raw = 20
-        case "xchacha20-ietf-poly1305": raw = 21
+        case "chacha20-ietf-poly1305": raw = 21
+        case "xchacha20-ietf-poly1305": raw = 22
         default:
             raw = 0
         }
@@ -220,7 +224,57 @@ let  MAX_KEY_LENGTH =  64
 let  MAX_IV_LENGTH = 16
 let CLEN_BYTES = 2
 
+
+typealias fCCCryptorGCMAddIV = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt) -> CInt
+typealias fCCCryptorGCMaddAAD = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt) -> CInt
+typealias fgcm_update = @convention(c) (CCCryptorRef, UnsafeRawPointer,CInt,UnsafeMutableRawPointer) -> CInt
+typealias fCCCryptorGCMFinal = @convention(c) (CCCryptorRef, UnsafeMutableRawPointer,UnsafeMutablePointer<Int>) -> CInt
+class loadSys {
+    static var load = false
+    static var CCCryptorGCMAddIV:fCCCryptorGCMAddIV!
+    static var CCCryptorGCMaddAAD:fCCCryptorGCMaddAAD!
+    static var gcm_update:fgcm_update!
+    static var CCCryptorGCMFinal:fCCCryptorGCMFinal!
+    static func loadFuncs() {
+        if !load{
+            let d = dlopen("/usr/lib/system/libcommonCrypto.dylib", RTLD_NOW);
+            
+            let x  = dlsym(d, "CCCryptorGCMAddIV");
+            CCCryptorGCMAddIV = unsafeBitCast(x, to: fCCCryptorGCMAddIV.self)
+           
+            
+            let y  = dlsym(d, "CCCryptorGCMaddAAD");
+            CCCryptorGCMaddAAD = unsafeBitCast(y, to: fCCCryptorGCMaddAAD.self)
+            let z  = dlsym(d, "gcm_update");
+            gcm_update = unsafeBitCast(z, to: fgcm_update.self)
+            let w  = dlsym(d, "CCCryptorGCMFinal");
+            CCCryptorGCMFinal = unsafeBitCast(w, to: fCCCryptorGCMFinal.self)
+            load = true
+        }
+    }
+    static func addIV(ctx:CCCryptorRef,iv:Data) {
+        let c = (iv as NSData).bytes
+        let r = CCCryptorGCMAddIV(ctx,c,CInt(iv.count))
+        AxLogger.log("CCCryptorGCMAddIV \(r)", level: .Debug)
+    }
+    static func addAAD(ctx:CCCryptorRef,aData:Data){
+        let c = (aData as NSData).bytes
+        let r = CCCryptorGCMaddAAD(ctx,c,CInt(aData.count))
+        AxLogger.log("CCCryptorGCMaddAAD \(r)", level: .Debug)
+    }
+    static func  update(ctx:CCCryptorRef,data:Data,dataOut:UnsafeMutableRawPointer,tagOut:UnsafeMutableRawPointer,tagLength:UnsafeMutablePointer<Int>){
+        let c = (data as NSData).bytes
+       let r =  gcm_update(ctx,c,CInt(data.count),dataOut)
+        
+        AxLogger.log("gcm_update \(r)", level: .Debug)
+        
+        let rr = CCCryptorGCMFinal(ctx,tagOut,tagLength)
+        AxLogger.log("CCCryptorGCMaddAAD \(rr)", level: .Debug)
+    }
+}
 class enc_ctx {
+    
+    
     var m:CryptoMethod
     static var sodiumInited = false
     var counter:UInt64 = 0
@@ -272,6 +326,10 @@ class enc_ctx {
         }
         
     }
+//    init(){
+//        IV = Data()
+//        ctx = nil
+//    }
     init(key:Data,iv:Data,encrypt:Bool,method:CryptoMethod){
         
         if method.iv_size != iv.count {
@@ -324,10 +382,10 @@ class enc_ctx {
                 AxLogger.log("create crypto ctx error",level: .Error)
                 
             }
-            //CCCryptorRelease(temp)
-            //ctx = cryptor.pointee
-            //cryptor.deallocate(capacity: 1)
-            
+          
+            if method == .AES128GCM || method == .AES192GCM || method == .AES256GCM {
+                loadSys.loadFuncs()
+            }
         }else {
             //ctx = nil
             if method == .SALSA20 || method == .CHACHA20 || method == .CHACHA20IETF {
@@ -815,4 +873,35 @@ public class SSEncrypt {
         return result.data
     }
     
+}
+
+
+extension SSEncrypt{
+   public func testGCM() {
+        var taglen:Int = 16;
+        let ctx = self.send_ctx.ctx!
+        loadSys.addIV(ctx: ctx, iv: "1234567890qwerty".data(using: .utf8)!)
+        loadSys.addAAD(ctx: ctx, aData: "12345678".data(using: .utf8)!)
+    var data = Data.init(capacity: 1024)
+    var data11 = Data.init(capacity: 16)
+    var p:UnsafeMutableRawPointer?
+    _ = data.withUnsafeMutableBytes { mutableBytes in
+        p = UnsafeMutableRawPointer.init(mutableBytes)
+    }
+    var tagout:UnsafeMutableRawPointer?
+    _ = data11.withUnsafeMutableBytes {mutableBytes in
+        tagout = UnsafeMutableRawPointer.init(mutableBytes)
+    }
+    loadSys.update(ctx: ctx, data: "1234567890qwerty".data(using: .utf8)!, dataOut: p!, tagOut: tagout!, tagLength: &taglen)
+    print("\(data as NSData)")
+    print("\(data11 as NSData)")
+        //        char tag[16];
+        //        char *aes_key = "1234567890qwerty";
+        //        char *aes_iv = "1234567890qwerty";
+        //        char *data = "11111111";
+        //        char *adata = "12345678";
+        //        NSMutableData *buffer = [[NSMutableData alloc] init];
+        //        char dataOut[1024];
+        //        memset(dataOut, 0, 1024);
+    }
 }

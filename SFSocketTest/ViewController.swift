@@ -14,18 +14,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let a:Float = 10.23
-        print(String.init(format: "%.0f", a))
-        
-        if let h = SFHTTPHeader.init(data: http503.data(using: .utf8)!){
-            print(h.app)
-        }
-        if  let b = SFHTTPRequestHeader.init(data: http503.data(using: .utf8)!){
-            print(b.Host)
-        }
-        if  let b = SFHTTPResponseHeader.init(data: http503.data(using: .utf8)!){
-            print(b.sCode)
-        }
-        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.test(_:)), userInfo: nil, repeats: true)
+        testaead()
+//        print(String.init(format: "%.0f", a))
+//        
+//        if let h = SFHTTPHeader.init(data: http503.data(using: .utf8)!){
+//            print(h.app)
+//        }
+//        if  let b = SFHTTPRequestHeader.init(data: http503.data(using: .utf8)!){
+//            print(b.Host)
+//        }
+//        if  let b = SFHTTPResponseHeader.init(data: http503.data(using: .utf8)!){
+//            print(b.sCode)
+//        }
+//        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.test(_:)), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -119,6 +120,7 @@ class ViewController: UIViewController {
         let aes_iv = "password".data(using: .utf8)!
         var taglen = 16
         var tag = Data.init(count: 16)
+        let x:[CUnsignedChar] = [111,11]
 //        let cs = CCCryptorGCM(1,
 //                          0,
 //                          aes_key,
@@ -133,6 +135,10 @@ class ViewController: UIViewController {
 //                          (tag as NSData).bytes,
 //                          &taglen);
     }
-
+    func testaead(){
+        let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-gcm")
+        enc.testGCM()
+        
+    }
 }
 
