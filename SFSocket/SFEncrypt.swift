@@ -12,14 +12,23 @@ import AxLogger
 import Sodium
 //import Security
 
+
+
+let SUBKEY_INFO = "ss-subkey"
 let  kCCAlgorithmInvalid =  UINT32_MAX
 let  supported_ciphers_iv_size = [
-    0, 0, 16, 16, 16, 16, 8, 16, 16, 16, 8, 8, 8, 8, 16, 8, 8, 12
+    0, 0, 16, 16, 16, 16, 8, 16, 16, 16, 8, 8, 8, 8, 16, 8, 8, 12,
+    16,24,32,32,32//AEAD
 ];
 
 let supported_ciphers_key_size = [
-    0, 16, 16, 16, 24, 32, 16, 16, 24, 32, 16, 8, 16, 16, 16, 32, 32, 32
+    0, 16, 16, 16, 24, 32, 16, 16, 24, 32, 16, 8, 16, 16, 16, 32, 32, 32,
+    16,24,32,32,32//AEAD
 ];
+
+let supported_aead_ciphers_nonce_size = [12,12,12,12,24]
+let supported_aead_ciphers_tag_size = [16,16,16,16]
+
 let SODIUM_BLOCK_SIZE:UInt64 = 64
 public enum  CryptoMethod:Int,CustomStringConvertible{
     //case NONE       =         -1
@@ -41,6 +50,11 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
     case SALSA20         =    15
     case CHACHA20         =   16
     case CHACHA20IETF      =  17
+    case AES128GCM = 18
+    case AES192GCM = 19
+    case AES256GCM = 20
+    case CHACHA20IETF305 = 21
+    case XCHACHA20IETF305 = 22
     public var description: String {
         switch self {
             
@@ -63,6 +77,12 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case .SALSA20:         return    "SALSA20"
         case .CHACHA20:         return   "CHACHA20"
         case .CHACHA20IETF:      return  "CHACHA20IETF"
+        case .AES128GCM: return "AES-128-GCM"
+        case .AES192GCM: return "AES-192-GCM"
+        case .AES256GCM: return "AES-256-GCM"
+       
+        case .CHACHA20IETF305: return "chacha20-ietf-poly1305"
+        case .XCHACHA20IETF305: return "xchacha20-ietf-poly1305"
         }
     }
     public var support:Bool {
@@ -86,6 +106,12 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case .SALSA20:         return    true
         case .CHACHA20:         return   true
         case .CHACHA20IETF:      return  true
+        case .AES128GCM: return true
+        case .AES192GCM: return true
+        case .AES256GCM: return true
+            
+        case .CHACHA20IETF305: return false
+        case .XCHACHA20IETF305: return false
         }
     }
     public var ccmode:CCMode {
@@ -132,6 +158,12 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case .SALSA20:         return    kCCAlgorithmInvalid
         case .CHACHA20:         return   kCCAlgorithmInvalid
         case .CHACHA20IETF:      return  kCCAlgorithmInvalid
+        case .AES128GCM: return  CCAlgorithm(kCCAlgorithmAES)
+        case .AES192GCM: return  CCAlgorithm(kCCAlgorithmAES)
+        case .AES256GCM: return  CCAlgorithm(kCCAlgorithmAES)
+            
+        case .CHACHA20IETF305: return kCCAlgorithmInvalid
+        case .XCHACHA20IETF305: return kCCAlgorithmInvalid
         }
         
         
@@ -166,6 +198,12 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         case "SALSA20":         raw = 15
         case "CHACHA20":         raw = 16
         case "CHACHA20IETF":      raw = 17
+        case "AES-128-GCM": raw = 17
+        case "AES-192-GCM": raw = 18
+        case "AES-256-GCM": raw = 19
+            
+        case "chacha20-ietf-poly1305": raw = 20
+        case "xchacha20-ietf-poly1305": raw = 21
         default:
             raw = 0
         }

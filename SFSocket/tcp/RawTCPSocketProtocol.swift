@@ -15,6 +15,8 @@ public protocol RawTCPSocketProtocol : class {
     /// If the socket is connected.
     var isConnected: Bool { get }
 
+    var writePending:Bool {get }
+    var readPending:Bool  {get}
     /// The source address.
     var sourceIPAddress: IPv4Address? { get }
 

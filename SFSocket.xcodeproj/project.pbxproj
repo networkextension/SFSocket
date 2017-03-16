@@ -128,6 +128,10 @@
 		69C298A01DD594D500E4C3BD /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */; };
 		69C298A31DD5958900E4C3BD /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */; };
 		69C298A51DD5959000E4C3BD /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */; };
+		69C8D9F91E7A792A00A65301 /* TCPSS3Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */; };
+		69C8D9FA1E7A792A00A65301 /* TCPSS3Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */; };
+		69C8D9FC1E7A850C00A65301 /* SocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */; };
+		69C8D9FD1E7A850C00A65301 /* SocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */; };
 		69DD43591DDC4FBA00080CF1 /* SFVPNStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */; };
 		69E470AF1E67AADE00AE11FB /* SocksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E470AE1E67AADE00AE11FB /* SocksTest.swift */; };
 		69F698E71DDC151800966272 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69803E0F1DD95DC20047112C /* CommonCrypto.framework */; };
@@ -249,6 +253,8 @@
 		69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawTCPSocketProtocol.swift; sourceTree = "<group>"; };
 		69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
 		69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
+		69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSS3Connector.swift; sourceTree = "<group>"; };
+		69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketFactory.swift; sourceTree = "<group>"; };
 		69DD43581DDC4FBA00080CF1 /* SFVPNStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFVPNStatistics.swift; sourceTree = "<group>"; };
 		69E470AE1E67AADE00AE11FB /* SocksTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocksTest.swift; sourceTree = "<group>"; };
 		69FC1AFD1DDBFAB000EF8AAC /* SFSocketTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSocketTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +441,7 @@
 		69C298991DD5946200E4C3BD /* tcp */ = {
 			isa = PBXGroup;
 			children = (
+				69C8D9F81E7A792A00A65301 /* TCPSS3Connector.swift */,
 				692DD57D1DD5CA630079493D /* SFHTTPHeader.swift */,
 				692DD53F1DD5C9F10079493D /* SFProxy.swift */,
 				692DD53D1DD5C99E0079493D /* Socks5Connector.swift */,
@@ -446,6 +453,7 @@
 				69C298A41DD5959000E4C3BD /* GCDTCPSocket.swift */,
 				69C298A21DD5958900E4C3BD /* NWTCPSocket.swift */,
 				69C2989F1DD594D500E4C3BD /* RawTCPSocketProtocol.swift */,
+				69C8D9FB1E7A850C00A65301 /* SocketFactory.swift */,
 			);
 			path = tcp;
 			sourceTree = "<group>";
@@ -590,12 +598,13 @@
 					69B954F11DDF81CF006AF669 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 745WQDK4L7;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					69C2988D1DD593FF00E4C3BD = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 745WQDK4L7;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					69FC1AFC1DDBFAB000EF8AAC = {
@@ -671,6 +680,7 @@
 				69BF6C4E1DE57E3A000ABF09 /* EventType.swift in Sources */,
 				69B954FB1DDF81E0006AF669 /* SFData.swift in Sources */,
 				69B954FA1DDF81DC006AF669 /* SFVPNStatistics.swift in Sources */,
+				69C8D9FA1E7A792A00A65301 /* TCPSS3Connector.swift in Sources */,
 				69B955151DDF823D006AF669 /* RawTCPSocketProtocol.swift in Sources */,
 				69B955031DDF8201006AF669 /* IPPacket.swift in Sources */,
 				69BF6C421DE57DF5000ABF09 /* Observer.swift in Sources */,
@@ -711,6 +721,7 @@
 				6994E0181DEFBE9E009394F9 /* Rule.swift in Sources */,
 				69BF6C661DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */,
 				69BF6C3F1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */,
+				69C8D9FD1E7A850C00A65301 /* SocketFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +743,7 @@
 				69BF6C4D1DE57E3A000ABF09 /* EventType.swift in Sources */,
 				692DD5AE1DD5CE490079493D /* IPStackProtocol.swift in Sources */,
 				698A08221DD5C6D4009BFFC9 /* SFEncrypt.swift in Sources */,
+				69C8D9F91E7A792A00A65301 /* TCPSS3Connector.swift in Sources */,
 				692DD5801DD5CAB50079493D /* SwiftExtension.swift in Sources */,
 				698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */,
 				69BF6C411DE57DF5000ABF09 /* Observer.swift in Sources */,
@@ -772,6 +784,7 @@
 				6994E0171DEFBE9E009394F9 /* Rule.swift in Sources */,
 				69BF6C651DE57FCA000ABF09 /* HTTPStreamScanner.swift in Sources */,
 				69BF6C3E1DE57DE1000ABF09 /* ConnectResponse.swift in Sources */,
+				69C8D9FC1E7A850C00A65301 /* SocketFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +832,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -839,6 +853,7 @@
 				PRODUCT_NAME = SFSocket;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -847,6 +862,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -913,6 +929,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -960,6 +977,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -973,6 +991,7 @@
 		69C298971DD593FF00E4C3BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -999,6 +1018,7 @@
 		69C298981DD593FF00E4C3BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;

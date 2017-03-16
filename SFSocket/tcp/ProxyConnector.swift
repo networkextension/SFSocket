@@ -119,16 +119,20 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
     }
     
     @nonobjc public func evaluateTrustForConnection(connection: NWTCPConnection, peerCertificateChain: [AnyObject], completionHandler completion: @escaping (SecTrust) -> Void){
-        let remoteAddress = connection.remoteAddress as? NWHostEndpoint
-        AxLogger.log("debug :\(remoteAddress?.hostname)", level: .Debug)
+        
         let myPolicy = SecPolicyCreateSSL(true, nil)//proxy.serverAddress
         
         var possibleTrust: SecTrust?
         
         let x = SecTrustCreateWithCertificates(peerCertificateChain.first!, myPolicy,
                                        &possibleTrust)
+        guard let remoteAddress = connection.remoteAddress as? NWHostEndpoint else {
+            completion(possibleTrust!)
+            return
+        }
+        AxLogger.log("debug :\(remoteAddress.hostname)", level: .Debug)
         if x != 0 {
-             AxLogger.log("debug :\(remoteAddress?.hostname) \(x)", level: .Debug)
+             AxLogger.log("debug :\(remoteAddress.hostname) \(x)", level: .Debug)
         }
         if let trust = possibleTrust {
             //let's do test by ourself first
@@ -136,19 +140,19 @@ public class ProxyConnector: NWTCPSocket,NWTCPConnectionAuthenticationDelegate {
              var trustResult : SecTrustResultType = .invalid
              let r = SecTrustEvaluate(trust, &trustResult)
             if r != 0{
-                AxLogger.log("debug :\(remoteAddress?.hostname) error code:\(r)", level: .Debug)
+                AxLogger.log("debug :\(remoteAddress.hostname) error code:\(r)", level: .Debug)
             }
             if trustResult == .proceed {
-                AxLogger.log("debug :\(remoteAddress?.hostname) Proceed", level: .Debug)
+                AxLogger.log("debug :\(remoteAddress.hostname) Proceed", level: .Debug)
             }else {
-                AxLogger.log("debug :\(remoteAddress?.hostname) Proceed error", level: .Debug)
+                AxLogger.log("debug :\(remoteAddress.hostname) Proceed error", level: .Debug)
             }
              //print(trustResult)  // the result is 5, is it
              //kSecTrustResultRecoverableTrustFailure?
              
             completion(trust)
         }else {
-             AxLogger.log("debug :\(remoteAddress?.hostname) error", level: .Debug)
+             AxLogger.log("debug :\(remoteAddress.hostname) error", level: .Debug)
         }
     }
  

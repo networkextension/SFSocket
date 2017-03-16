@@ -5,6 +5,8 @@ import CocoaAsyncSocket
 ///
 /// - warning: This class is not thread-safe, it is expected that the instance is accessed on the `queue` only.
 open class GCDTCPSocket: NSObject, GCDAsyncSocketDelegate, RawTCPSocketProtocol {
+    public var writePending: Bool = false
+    public var readPending: Bool = false
     /// cell or wifi 
     public var useCell: Bool {
         get {

@@ -12,6 +12,7 @@ public enum SFProxyType :Int, CustomStringConvertible{
     case HTTP = 0
     case HTTPS = 1
     case SS = 2
+    case SS3 = 6
     case SOCKS5 = 3
     case HTTPAES  = 4
     case LANTERN  = 5
@@ -20,6 +21,7 @@ public enum SFProxyType :Int, CustomStringConvertible{
         case .HTTP: return "HTTP"
         case .HTTPS: return "HTTPS"
         case .SS: return "SS"
+        case .SS3: return "SS3"
         case .SOCKS5: return "SOCKS5"
         case .HTTPAES: return "GFW Press"
         case .LANTERN: return "LANTERN"
@@ -81,6 +83,8 @@ public class SFProxy {
                 proxy.type = .SOCKS5
             }else if t == "SS" {
                 proxy.type = .SS
+            }else if t == "SS3" {
+                proxy.type = .SS3
             }else {
                 return (nil, "URL \(scheme) Invilad")
                 
@@ -169,6 +173,8 @@ public class SFProxy {
                 proxy.type = .SOCKS5
             }else if t == "SS" {
                 proxy.type = .SS
+            }else if t == "SS3" {
+                proxy.type = .SS3
             }else {
                 //alertMessageAction("\(scheme) Invilad", complete: nil)
                 //return
@@ -249,6 +255,8 @@ public class SFProxy {
             type = .SS
         }else if proto == "SS" {
             type = .SS
+        }else if proto == "SS3" {
+            type = .SS3
         }else if proto == "SOCKS5" {
             type = .SOCKS5
         }else {

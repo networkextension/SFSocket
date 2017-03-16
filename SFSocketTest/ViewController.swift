@@ -91,6 +91,48 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    func test(){
+//        CCCryptorStatus CCCryptorGCM(
+//            CCOperation 	op,				/* kCCEncrypt, kCCDecrypt */
+//            CCAlgorithm		alg,
+//            const void 		*key,			/* raw key material */
+//            size_t 			keyLength,
+//            const void 		*iv,
+//            size_t 			ivLen,
+//            const void 		*aData,
+//            size_t 			aDataLen,
+//            const void 		*dataIn,
+//            size_t 			dataInLength,
+//            void 			*dataOut,
+//            void 		    *tagOut,
+//            size_t 			*tagLength)
+//        __OSX_AVAILABLE_STARTING(__MAC_10_8, __IPHONE_5_0);
+        var str = "Hello, playground"
+        
+        let d = dlopen("/usr/lib/system/libcommonCrypto.dylib", RTLD_NOW);
+        
+        let CCCryptorGCM = dlsym(d, "CCCryptorGCM");
+        //fprintf(stderr, "CCCryptorGCM=%x\n", CCCryptorGCM);
+        
+        let aes_key = "pass".data(using: .utf8)!
+        let aes_iv = "password".data(using: .utf8)!
+        var taglen = 16
+        var tag = Data.init(count: 16)
+//        let cs = CCCryptorGCM(1,
+//                          0,
+//                          aes_key,
+//                          4,
+//                          0,
+//                          0,
+//                          0,
+//                          0,
+//                          &datab[52],
+//                          item_length,
+//                          "abc",
+//                          (tag as NSData).bytes,
+//                          &taglen);
+    }
 
 }
 
