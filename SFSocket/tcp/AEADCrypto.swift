@@ -37,7 +37,7 @@ class loadSys {
             CCCryptorGCMaddAAD = unsafeBitCast(y, to: fCCCryptorGCMaddAAD.self)
             let z  = dlsym(d, "gcm_update");
             let err = dlerror()
-            let xx = String.init(cString: err!, encoding: .utf8)
+            //let xx = String.init(cString: err!, encoding: .utf8)
             gcm_update = unsafeBitCast(z, to: fgcm_update.self)
             
             let yy  = dlsym(d, "CCCryptorGCMEncrypt");
@@ -108,6 +108,180 @@ public class AEAD {
     }
     
 }
+let  CHUNK_SIZE_LEN = 2
+let CHUNK_SIZE_MASK = 0x3FFF
+//
+public class aead_ctx {
+    var key:Data?
+    var key_bitlen:Int {
+        get {
+            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+                return m.key_size * 8
+                
+            }else {
+                return m.key_size
+            }
+        }
+    }
+    var iv_size:Int {//for new protocol
+        get{
+            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+                return m.iv_size
+                
+            }else {
+                return m.iv_size
+            }
+        }
+    }
+    var nonce_len:Int {
+        get {
+            return m.nonce_len
+        }
+    }
+    var tag_len:Int{
+        get {
+            return m.tag_len
+        }
+    }
+    var m:CryptoMethod
+    static var sodiumInited = false
+    var counter:UInt64 = 0
+    //let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
+    var IV:Data
+    
+    var  ctx:CCCryptorRef?
+    var cryptoInit:Bool = false
+    func test (){
+        let abcd = "aaaa"
+        if abcd.hasPrefix("aa"){
+            
+        }
+    }
+    static func setupSodium() {
+        if !enc_ctx.sodiumInited {
+            if sodium_init() == -1 {
+                //print("sodium_init failure")
+                AxLogger.log("sodium_init failure todo fix",level: .Error)
+            }
+        }
+    }
+    static func create_enc(op:CCOperation,key:Data,iv:Data,m:CryptoMethod,cryptor: inout UnsafeMutablePointer<CCCryptorRef?>)   {//->CCCryptorRef?
+        
+        let algorithm:CCAlgorithm =  m.supported_ciphers() // findCCAlgorithm(Int32(m.rawValue))
+        //var  cryptor :CCCryptorRef?
+        
+        let key_size = m.key_size
+        
+        let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(op, // operation
+            m.ccmode, // mode CTR kCCModeRC4= 9
+            algorithm,//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
+            CCPadding(0), // padding
+            (iv as NSData).bytes, // can be NULL, because null is full of zeros
+            (key  as NSData).bytes, // key
+            key_size, // keylength
+            nil, //const void *tweak
+            0, //size_t tweakLength,
+            0, //int numRounds,
+            0, //CCModeOptions options,
+            cryptor); //CCCryptorRef *cryptorRef
+        if (createDecrypt == CCCryptorStatus(0)){
+            //let ptr = cryptor.pointee
+            //cryptor.deallocate(capacity: 1)
+            //return ptr
+        }else {
+            AxLogger.log("create crypto ctx error",level: .Error)
+            //return nil
+        }
+        
+    }
+    //    init(){
+    //        IV = Data()
+    //        ctx = nil
+    //    }
+    init(key:Data,iv:Data,encrypt:Bool,method:CryptoMethod){
+        
+        if method.iv_size != iv.count {
+            fatalError()
+        }
+        
+        //findCCAlgorithm(Int32(method.rawValue)) //m.supported_ciphers()
+        var true_key:Data
+        if method == .RC4_MD5 {
+            var key_iv = Data()
+            key_iv.append(key)
+            key_iv.count = 16
+            key_iv.append(iv)
+            
+            
+            true_key = key_iv.md5x
+            //iv_len   = 0;
+        }else {
+            true_key = key
+            
+            
+        }
+        
+        m = method
+        let c = m.supported_ciphers()
+        if  c != UInt32.max {
+            
+            var opt:CCOperation = CCOperation(1)
+            if encrypt {
+                opt = CCOperation(0)
+                
+            }
+            var temp:CCCryptorRef?
+            let  createDecrypt:CCCryptorStatus = CCCryptorCreateWithMode(opt, // operation
+                m.ccmode, // mode CTR kCCModeRC4= 9
+                m.supported_ciphers(),//CCAlgorithm(0),//kCCAlgorithmAES, // Algorithm
+                CCPadding(0), // padding
+                (iv as NSData).bytes, // can be NULL, because null is full of zeros
+                (true_key  as NSData).bytes, // key
+                m.key_size, // keylength
+                nil, //const void *tweak
+                0, //size_t tweakLength,
+                0, //int numRounds,
+                0, //CCModeOptions options,
+                &temp); //CCCryptorRef *cryptorRef
+            if (createDecrypt == CCCryptorStatus(0)){
+                cryptoInit = true
+                ctx = temp
+            }else {
+                AxLogger.log("create crypto ctx error",level: .Error)
+                
+            }
+            
+            if method == .AES128GCM || method == .AES192GCM || method == .AES256GCM {
+                loadSys.loadFuncs()
+            }
+        }else {
+            //ctx = nil
+            if method == .SALSA20 || method == .CHACHA20 || method == .CHACHA20IETF {
+                //let sIV = NSMutableData.init(data: iv)
+                //sIV.length = 16
+                
+                enc_ctx.setupSodium()
+            }
+            //init
+        }
+        
+        IV = iv
+        
+    }
+    
+    deinit {
+        
+        if ctx != nil {
+            CCCryptorRelease(ctx)
+        }
+        
+        
+        print("enc deinit")
+        
+    }
+}
+//key_bitlen = supported_aead_ciphers_key_size*8
+// iv_size = supported_aead_ciphers_nonce_size
 public class AEADCrypto {
     
     var m:CryptoMethod
@@ -131,6 +305,13 @@ public class AEADCrypto {
         return false
         
     }
+    
+    func aead_init(pass:String ,key:String) {
+        
+    }
+    func aead_key_init(pass:String ,key:String){
+        
+    }
     deinit {
         print("SFEncrypt deinit")
     }
@@ -146,11 +327,17 @@ public class AEADCrypto {
         }
         return data.data
     }
-    public init(password:String,method:String) {
+    public init(password:String,key:String,method:String) {
         
         m = CryptoMethod.init(cipher: method)
+        //var keyData:Data
+        if key.isEmpty {
+            ramdonKey = AEAD.crypto_derive_key(password)
+        }else {
+            ramdonKey = AEAD.crypto_derive_key(key)
+        }
         //print("method:\(m.description)")
-        ramdonKey  = SSEncrypt.evpBytesToKey(password: password,keyLen: m.key_size)
+        //ramdonKey  = SSEncrypt.evpBytesToKey(password: password,keyLen: m.key_size)
         
         let iv =  SSEncrypt.getSecureRandom(bytesCount: m.iv_size)
         
@@ -169,39 +356,7 @@ public class AEADCrypto {
         }
         
     }
-    static func evpBytesToKey(password:String, keyLen:Int) ->Data {
-        let  md5Len:Int = 16
-        
-        let cnt = (keyLen - 1)/md5Len + 1
-        var m = Data.init(count: cnt*md5Len)
-        let bytes = password.data(using: .utf8, allowLossyConversion: false)
-        // memcpy((m?.mutableBytes)!, bytes.bytes , password.characters.count)
-        let md5 = bytes?.md5x
-        m = md5!
-        
-        
-        // Repeatedly call md5 until bytes generated is enough.
-        // Each call to md5 uses data: prev md5 sum + password.
-        var d = Data()//.init(count:md5Len+(bytes?.count)!)
-        //d := make([]byte, md5Len+len(password))
-        var start = 0
-        for _ in 0 ..< cnt {//最长32,算法还不支持>32 的情况
-            start += md5Len
-            d.append(m)
-            d.append(bytes!)
-            //            memcpy(d.mutableBytes,m.bytes , m.count)
-            //            memcpy(d.mutableBytes+md5Len, bytes?.bytes, (bytes?.count)!)
-            let md5 = d.md5x
-            m.append(md5)
-            if m.count >= keyLen {
-                break;
-            }
-        }
-        
-        m.count = keyLen
-        
-        return m
-    }
+
 
     func crypto_stream_xor_ic(_ cd:inout Data, md: Data,mlen: UInt64, nd:Data, ic:UInt64, kd:Data)  ->Int32{
         
@@ -564,32 +719,136 @@ extension AEADCrypto{
         loadSys.update(ctx: ctx, data: "1234567890qwerty".data(using: .utf8)!, dataOut: p!, tagOut: tagout!, tagLength: &taglen, en: true)
         
         var data2 = Data.init(count: 16)
-        var data111 = Data.init(count: 16)
+        _ = Data.init(count: 16)
         var p2:UnsafeMutableRawPointer?
         _ = data2.withUnsafeMutableBytes { mutableBytes in
             p2 = UnsafeMutableRawPointer.init(mutableBytes)
         }
-        //    var tagout2:UnsafeMutableRawPointer?
-        //    _ = data111.withUnsafeMutableBytes {mutableBytes in
-        //        tagout2 = UnsafeMutableRawPointer.init(mutableBytes)
-        //    }
+        
         self.recv_ctx = enc_ctx.init(key: ramdonKey!, iv: self.send_ctx.IV, encrypt: false,method:m)
         loadSys.addIV(ctx: self.recv_ctx.ctx!, iv: "1234567890qwerty".data(using: .utf8)!)
         loadSys.addAAD(ctx: self.recv_ctx.ctx!, aData: "12345678".data(using: .utf8)!)
         loadSys.update(ctx: self.recv_ctx.ctx!, data: data, dataOut: p2!, tagOut: tagout!, tagLength: &taglen, en: false)
         print("\(data2 as NSData)")
-        print(String.init(data: data2, encoding: .utf8))
+        print(String.init(data: data2, encoding: .utf8)!)
         
         let key = AEAD.crypto_derive_key("12345678")
         print(key as NSData)
-        //print("\(data11 as NSData)")
-        //        char tag[16];
-        //        char *aes_key = "1234567890qwerty";
-        //        char *aes_iv = "1234567890qwerty";
-        //        char *data = "11111111";
-        //        char *adata = "12345678";
-        //        NSMutableData *buffer = [[NSMutableData alloc] init];
-        //        char dataOut[1024];
-        //        memset(dataOut, 0, 1024);
+        
+    }
+    func crypto_hkdf(salt:Data,salt_len:Int,ikm:Data,ikm_len:Int,info:Data,info_len:Int, okm:inout Data,okm_len:Int) ->Int{
+        //sha1
+        var prk:Data = Data.init(count:Int(CC_SHA1_DIGEST_LENGTH) )
+        
+        var dataptr:UnsafeMutablePointer<Any>?
+        _ = prk.withUnsafeMutableBytes { (ptr:UnsafeMutablePointer)  in
+            dataptr = ptr
+        }
+        
+        var saltptr:UnsafeRawPointer?
+        var salt_len2 = salt_len
+        if salt.isEmpty {
+            let hash_len = Int(CC_SHA1_DIGEST_LENGTH)
+            var null = 0x00
+            let saltData:Data = Data.init(bytes: &null, count: hash_len)
+            salt_len2 = Int(CC_SHA1_DIGEST_LENGTH)
+            _ = saltData.withUnsafeRawPointer { (ptr:UnsafeRawPointer)  in
+                saltptr = ptr
+            }
+        }else {
+            _ = salt.withUnsafeRawPointer { (ptr:UnsafeRawPointer)  in
+                saltptr = ptr
+            }
+        }
+        
+        
+        
+        
+        var ikmptr:UnsafeRawPointer?
+        _ = ikm.withUnsafeRawPointer { (ptr:UnsafeRawPointer)  in
+            ikmptr = ptr
+        }
+        //mbedtls_md_hmac
+        CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA1), saltptr, salt_len2, ikmptr, ikm_len, dataptr)
+       // CCHmac(<#T##algorithm: CCHmacAlgorithm##CCHmacAlgorithm#>, <#T##key: UnsafeRawPointer!##UnsafeRawPointer!#>, <#T##keyLength: Int##Int#>, <#T##data: UnsafeRawPointer!##UnsafeRawPointer!#>, <#T##dataLength: Int##Int#>, <#T##macOut: UnsafeMutableRawPointer!##UnsafeMutableRawPointer!#>)
+        //crypto_hkdf_expand
+        
+        
+        
+        let hash_len:Int = Int(CC_SHA1_DIGEST_LENGTH)
+        var iterations:Int = okm_len / hash_len
+        if okm_len % hash_len != 0 {
+            iterations += 1
+        }
+        var mixin:Data = Data()
+        //var results:Data = Data()
+        
+        for i in 1...iterations{
+            let ctx:UnsafeMutablePointer<CCHmacContext> = UnsafeMutablePointer.allocate(capacity: 1)
+            var mixinptr:UnsafeRawPointer?
+            CCHmacInit(ctx, CCHmacAlgorithm(kCCHmacAlgSHA1), dataptr, Int(CC_SHA1_DIGEST_LENGTH))
+            _ = mixin.withUnsafeRawPointer { (ptr:UnsafeRawPointer)  in
+                mixinptr = ptr
+            }
+            var infoptr:UnsafeRawPointer?
+            _ = info.withUnsafeRawPointer { (ptr:UnsafeRawPointer)  in
+                infoptr = ptr
+            }
+            if !info.isEmpty {
+                 CCHmacUpdate(ctx, infoptr, info_len);
+            }
+            var c:UInt8 = UInt8(i + 1)
+            CCHmacUpdate(ctx,&c,1)
+            CCHmacUpdate(ctx, mixinptr, mixin.count)
+            
+            var null = 0x00
+            var T:Data = Data.init(bytes: &null, count: Int(CC_SHA1_DIGEST_LENGTH))
+            
+            var tptr:UnsafeMutablePointer<Any>?
+            _ = T.withUnsafeMutableBytes { (ptr:UnsafeMutablePointer)  in
+               tptr = ptr
+            }
+            
+            CCHmacFinal(ctx, tptr)
+            //CCHmacFinal(<#T##ctx: UnsafeMutablePointer<CCHmacContext>!##UnsafeMutablePointer<CCHmacContext>!#>, <#T##macOut: UnsafeMutableRawPointer!##UnsafeMutableRawPointer!#>)
+            //results.append(T)
+            okm.append(T)
+            mixin = T
+        }
+        return 0
     }
 }
+
+//#import <CommonCrypto/CommonCrypto.h>
+//// ...
+//
+//NSData * HKDF_SHA256(NSData *seed, NSData *info, NSData *salt, int outputSize) {
+//    char prk[CC_SHA256_DIGEST_LENGTH] = {0};
+//    CCHmac(kCCHmacAlgSHA256, [salt bytes], [salt length], [seed bytes], [seed length], prk);
+//    
+//    int             iterations = (int)ceil((double)outputSize/(double)CC_SHA256_DIGEST_LENGTH);
+//    NSData          *mixin = [NSData data];
+//    NSMutableData   *results = [NSMutableData data];
+//    
+//    for (int i=0; i<iterations; i++) {
+//        CCHmacContext ctx;
+//        CCHmacInit(&ctx, kCCHmacAlgSHA256, prk, CC_SHA256_DIGEST_LENGTH);
+//        CCHmacUpdate(&ctx, [mixin bytes], [mixin length]);
+//        if (info != nil) {
+//            CCHmacUpdate(&ctx, [info bytes], [info length]);
+//        }
+//        
+//        unsigned char c = i+1;
+//        CCHmacUpdate(&ctx, &c, 1);
+//        
+//        unsigned char T[CC_SHA256_DIGEST_LENGTH];
+//        memset(T, 0, CC_SHA256_DIGEST_LENGTH);
+//        CCHmacFinal(&ctx, T);
+//        NSData *stepResult = [NSData dataWithBytes:T length:sizeof(T)];
+//        [results appendData:stepResult];
+//        mixin = [stepResult copy];
+//    }
+//    
+//    return [NSData dataWithData:results];
+//}
+//line 5 should be char prk[CC_SHA256_DIGEST_LENGTH] and line 6 CCHmac(kCCHmacAlgSHA256... maybe a typo

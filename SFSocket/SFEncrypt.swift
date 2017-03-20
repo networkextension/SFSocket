@@ -18,7 +18,8 @@ let SUBKEY_INFO = "ss-subkey"
 let  kCCAlgorithmInvalid =  UINT32_MAX
 let  supported_ciphers_iv_size = [
     0, 0, 16, 16, 16, 16, 8, 16, 16, 16, 8, 8, 8, 8, 16, 8, 8, 12,
-    16,24,32,32,32//AEAD
+    //16,24,32,32,32//AEAD
+    12,12,12,12,24
 ];
 
 let supported_ciphers_key_size = [
@@ -26,8 +27,10 @@ let supported_ciphers_key_size = [
     16,24,32,32,32//AEAD
 ];
 
-let supported_aead_ciphers_nonce_size = [12,12,12,12,24]
-let supported_aead_ciphers_tag_size = [16,16,16,16]
+let supported_aead_ciphers_nonce_size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    ,12,12,12,12,24]
+let supported_aead_ciphers_tag_size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                                       16,16,16,16]
 
 let SODIUM_BLOCK_SIZE:UInt64 = 64
 public enum  CryptoMethod:Int,CustomStringConvertible{
@@ -179,6 +182,15 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
     public var key_size:Int {
         return supported_ciphers_key_size[self.rawValue]
     }
+    
+    public var nonce_len:Int {
+        return supported_aead_ciphers_nonce_size[self.rawValue]
+    }
+    public var tag_len:Int {
+        return supported_aead_ciphers_tag_size[self.rawValue]
+    }
+    
+    
     init(cipher:String){
         let up = cipher.uppercased()
         var raw = 0
@@ -227,8 +239,37 @@ let CLEN_BYTES = 2
 
 
 public class enc_ctx {
-    
-    
+    var key:Data?
+    var key_bitlen:Int {
+        get {
+            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+                return m.key_size * 8
+                
+            }else {
+                return m.key_size
+            }
+        }
+    }
+    var iv_size:Int {//for new protocol
+        get{
+            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+                return m.iv_size
+                
+            }else {
+                return m.iv_size
+            }
+        }
+    }
+    var nonce_len:Int {
+        get {
+            return m.nonce_len
+        }
+    }
+    var tag_len:Int{
+        get {
+            return m.tag_len
+        }
+    }
     var m:CryptoMethod
     static var sodiumInited = false
     var counter:UInt64 = 0
