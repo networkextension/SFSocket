@@ -93,50 +93,12 @@ class ViewController: UIViewController {
     }
 
     
-    func test(){
-//        CCCryptorStatus CCCryptorGCM(
-//            CCOperation 	op,				/* kCCEncrypt, kCCDecrypt */
-//            CCAlgorithm		alg,
-//            const void 		*key,			/* raw key material */
-//            size_t 			keyLength,
-//            const void 		*iv,
-//            size_t 			ivLen,
-//            const void 		*aData,
-//            size_t 			aDataLen,
-//            const void 		*dataIn,
-//            size_t 			dataInLength,
-//            void 			*dataOut,
-//            void 		    *tagOut,
-//            size_t 			*tagLength)
-//        __OSX_AVAILABLE_STARTING(__MAC_10_8, __IPHONE_5_0);
-        var str = "Hello, playground"
-        
-        let d = dlopen("/usr/lib/system/libcommonCrypto.dylib", RTLD_NOW);
-        
-        let CCCryptorGCM = dlsym(d, "CCCryptorGCM");
-        //fprintf(stderr, "CCCryptorGCM=%x\n", CCCryptorGCM);
-        
-        let aes_key = "pass".data(using: .utf8)!
-        let aes_iv = "password".data(using: .utf8)!
-        var taglen = 16
-        var tag = Data.init(count: 16)
-        let x:[CUnsignedChar] = [111,11]
-//        let cs = CCCryptorGCM(1,
-//                          0,
-//                          aes_key,
-//                          4,
-//                          0,
-//                          0,
-//                          0,
-//                          0,
-//                          &datab[52],
-//                          item_length,
-//                          "abc",
-//                          (tag as NSData).bytes,
-//                          &taglen);
-    }
+
+    
     func testaead(){
-        let enc = SSEncrypt.init(password: "aes-256", method: "aes-256-gcm")
+        let lengString = String(repeating: "AAA", count: 4)
+        print(lengString)
+        let enc = AEADCrypto.init(password: "aes-256", method: "aes-256-gcm")
         enc.testGCM()
         
     }
