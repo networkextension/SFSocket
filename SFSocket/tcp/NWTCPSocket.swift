@@ -216,13 +216,17 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
 
      - parameter tag: The tag identifying the data in the callback delegate method.
      - warning: This should only be called after the last read is finished, i.e., `delegate?.didReadData()` is called.
+     - fix c.localAddress nil crash 
      */
     public func readDataWithTag(_ tag: Int) {
         if readPending {
-            // 非常管用
+            
             guard  let c = connection else {return }
-            let addr = c.localAddress as! NWHostEndpoint
-            AxLogger.log("\(cIDString) \(addr) readPending ", level: .Debug)
+            if let a = c.localAddress {
+                let addr = a as! NWHostEndpoint
+                AxLogger.log("\(cIDString) \(addr) readPending ", level: .Debug)
+            }
+            
                 
             
             
