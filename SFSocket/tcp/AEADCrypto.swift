@@ -83,6 +83,7 @@ class loadSys {
         AxLogger.log("CCCryptorGCMaddAAD \(rr)", level: .Debug)
     }
 }
+
 public class AEAD {
     static func crypto_derive_key(_ pass: String) -> Data {
         //AEAE,key max 32 ,two time md5
@@ -106,43 +107,40 @@ public class AEAD {
         
         return res
     }
-    
+    ///
+    ///
+    /// base64 decode ,if base64 decode result len >= key_len , use the part result
+    /// else return random byte use key_len
+    static func crypto_parse_key(base64:String ,key:inout Data,key_len:Int) ->Int{
+        var paddedLength = 0
+        let left = base64.characters.count % 4
+        if left != 0 {
+            paddedLength = 4 - left
+        }
+        let padStr = base64 + String.init(repeating: "=", count: paddedLength)
+        if let data = Data.init(base64Encoded: padStr, options: .ignoreUnknownCharacters) {
+            if data.count >= key_len {
+                key.append(data.subdata(in: 0..<key_len))
+                return key_len
+            }
+            
+        }
+        
+        let ramdonData = SSEncrypt.getSecureRandom(bytesCount: key_len )
+        key.append(ramdonData)
+        AxLogger.log("\(base64) invalid ", level: .Error)
+        return key_len
+    }
 }
 let  CHUNK_SIZE_LEN = 2
 let CHUNK_SIZE_MASK = 0x3FFF
 //
 public class aead_ctx {
     var key:Data?
-    var key_bitlen:Int {
-        get {
-            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
-                return m.key_size * 8
-                
-            }else {
-                return m.key_size
-            }
-        }
-    }
-    var iv_size:Int {//for new protocol
-        get{
-            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
-                return m.iv_size
-                
-            }else {
-                return m.iv_size
-            }
-        }
-    }
-    var nonce_len:Int {
-        get {
-            return m.nonce_len
-        }
-    }
-    var tag_len:Int{
-        get {
-            return m.tag_len
-        }
-    }
+    var skey:Data?
+    var nonce:Data?
+    var salt:Data = Data()
+ 
     var m:CryptoMethod
     static var sodiumInited = false
     var counter:UInt64 = 0
@@ -200,7 +198,7 @@ public class aead_ctx {
     //    }
     init(key:Data,iv:Data,encrypt:Bool,method:CryptoMethod){
         
-        if method.iv_size != iv.count {
+        if method.key_size != iv.count {
             fatalError()
         }
         
@@ -279,6 +277,9 @@ public class aead_ctx {
         print("enc deinit")
         
     }
+    
+    
+    
 }
 //key_bitlen = supported_aead_ciphers_key_size*8
 // iv_size = supported_aead_ciphers_nonce_size
@@ -286,8 +287,8 @@ public class AEADCrypto {
     
     var m:CryptoMethod
     var testenable:Bool = false
-    var send_ctx:enc_ctx
-    var recv_ctx:enc_ctx!
+    var send_ctx:aead_ctx!
+    var recv_ctx:aead_ctx!
     //let block_size = 16
     public var ramdonKey:Data?
     var ivBuffer:Data = Data()
@@ -331,18 +332,24 @@ public class AEADCrypto {
         
         m = CryptoMethod.init(cipher: method)
         //var keyData:Data
-        if key.isEmpty {
-            ramdonKey = AEAD.crypto_derive_key(password)
-        }else {
-            ramdonKey = AEAD.crypto_derive_key(key)
-        }
+        
         //print("method:\(m.description)")
         //ramdonKey  = SSEncrypt.evpBytesToKey(password: password,keyLen: m.key_size)
+        if sodium_init() == -1 {
+            //print("sodium_init failure")
+            AxLogger.log("sodium_init failure todo fix",level: .Error)
+        }
+        ramdonKey = Data()
+        if !key.isEmpty {
+           let _   = AEAD.crypto_parse_key(base64: key, key: &ramdonKey!, key_len: m.key_size)
+        }else {
+            ramdonKey = AEAD.crypto_derive_key(password)
+        }
+        let salt = SSEncrypt.getSecureRandom(bytesCount: m.key_size)
+        //let iv =  SSEncrypt.getSecureRandom(bytesCount: m.iv_size)
         
-        let iv =  SSEncrypt.getSecureRandom(bytesCount: m.iv_size)
-        
-        send_ctx = enc_ctx.init(key: ramdonKey!, iv: iv, encrypt: true,method:m )
-        
+        send_ctx = aead_ctx.init(key: ramdonKey!, iv: salt, encrypt: true,method:m )
+        AxLogger.log("Key \(ramdonKey! as NSData) salt:\(salt as NSData)", level: .Debug)
         
     }
     func recvCTX(iv:Data){
@@ -351,7 +358,7 @@ public class AEADCrypto {
             AxLogger.log("cryto iv dup error",level: .Error)
             
         }else {
-            recv_ctx = enc_ctx.init(key: ramdonKey!, iv: iv, encrypt: false,method:m)
+            recv_ctx = aead_ctx.init(key: ramdonKey!, iv: iv, encrypt: false,method:m)
             
         }
         
@@ -543,21 +550,7 @@ public class AEADCrypto {
         
         return nil
     }
-    static func getSecureRandom(bytesCount:Int) ->Data {
-        // Swift
-        //import Security
-        
-        //let bytesCount = 4 // number of bytes
-        //var randomNum: UInt32 = 0 // variable for random unsigned 32 bit integer
-        var randomBytes = [UInt8](repeating: 0, count: bytesCount) // array to hold randoms bytes
-        
-        // Gen random bytes
-        _ = SecRandomCopyBytes(kSecRandomDefault, bytesCount, &randomBytes)
-        
-        // Turn bytes into data and pass data bytes into int
-        
-        return Data(bytes: randomBytes, count: bytesCount) //getBytes(&randomNum, length: bytesCount)
-    }
+   
     //    func padding(d:NSData) ->NSData{
     //        let l = d.length % block_size
     //        if l != 0 {
@@ -570,8 +563,10 @@ public class AEADCrypto {
     //    }
     public func encrypt(encrypt_bytes:Data) ->Data?{
         
-        
-        let ctx = send_ctx
+        if send_ctx == nil {
+            
+        }
+        guard let ctx = send_ctx else {return nil }
         //Update Cryptor
         if ctx.m.rawValue >= CryptoMethod.SALSA20.rawValue {
             //debugLog("111 encrypt")
@@ -701,6 +696,8 @@ public class AEADCrypto {
     
 }
 extension AEADCrypto{
+    
+    
     public func testGCM() {
         var taglen:Int = 16;
         let ctx = self.send_ctx.ctx!
@@ -725,7 +722,7 @@ extension AEADCrypto{
             p2 = UnsafeMutableRawPointer.init(mutableBytes)
         }
         
-        self.recv_ctx = enc_ctx.init(key: ramdonKey!, iv: self.send_ctx.IV, encrypt: false,method:m)
+        self.recv_ctx = aead_ctx.init(key: ramdonKey!, iv: self.send_ctx.IV, encrypt: false,method:m)
         loadSys.addIV(ctx: self.recv_ctx.ctx!, iv: "1234567890qwerty".data(using: .utf8)!)
         loadSys.addAAD(ctx: self.recv_ctx.ctx!, aData: "12345678".data(using: .utf8)!)
         loadSys.update(ctx: self.recv_ctx.ctx!, data: data, dataOut: p2!, tagOut: tagout!, tagLength: &taglen, en: false)
@@ -814,9 +811,11 @@ extension AEADCrypto{
             //results.append(T)
             okm.append(T)
             mixin = T
+            ctx.deallocate(capacity: 1)
         }
         return 0
     }
+
 }
 
 //#import <CommonCrypto/CommonCrypto.h>

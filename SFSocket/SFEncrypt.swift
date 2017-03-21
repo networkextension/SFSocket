@@ -190,7 +190,36 @@ public enum  CryptoMethod:Int,CustomStringConvertible{
         return supported_aead_ciphers_tag_size[self.rawValue]
     }
     
-    
+    var key_bitlen:Int {
+        get {
+            if self.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+                return self.key_size * 8
+                
+            }else {
+                return self.key_size
+            }
+        }
+    }
+//    var iv_size:Int {//for new protocol
+//        get{
+//            if m.rawValue >= CryptoMethod.CHACHA20IETF305.rawValue{
+//                return m.iv_size
+//                
+//            }else {
+//                return m.iv_size
+//            }
+//        }
+//    }
+//    var nonce_len:Int {
+//        get {
+//            return m.nonce_len
+//        }
+//    }
+//    var tag_len:Int{
+//        get {
+//            return m.tag_len
+//        }
+//    }
     init(cipher:String){
         let up = cipher.uppercased()
         var raw = 0

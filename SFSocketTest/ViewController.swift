@@ -98,7 +98,7 @@ class ViewController: UIViewController {
     func testaead(){
         let lengString = String(repeating: "AAA", count: 4)
         print(lengString)
-        //let enc = AEADCrypto.init(password: "aes-256", key: "", method: "aes-256-gcm")
+        let enc = AEADCrypto.init(password: "aes-256", key: "", method: "aes-256-gcm")
         //enc.testGCM()
         
     }

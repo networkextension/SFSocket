@@ -1,6 +1,7 @@
 github "networkextension/AxLogger" "0.2.4"
-github "robbiehanson/CocoaAsyncSocket" "7.5.0"
+github "robbiehanson/CocoaAsyncSocket" "7.5.1"
 github "soffes/CommonCrypto" "v1.1.0"
+github "iosdevzone/IDZSwiftCommonCrypto" "0.9.1"
 github "zhuhaow/Sodium-framework" "v1.0.10.1"
 github "networkextension/SwiftyJSON" "3.1.4"
 github "yarshure/Crypto" "v0.5.2"
