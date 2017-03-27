@@ -101,7 +101,7 @@ open class HTTPHeader {
     }
 
     public convenience init?(headerData: Data) {
-        guard let headerString = NSString(data: headerData, encoding: String.Encoding.utf8.rawValue) as? String else {
+        guard let headerString = NSString(data: headerData, encoding: String.Encoding.utf8.rawValue) as String? else {
             return nil
         }
 

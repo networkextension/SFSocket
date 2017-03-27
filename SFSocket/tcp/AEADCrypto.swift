@@ -36,7 +36,7 @@ class loadSys {
             let y  = dlsym(d, "CCCryptorGCMaddAAD");
             CCCryptorGCMaddAAD = unsafeBitCast(y, to: fCCCryptorGCMaddAAD.self)
             let z  = dlsym(d, "gcm_update");
-            let err = dlerror()
+            _ = dlerror()
             //let xx = String.init(cString: err!, encoding: .utf8)
             gcm_update = unsafeBitCast(z, to: fgcm_update.self)
             

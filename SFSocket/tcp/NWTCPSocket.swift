@@ -344,7 +344,7 @@ public class NWTCPSocket: NSObject, RawTCPSocketProtocol {
         //crash 
         guard let connection = connection else {return}
         if let error = connection.error {
-            AxLogger.log("Socket-\(cIDString) state: \(error.localizedDescription)", level: .Debug)
+            AxLogger.log("Socket-\(cIDString) Error: \(error.localizedDescription)", level: .Debug)
         }
         switch connection.state {
         case .connected:

@@ -50,7 +50,7 @@ open class NWUDPSocket {
             sSelf.updateActivityTimer()
             
             guard error == nil else {
-                AxLogger.log("Error when reading from remote server. \(error)",level: .Error)
+                AxLogger.log("Error when reading from remote server. \(String(describing: error))",level: .Error)
                 return
             }
             

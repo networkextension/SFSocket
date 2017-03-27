@@ -43,7 +43,7 @@ class ViewController: UIViewController {
                 
                 let st = "sdlfjlsadfjalsdjfalsdfjlasf"
                 let data = st.data(using: .utf8)!
-                for i in 0 ..< 10 {
+                for _ in 0 ..< 10 {
                     let out  = enc.encrypt(encrypt_bytes: data)
                     //                result.append(out!)
                     //                let x = enc.decrypt(encrypt_bytes: out!)
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
     func testaead(){
         let lengString = String(repeating: "AAA", count: 4)
         print(lengString)
-        let enc = AEADCrypto.init(password: "aes-256", key: "", method: "aes-256-gcm")
+        _ = AEADCrypto.init(password: "aes-256", key: "", method: "aes-256-gcm")
         //enc.testGCM()
         
     }

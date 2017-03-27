@@ -271,7 +271,7 @@ open  class  SFHTTPResponseHeader :SFHTTPHeader{
         
     }
     open func statusLine() ->String{
-        return "\(version) \(sCode) \(statusCodeDescriptions[sCode])"
+        return "\(version) \(sCode) \(String(describing: statusCodeDescriptions[sCode]))"
     }
     public var finished:Bool  = false
     open override func bodyReadFinish() ->Bool{
