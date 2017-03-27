@@ -9,10 +9,24 @@
 import Foundation
 
 protocol AdapterProtocol {
-    
+    var streaming:Bool{ get }
+    func send(_ data:Data) ->Data
+    func recv(_ data:Data) ->Data
 }
-class Adapter {
-    
+class Adapter:AdapterProtocol {
+    func recv(_ data: Data) -> Data {
+        return Data()
+    }
+
+    func send(_ data: Data) -> Data {
+        return Data()
+    }
+
+    var streaming:Bool{
+        get {
+            return false
+        }
+    }
     var proxy:SFProxy
     var realHost:String
     var realPort:UInt16

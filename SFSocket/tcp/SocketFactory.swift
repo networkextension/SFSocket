@@ -8,13 +8,13 @@
 
 import Foundation
 import AxLogger
-class SocketFactory {
+public class SocketFactory {
     //proxy chain suport flag
-    var proxy:SFProxy? //first proxy, support proxy chain
+    public var proxy:SFProxy? //first proxy, support proxy chain
     
-    static var shared = SocketFactory()
+    public static var shared = SocketFactory()
     //var proxyChain:Bool = false
-    func socketFromProxy(_ p: SFProxy?,policy:SFPolicy,targetHost:String,Port:UInt16) ->NWTCPSocket? {
+    public func socketFromProxy(_ p: SFProxy?,policy:SFPolicy,targetHost:String,Port:UInt16) ->NWTCPSocket? {
         
         if policy == .Direct {
             //基本上网需求

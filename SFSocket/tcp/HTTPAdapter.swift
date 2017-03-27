@@ -1,5 +1,5 @@
 //
-//  SS3Adapter.swift
+//  File.swift
 //  SFSocket
 //
 //  Created by 孔祥波 on 27/03/2017.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SS3Adapter :Adapter{
+class HTTPAdapter: Adapter {
     override var streaming:Bool{
         get {
             return false

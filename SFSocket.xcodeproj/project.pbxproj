@@ -26,7 +26,7 @@
 		6938BFBC1E88B0B400332D82 /* SS3Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFBB1E88B0B400332D82 /* SS3Adapter.swift */; };
 		6938BFBE1E88B0F700332D82 /* CSocks5Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFBD1E88B0F700332D82 /* CSocks5Connector.swift */; };
 		6938BFC01E88B15A00332D82 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFBF1E88B15A00332D82 /* Adapter.swift */; };
-		6938BFC21E88B63000332D82 /* SFHTTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFC11E88B63000332D82 /* SFHTTPAdapter.swift */; };
+		6938BFC21E88B63000332D82 /* HTTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFC11E88B63000332D82 /* HTTPAdapter.swift */; };
 		6938BFC41E88B6C900332D82 /* CHTTPProxConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6938BFC31E88B6C900332D82 /* CHTTPProxConnector.swift */; };
 		697B7C431DE067C500584179 /* AxLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C421DE067C500584179 /* AxLogger.framework */; };
 		697B7C451DE067CC00584179 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697B7C441DE067CC00584179 /* CocoaAsyncSocket.framework */; };
@@ -208,7 +208,7 @@
 		6938BFBB1E88B0B400332D82 /* SS3Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SS3Adapter.swift; sourceTree = "<group>"; };
 		6938BFBD1E88B0F700332D82 /* CSocks5Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSocks5Connector.swift; sourceTree = "<group>"; };
 		6938BFBF1E88B15A00332D82 /* Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
-		6938BFC11E88B63000332D82 /* SFHTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFHTTPAdapter.swift; sourceTree = "<group>"; };
+		6938BFC11E88B63000332D82 /* HTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAdapter.swift; sourceTree = "<group>"; };
 		6938BFC31E88B6C900332D82 /* CHTTPProxConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHTTPProxConnector.swift; sourceTree = "<group>"; };
 		697B7C421DE067C500584179 /* AxLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AxLogger.framework; path = Carthage/Build/Mac/AxLogger.framework; sourceTree = SOURCE_ROOT; };
 		697B7C441DE067CC00584179 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Carthage/Build/Mac/CocoaAsyncSocket.framework; sourceTree = SOURCE_ROOT; };
@@ -485,7 +485,7 @@
 				6938BFB91E88B09800332D82 /* SSAdapter.swift */,
 				6938BFBB1E88B0B400332D82 /* SS3Adapter.swift */,
 				6938BFBF1E88B15A00332D82 /* Adapter.swift */,
-				6938BFC11E88B63000332D82 /* SFHTTPAdapter.swift */,
+				6938BFC11E88B63000332D82 /* HTTPAdapter.swift */,
 			);
 			path = tcp;
 			sourceTree = "<group>";
@@ -780,7 +780,7 @@
 				692DD5AE1DD5CE490079493D /* IPStackProtocol.swift in Sources */,
 				698A08221DD5C6D4009BFFC9 /* SFEncrypt.swift in Sources */,
 				69C8D9F91E7A792A00A65301 /* TCPSS3Connector.swift in Sources */,
-				6938BFC21E88B63000332D82 /* SFHTTPAdapter.swift in Sources */,
+				6938BFC21E88B63000332D82 /* HTTPAdapter.swift in Sources */,
 				692DD5801DD5CAB50079493D /* SwiftExtension.swift in Sources */,
 				698A081F1DD5C664009BFFC9 /* ProxyConnector.swift in Sources */,
 				69BF6C411DE57DF5000ABF09 /* Observer.swift in Sources */,

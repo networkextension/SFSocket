@@ -21,4 +21,15 @@ class CSocks5Connector: Socks5Connector {
         //c.start()
         return c
     }
+    override func readCallback(data: Data?, tag: Int) {
+        guard let  adapter = adapter else { return  }
+        let newdata = adapter.recv(data!)
+        super.readCallback(data: newdata, tag: tag)
+    }
+    public override func sendData(data: Data, withTag tag: Int) {
+        guard let  adapter = adapter else { return  }
+        let newdata = adapter.send(data)
+        super.sendData(data: newdata , withTag: tag)
+    }
+    
 }
